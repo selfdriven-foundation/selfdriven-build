@@ -1,0 +1,593 @@
+---
+layout: null
+title: Cyberdeck Pocket Build Guide - selfdriven You
+permalink: /cyberdeck-pocket-build-guide
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="assets/img/selfdriven-you-logo-round-4colour-wheel.png">
+<link rel="shortcut icon" href="/assets/img/selfdriven-you-logo-round-4colour-blend.png">
+<link rel="apple-touch-icon" href="/assets/img/selfdriven-you-logo-round-4colour-blend.png" />
+<title>Build a Pocket Deck · selfdriven.you</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#09090f; --surface:#111118; --surface2:#18181f;
+  --border:rgba(255,255,255,.08); --border2:rgba(255,255,255,.14);
+  --text:#f0eeff; --muted:#7e7a9a; --muted2:#3d3a55;
+
+  --curious:#f5c842; --caring:#ff5f7e; --constructive:#00e5a0; --chill:#7b6cff;
+  --chill-bright:#9b8fff;
+  --curious-dim:rgba(245,200,66,.13); --caring-dim:rgba(255,95,126,.13);
+  --constructive-dim:rgba(0,229,160,.13); --chill-dim:rgba(123,108,255,.13);
+  --pill:999px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.65;overflow-x:hidden;cursor:none;-webkit-font-smoothing:antialiased}
+a{cursor:none}
+h1,h2,h3,h4{font-family:'Bricolage Grotesque',sans-serif;line-height:1.05}
+.mono{font-family:'JetBrains Mono',monospace}
+
+.glow-wrap{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.gblob{position:absolute;border-radius:50%;filter:blur(95px);opacity:.42}
+.gb1{width:520px;height:520px;background:var(--curious);top:-160px;left:-160px;animation:gb 15s ease-in-out infinite}
+.gb2{width:440px;height:440px;background:var(--caring);top:30%;right:-150px;animation:gb 19s ease-in-out infinite reverse}
+.gb3{width:380px;height:380px;background:var(--constructive);bottom:8%;left:14%;animation:gb 23s ease-in-out infinite 3s}
+.gb4{width:340px;height:340px;background:var(--chill);bottom:-80px;right:16%;animation:gb 17s ease-in-out infinite 8s}
+@keyframes gb{0%,100%{transform:translate(0,0) scale(1)}40%{transform:translate(34px,-26px) scale(1.08)}70%{transform:translate(-22px,30px) scale(.93)}}
+
+.cursor-dot{position:fixed;top:0;left:0;width:8px;height:8px;border-radius:50%;background:var(--chill-bright);pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .12s ease,background .2s}
+.cursor-ring{position:fixed;top:0;left:0;width:34px;height:34px;border-radius:50%;border:1.5px solid rgba(240,238,255,.3);pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .2s,height .2s,border-color .2s}
+@media (hover:none){body{cursor:auto}a{cursor:auto}.cursor-dot,.cursor-ring{display:none}}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:16px 0;transition:background .3s,border-color .3s,padding .3s;border-bottom:1px solid transparent}
+nav.scrolled{background:rgba(9,9,15,.72);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid var(--border);padding:11px 0}
+.nav-inner{max-width:1080px;margin:0 auto;padding:0 28px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:21px;letter-spacing:-.03em;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:11px}
+.brand em{font-style:normal;color:var(--constructive)}
+.markdots{display:inline-flex;gap:3px}
+.markdots i{width:7px;height:7px;border-radius:50%;display:block}
+.markdots i:nth-child(1){background:var(--curious)}
+.markdots i:nth-child(2){background:var(--caring)}
+.markdots i:nth-child(3){background:var(--constructive)}
+.markdots i:nth-child(4){background:var(--chill)}
+.nav-pills{display:flex;gap:9px;align-items:center}
+@media (max-width:860px){.nav-pills .mode-pill span{display:none}.nav-pills .mode-pill{padding:10px}}
+@media (max-width:620px){.nav-pills{display:none}}
+
+.mode-pill{display:inline-flex;align-items:center;gap:8px;padding:11px 20px;border-radius:var(--pill);font-family:'Bricolage Grotesque',sans-serif;font-size:14px;font-weight:600;text-decoration:none;border:1.5px solid transparent;transition:transform .2s,box-shadow .2s}
+.mode-pill svg{width:16px;height:16px}
+.mode-pill:hover{transform:translateY(-4px) rotate(-1.5deg);box-shadow:0 14px 36px rgba(0,0,0,.5)}
+.mp-c{background:var(--curious-dim);color:var(--curious);border-color:rgba(245,200,66,.28)}
+.mp-k{background:var(--caring-dim);color:var(--caring);border-color:rgba(255,95,126,.28)}
+.mp-b{background:var(--constructive-dim);color:var(--constructive);border-color:rgba(0,229,160,.28)}
+.mp-l{background:var(--chill-dim);color:var(--chill-bright);border-color:rgba(123,108,255,.28)}
+
+.wrap{max-width:1080px;margin:0 auto;padding:0 28px;position:relative;z-index:2}
+section{position:relative;z-index:2}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+
+.hero{min-height:92vh;display:flex;flex-direction:column;justify-content:center;padding-top:130px;padding-bottom:80px}
+.hero-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(9,9,15,.55);border:1px solid rgba(255,255,255,.22);border-radius:var(--pill);padding:8px 18px;font-size:12px;font-weight:500;color:rgba(240,238,255,.72);letter-spacing:.08em;text-transform:uppercase;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);width:fit-content}
+.hero-pill .dot{width:7px;height:7px;border-radius:50%;background:var(--chill-bright);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
+.hero h1{font-size:clamp(44px,8.5vw,92px);font-weight:800;letter-spacing:-.045em;margin:26px 0 0;max-width:14ch}
+.hero h1 .a{background:linear-gradient(120deg,var(--curious),var(--constructive));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero h1 .b{background:linear-gradient(120deg,var(--chill-bright),var(--caring));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero p.lead{font-size:clamp(17px,2.2vw,21px);color:var(--muted);max-width:56ch;margin:30px 0 0;line-height:1.6}
+.hero .jump-row{margin-top:40px;display:flex;flex-wrap:wrap;gap:12px;position:relative}
+.spec-strip{display:flex;flex-wrap:wrap;gap:0;margin-top:54px;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.spec-strip .s{flex:1 1 160px;padding:22px 24px;border-right:1px solid var(--border)}
+.spec-strip .s:last-child{border-right:none}
+.spec-strip .k{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.spec-strip .v{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:23px;margin-top:6px;letter-spacing:-.02em}
+
+@media (max-width:640px){
+  .wrap{padding:0 20px}
+  .nav-inner{padding:0 20px}
+  .hero{min-height:auto;padding-top:118px;padding-bottom:52px;justify-content:flex-start}
+  .hero h1{font-size:clamp(40px,12.5vw,62px)}
+  .hero p.lead{margin-top:20px;font-size:16.5px}
+  .hero .jump-row{margin-top:26px;gap:10px}
+  .spec-strip{display:grid;grid-template-columns:1fr 1fr;margin-top:38px}
+  .spec-strip .s{flex:none;padding:16px 18px;border-right:1px solid var(--border);border-bottom:1px solid var(--border)}
+  .spec-strip .s:nth-child(2n){border-right:none}
+  .spec-strip .s:nth-child(n+3){border-bottom:none}
+  .spec-strip .v{font-size:19px}
+  .section-pad{padding-block:62px}
+}
+
+.section-pad{padding-block:90px}
+.sec-head{max-width:62ch}
+.sec-head h2{font-size:clamp(30px,5vw,52px);font-weight:800;letter-spacing:-.04em;margin:14px 0 0}
+.sec-head p{color:var(--muted);font-size:18px;margin-top:18px;line-height:1.6}
+.accent-c{color:var(--curious)} .accent-k{color:var(--caring)} .accent-b{color:var(--constructive)} .accent-l{color:var(--chill-bright)}
+
+.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:48px}
+@media (max-width:780px){.why-grid{grid-template-columns:1fr}}
+.why-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:30px;position:relative;overflow:hidden}
+.why-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;opacity:.85}
+.why-card.c1::before{background:var(--curious)} .why-card.c2::before{background:var(--chill)} .why-card.c3::before{background:var(--constructive)}
+.why-card .n{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted)}
+.why-card h3{font-size:21px;font-weight:700;letter-spacing:-.02em;margin:14px 0 10px}
+.why-card p{color:var(--muted);font-size:15px;line-height:1.6}
+
+.phases{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:48px}
+@media (max-width:880px){.phases{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:480px){.phases{grid-template-columns:1fr}}
+.phase{display:block;text-decoration:none;color:inherit;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:26px;transition:transform .25s,border-color .25s,box-shadow .25s}
+.phase:hover{transform:translateY(-6px);box-shadow:0 18px 44px rgba(0,0,0,.45)}
+.phase .ico{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:18px}
+.phase .ico svg{width:22px;height:22px}
+.phase .step{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.phase h3{font-size:22px;font-weight:700;letter-spacing:-.02em;margin:7px 0 9px}
+.phase p{color:var(--muted);font-size:14px;line-height:1.55}
+.ph-c .ico{background:var(--curious-dim);color:var(--curious)} .ph-c:hover{border-color:rgba(245,200,66,.4)} .ph-c h3{color:var(--curious)}
+.ph-k .ico{background:var(--caring-dim);color:var(--caring)} .ph-k:hover{border-color:rgba(255,95,126,.4)} .ph-k h3{color:var(--caring)}
+.ph-b .ico{background:var(--constructive-dim);color:var(--constructive)} .ph-b:hover{border-color:rgba(0,229,160,.4)} .ph-b h3{color:var(--constructive)}
+.ph-l .ico{background:var(--chill-dim);color:var(--chill-bright)} .ph-l:hover{border-color:rgba(123,108,255,.4)} .ph-l h3{color:var(--chill-bright)}
+
+.mode-banner{display:flex;align-items:center;gap:16px;margin-bottom:8px}
+.mode-banner .badge{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.mode-banner .badge svg{width:25px;height:25px}
+.mode-banner .step{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.b-c{background:var(--curious-dim);color:var(--curious)} .b-k{background:var(--caring-dim);color:var(--caring)}
+.b-b{background:var(--constructive-dim);color:var(--constructive)} .b-l{background:var(--chill-dim);color:var(--chill-bright)}
+.rule{height:1px;background:var(--border);margin:0;border:none}
+
+.tbl-wrap{margin-top:30px;border:1px solid var(--border);border-radius:18px;overflow:hidden;overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:560px}
+th,td{text-align:left;padding:15px 18px;font-size:14.5px;border-bottom:1px solid var(--border)}
+thead th{background:var(--surface2);font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:13px;letter-spacing:.02em;color:var(--text)}
+tbody tr:last-child td{border-bottom:none}
+tbody td:first-child{font-weight:600;color:var(--text)}
+td .pick{display:inline-block;margin-left:8px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;color:var(--chill-bright);border:1px solid rgba(123,108,255,.45);border-radius:999px;padding:2px 8px;vertical-align:middle}
+td small{color:var(--muted)}
+.tbl-cost td:nth-child(3){font-family:'JetBrains Mono',monospace;color:var(--constructive);white-space:nowrap}
+
+.arch-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:36px}
+@media (max-width:780px){.arch-grid{grid-template-columns:1fr}}
+.arch{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:26px;transition:transform .25s,border-color .25s}
+.arch:hover{transform:translateY(-5px);border-color:var(--border2)}
+.arch .tag{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--chill-bright)}
+.arch h4{font-size:20px;font-weight:700;margin:9px 0 8px;letter-spacing:-.02em}
+.arch p{color:var(--muted);font-size:14.5px;line-height:1.55}
+.arch ul{list-style:none;margin-top:14px;display:flex;flex-direction:column;gap:7px}
+.arch li{font-size:13.5px;color:var(--muted);padding-left:18px;position:relative}
+.arch li::before{content:'›';position:absolute;left:0;color:var(--chill-bright);font-family:'JetBrains Mono',monospace}
+
+.steps{margin-top:40px;display:flex;flex-direction:column;gap:0}
+.step-card{display:grid;grid-template-columns:64px 1fr;gap:22px;padding:0 0 34px;position:relative}
+.step-card:last-child{padding-bottom:0}
+.step-card .num{width:52px;height:52px;border-radius:14px;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:21px;color:var(--constructive);position:relative;z-index:2}
+.step-card:not(:last-child)::before{content:'';position:absolute;left:26px;top:52px;bottom:0;width:2px;background:linear-gradient(var(--border),transparent);z-index:1}
+.step-card .body h4{font-size:19px;font-weight:700;letter-spacing:-.02em;margin-bottom:7px}
+.step-card .body p{color:var(--muted);font-size:15px;line-height:1.6}
+
+.code{margin-top:18px;background:#0c0c14;border:1px solid var(--border);border-left:3px solid var(--constructive);border-radius:12px;padding:18px 20px;overflow-x:auto}
+.code pre{font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.75;color:#cfcbe8;white-space:pre}
+.code .cm{color:var(--muted)}
+.code .cmd{color:var(--constructive)}
+
+.callout{margin-top:24px;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:22px 24px;display:flex;gap:16px;align-items:flex-start}
+.callout .mk{width:34px;height:34px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.callout .mk svg{width:18px;height:18px}
+.callout p{font-size:14.5px;color:var(--muted);line-height:1.6}
+.callout strong{color:var(--text);font-weight:600}
+.co-c .mk{background:var(--curious-dim);color:var(--curious)}
+.co-k .mk{background:var(--caring-dim);color:var(--caring)}
+.co-b .mk{background:var(--constructive-dim);color:var(--constructive)}
+.co-l .mk{background:var(--chill-dim);color:var(--chill-bright)}
+
+.cols2{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:36px}
+@media (max-width:780px){.cols2{grid-template-columns:1fr}}
+.col-card{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:28px}
+.col-card h4{font-size:18px;font-weight:700;margin-bottom:14px;letter-spacing:-.02em}
+.col-card ul{list-style:none;display:flex;flex-direction:column;gap:11px}
+.col-card li{font-size:14.5px;color:var(--muted);line-height:1.5;padding-left:22px;position:relative}
+.col-card li::before{content:'◆';position:absolute;left:0;font-size:9px;top:5px}
+.col-card.k li::before{color:var(--caring)} .col-card.l li::before{color:var(--chill-bright)}
+
+.chill-list{margin-top:34px;display:flex;flex-direction:column;gap:14px}
+.chill-item{display:flex;gap:18px;align-items:flex-start;padding:22px 24px;background:var(--surface);border:1px solid var(--border);border-radius:16px}
+.chill-item .q{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:26px;color:var(--chill-bright);line-height:1;flex-shrink:0;width:40px}
+.chill-item h4{font-size:17px;font-weight:700;margin-bottom:5px}
+.chill-item p{color:var(--muted);font-size:14.5px;line-height:1.6}
+
+.cta{padding-top:70px;padding-bottom:90px}
+.cta-card{background:linear-gradient(150deg,var(--surface2),var(--surface));border:1px solid var(--border2);border-radius:26px;padding:54px 44px;text-align:center;position:relative;overflow:hidden}
+.cta-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--curious),var(--caring),var(--constructive),var(--chill))}
+.cta-card h2{font-size:clamp(28px,4.5vw,42px);font-weight:800;letter-spacing:-.035em}
+.cta-card p{color:var(--muted);font-size:17px;margin:16px auto 0;max-width:48ch}
+.cta-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:30px}
+.btn{display:inline-flex;align-items:center;gap:9px;padding:14px 28px;border-radius:var(--pill);font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:15px;text-decoration:none;transition:transform .2s,box-shadow .2s}
+.btn-primary{background:var(--constructive);color:#06241a}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 14px 34px rgba(0,229,160,.3)}
+.btn-ghost{background:transparent;color:var(--text);border:1.5px solid var(--border2)}
+.btn-ghost:hover{transform:translateY(-3px);border-color:var(--text)}
+
+footer{border-top:1px solid var(--border);padding:48px 0 60px;position:relative;z-index:2}
+.foot-inner{max-width:1080px;margin:0 auto;padding:0 28px;display:flex;flex-direction:column;gap:22px}
+.foot-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:24px}
+.foot-tag{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:24px;letter-spacing:-.03em;max-width:18ch}
+.foot-tag .c{color:var(--curious)} .foot-tag .b{color:var(--constructive)} .foot-tag .k{color:var(--caring)}
+.foot-links{display:flex;flex-direction:column;gap:8px;text-align:right}
+.foot-links a{color:var(--muted);text-decoration:none;font-size:14px;transition:color .2s}
+.foot-links a:hover{color:var(--text)}
+.foot-bottom{border-top:1px solid var(--border);padding-top:22px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;font-size:12.5px;color:var(--muted2)}
+.foot-bottom .mono{font-size:11.5px}
+
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .6s,transform .6s cubic-bezier(.34,1.56,.64,1)}
+.reveal.vis{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="ic-telescope" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="17" cy="13" r="3"/><path d="M3 7l5.5 2.5"/><path d="M3 7l2-4 14.5 6.5-2 4"/><path d="M8.5 9.5L6 20h5l1.5-4"/><path d="M17 16v4"/>
+  </symbol>
+  <symbol id="ic-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+  </symbol>
+  <symbol id="ic-hammer" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="m15 12-8.5 8.5c-.83.83-2.17.83-3 0a2.12 2.12 0 0 1 0-3L12 9"/><path d="M17.64 15 22 10.64"/><path d="m20.91 11.7-1.25-1.25c-.6-.6-.93-1.4-.93-2.25v-.86L16.01 4.6a5.56 5.56 0 0 0-3.94-1.64H9l.92.82A6.18 6.18 0 0 1 12 8.4v1.56l2 2h2.47l2.26 1.91"/>
+  </symbol>
+  <symbol id="ic-waves" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/>
+  </symbol>
+  <symbol id="ic-cpu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M15 2v2M9 2v2M15 20v2M9 20v2M20 15h2M20 9h2M2 15h2M2 9h2"/>
+  </symbol>
+  <symbol id="ic-bolt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/>
+  </symbol>
+  <symbol id="ic-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/>
+  </symbol>
+</svg>
+
+<div class="glow-wrap" aria-hidden="true">
+  <div class="gblob gb1"></div><div class="gblob gb2"></div><div class="gblob gb3"></div><div class="gblob gb4"></div>
+</div>
+
+<div class="cursor-dot" id="cdot"></div>
+<div class="cursor-ring" id="cring"></div>
+
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="/" class="brand"><span class="markdots"><i></i><i></i><i></i><i></i></span><span class="wm">selfdriven<em>.you</em></span></a>
+    <div class="nav-pills">
+      <a href="#plan" class="mode-pill mp-c"><svg><use href="#ic-telescope"/></svg><span>Plan</span></a>
+      <a href="#build" class="mode-pill mp-b"><svg><use href="#ic-hammer"/></svg><span>Build</span></a>
+      <a href="#tend" class="mode-pill mp-k"><svg><use href="#ic-heart"/></svg><span>Tend</span></a>
+      <a href="#live" class="mode-pill mp-l"><svg><use href="#ic-waves"/></svg><span>Live</span></a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero wrap" id="top">
+  <span class="hero-pill"><span class="dot"></span>selfdriven.you · build log · pocket deck</span>
+  <h1>Build a <span class="a">pocket deck.</span><br>Carry a <span class="b">terminal.</span></h1>
+  <p class="lead">The small variant — a Raspberry&nbsp;Pi Zero&nbsp;2&nbsp;W you can slip in a jacket. A quiet terminal for writing, SSH, notes, and radio. The smallest self-driven machine that's still a real computer.</p>
+  <div class="jump-row">
+    <a href="#plan" class="mode-pill mp-c"><svg><use href="#ic-telescope"/></svg><span>01 · Plan it</span></a>
+    <a href="#build" class="mode-pill mp-b"><svg><use href="#ic-hammer"/></svg><span>02 · Build it</span></a>
+    <a href="#tend" class="mode-pill mp-k"><svg><use href="#ic-heart"/></svg><span>03 · Tend it</span></a>
+    <a href="#live" class="mode-pill mp-l"><svg><use href="#ic-waves"/></svg><span>04 · Live with it</span></a>
+  </div>
+  <div class="spec-strip">
+    <div class="s"><div class="k">Build time</div><div class="v">An evening</div></div>
+    <div class="s"><div class="k">Skill floor</div><div class="v">Curious + tidy</div></div>
+    <div class="s"><div class="k">Ballpark (USD)</div><div class="v">$90–160</div></div>
+    <div class="s"><div class="k">Soldering</div><div class="v">A little</div></div>
+  </div>
+</header>
+
+<section class="section-pad wrap">
+  <div class="sec-head reveal">
+    <span class="eyebrow">// the smallest sovereign machine</span>
+    <h2>Same idea, palm-sized. A whole computer that disappears into a pocket.</h2>
+    <p>The Field Deck is a workhorse. The Pocket Deck is a companion — a single, calm device you carry like a notebook. It won't render video or run a big model. It will SSH into anything, hold your notes offline, and never beg for your attention.</p>
+  </div>
+  <div class="why-grid">
+    <div class="why-card c1 reveal">
+      <div class="n">01</div>
+      <h3>Pocket-sized agency</h3>
+      <p>A real Linux machine the size of a wallet. Yours, openable, repairable — and it goes everywhere a phone goes without behaving like one.</p>
+    </div>
+    <div class="why-card c2 reveal">
+      <div class="n">02</div>
+      <h3>It sips power</h3>
+      <p>The Zero 2 W draws roughly a watt. A small lithium cell carries it for hours, so it's the deck you actually take with you rather than leave charging.</p>
+    </div>
+    <div class="why-card c3 reveal">
+      <div class="n">03</div>
+      <h3>Terminal-first by design</h3>
+      <p>No desktop, no feed, no distraction surface. Text, code, and a blinking cursor. The constraint is the point — it's a machine for thinking.</p>
+    </div>
+  </div>
+</section>
+
+<section class="wrap" style="padding-bottom:40px">
+  <div class="sec-head reveal">
+    <span class="eyebrow">// the build, in four modes</span>
+    <h2>One pocket. Four modes.</h2>
+    <p>Same rhythm as the Field Deck. Get <span class="accent-c">Curious</span> to plan it, go <span class="accent-b">Constructive</span> to build it, get <span class="accent-k">Caring</span> to tend it, then <span class="accent-l">Chill</span> and carry it everywhere.</p>
+  </div>
+  <div class="phases">
+    <a href="#plan" class="phase ph-c reveal">
+      <div class="ico"><svg><use href="#ic-telescope"/></svg></div>
+      <div class="step">Mode 01 · Curious</div><h3>Plan it</h3>
+      <p>Know what a pocket deck is for, and pick a screen path.</p>
+    </a>
+    <a href="#build" class="phase ph-b reveal">
+      <div class="ico"><svg><use href="#ic-hammer"/></svg></div>
+      <div class="step">Mode 02 · Constructive</div><h3>Build it</h3>
+      <p>A tiny parts list, six steps, and a lean terminal loadout.</p>
+    </a>
+    <a href="#tend" class="phase ph-k reveal">
+      <div class="ico"><svg><use href="#ic-heart"/></svg></div>
+      <div class="step">Mode 03 · Caring</div><h3>Tend it</h3>
+      <p>Card backups, lithium safety, share the little case.</p>
+    </a>
+    <a href="#live" class="phase ph-l reveal">
+      <div class="ico"><svg><use href="#ic-waves"/></svg></div>
+      <div class="step">Mode 04 · Chill</div><h3>Live with it</h3>
+      <p>One job, done calmly. The pocket as a single-task room.</p>
+    </a>
+  </div>
+</section>
+
+<!-- ───────── CURIOUS / PLAN ───────── -->
+<section class="section-pad wrap" id="plan">
+  <div class="mode-banner reveal">
+    <div class="badge b-c"><svg><use href="#ic-telescope"/></svg></div>
+    <div><div class="step accent-c">Mode 01 · Curious</div></div>
+  </div>
+  <div class="sec-head reveal">
+    <h2>Plan it.</h2>
+    <p>Pocket decks live or die on one decision: <em>how do you see the screen?</em> Everything else is small. Be honest about whether this is a standalone terminal or a thin client you drive from your phone — that choice picks your display and halves your parts list.</p>
+  </div>
+
+  <h3 style="margin-top:46px;font-size:22px;font-weight:700;letter-spacing:-.02em" class="reveal">Pick a screen path</h3>
+  <div class="arch-grid">
+    <div class="arch reveal">
+      <div class="tag">path A · standalone</div>
+      <h4>Tiny HDMI display</h4>
+      <p>A 4–5" 800×480 panel over the Zero's mini-HDMI. Bright, fast, fully self-contained. The classic pocket terminal.</p>
+      <ul><li>Always-on screen</li><li>More power draw</li><li>Real, snappy refresh</li></ul>
+    </div>
+    <div class="arch reveal">
+      <div class="tag">path B · calm</div>
+      <h4>E-ink panel</h4>
+      <p>A 2.9–4.2" e-paper display over SPI. Sips power, sunlight-readable, distraction-proof. Perfect for writing.</p>
+      <ul><li>Days of battery</li><li>Slow refresh</li><li>Needs a driver setup</li></ul>
+    </div>
+    <div class="arch reveal">
+      <div class="tag">path C · headless</div>
+      <h4>No screen at all</h4>
+      <p>Run it headless and reach it from your phone over SSH or its own Wi-Fi hotspot. The smallest, cheapest build.</p>
+      <ul><li>Tiniest footprint</li><li>Needs a phone/laptop</li><li>Zero display cost</li></ul>
+    </div>
+  </div>
+
+  <div class="callout co-c reveal">
+    <div class="mk"><svg><use href="#ic-telescope"/></svg></div>
+    <p><strong>Curious note — why the Zero 2 W:</strong> it's a quad-core machine with Wi-Fi and Bluetooth built in, for the price of lunch. It has no PCIe and only 512&nbsp;MB of RAM, so it's a <em>terminal and thin client</em>, not a desktop. If you want a browser and a local model, that's the Field Deck (Pi 5). Match the deck to the job.</p>
+  </div>
+</section>
+
+<hr class="rule">
+
+<!-- ───────── CONSTRUCTIVE / BUILD ───────── -->
+<section class="section-pad wrap" id="build">
+  <div class="mode-banner reveal">
+    <div class="badge b-b"><svg><use href="#ic-hammer"/></svg></div>
+    <div><div class="step accent-b">Mode 02 · Constructive</div></div>
+  </div>
+  <div class="sec-head reveal">
+    <h2>Build it.</h2>
+    <p>This is the standalone recipe — a Zero 2 W, a small HDMI screen, a 40% keyboard, and a clip-on battery in a printed case. Swap the display for e-ink or drop it entirely for the headless build. Get it talking over SSH first; the case comes last.</p>
+  </div>
+
+  <h3 style="margin-top:46px;font-size:22px;font-weight:700;letter-spacing:-.02em" class="reveal">Bill of materials</h3>
+  <div class="tbl-wrap reveal tbl-cost">
+    <table>
+      <thead><tr><th>Part</th><th>Pick</th><th>~Cost (USD)</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Compute</td><td>Raspberry Pi Zero 2 W</td><td>$15–20</td><td>Quad-core, Wi-Fi + Bluetooth on board. The whole brain.</td></tr>
+        <tr><td>Power + RTC</td><td>PiSugar-style add-on + LiPo</td><td>$25–40</td><td>Clip-on battery, soft power button, real-time clock. The neat path.</td></tr>
+        <tr><td>Storage</td><td>A2 microSD 32–64 GB</td><td>$8–14</td><td>No NVMe on a Zero. A fast A2 card matters here.</td></tr>
+        <tr><td>Display</td><td>4–5" HDMI panel <span class="pick">PATH A</span></td><td>$28–55</td><td>Or a 2.9–4.2" e-ink panel for the calm build.</td></tr>
+        <tr><td>Keyboard</td><td>40% USB / folding BT keyboard</td><td>$25–55</td><td>Wired needs a micro-USB OTG adapter; BT pairs after boot.</td></tr>
+        <tr><td>Adapters</td><td>mini-HDMI→HDMI, micro-USB OTG</td><td>$6–12</td><td>The Zero uses mini-HDMI and micro-USB — buy the right ends.</td></tr>
+        <tr><td>Cooling</td><td>Small stick-on heatsink</td><td>$3</td><td>Optional — the Zero 2 W runs cool. Nice under sustained load.</td></tr>
+        <tr><td>Enclosure</td><td>3D-printed pocket case</td><td>$8–20</td><td>Print in PETG. Leave the power button and a USB port exposed.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 style="margin-top:54px;font-size:22px;font-weight:700;letter-spacing:-.02em" class="reveal">Assemble it</h3>
+  <div class="steps">
+    <div class="step-card reveal">
+      <div class="num">1</div>
+      <div class="body"><h4>Flash Pi OS Lite, headless</h4>
+      <p>Flash <strong>Raspberry Pi OS Lite (64-bit)</strong> with <span class="mono">Raspberry Pi Imager</span> — no desktop, it's a terminal deck. In <em>Edit settings</em>, set hostname, your user, Wi-Fi, and enable SSH so the first boot needs nothing plugged in.</p>
+      <div class="code"><pre><span class="cm"># Raspberry Pi Imager → choose: Raspberry Pi OS Lite (64-bit)</span>
+hostname:  <span class="cmd">pocket</span>      enable SSH: <span class="cmd">on</span>
+wifi:      your-network    user: your-name</pre></div>
+      </div>
+    </div>
+    <div class="step-card reveal">
+      <div class="num">2</div>
+      <div class="body"><h4>Fit the power add-on</h4>
+      <p>If you went with a bare LiPo board you'll solder a header to the Zero (a little iron time); a PiSugar-style board clips to the back with pogo pins — no soldering. Attach the cell, stick on the heatsink, and confirm the soft power button works.</p></div>
+    </div>
+    <div class="step-card reveal">
+      <div class="num">3</div>
+      <div class="body"><h4>First boot over SSH</h4>
+      <p>Power on with nothing attached and find it on your network. Log in, update, and you've got a working pocket Linux box before a single screen is wired.</p>
+      <div class="code"><pre>ssh your-name@pocket.local
+<span class="cmd">sudo</span> apt update <span class="cm">&&</span> <span class="cmd">sudo</span> apt full-upgrade -y</pre></div>
+      </div>
+    </div>
+    <div class="step-card reveal">
+      <div class="num">4</div>
+      <div class="body"><h4>Wire the screen &amp; keyboard</h4>
+      <p>For Path A, connect the HDMI panel via the mini-HDMI adapter and power it (some panels need their own 5&nbsp;V line). Plug the keyboard into the data micro-USB port through an OTG adapter, or pair a Bluetooth keyboard once you're on the console. For e-ink (Path B), wire the SPI panel to the GPIO header and install its driver.</p></div>
+    </div>
+    <div class="step-card reveal">
+      <div class="num">5</div>
+      <div class="body"><h4>Make the console pleasant</h4>
+      <p>On a small screen, a readable framebuffer font and a larger console size go a long way. Tune it so the terminal is comfortable to actually use, not just technically working.</p>
+      <div class="code"><pre><span class="cmd">sudo</span> dpkg-reconfigure console-setup   <span class="cm"># bigger, crisper console font</span>
+<span class="cmd">sudo</span> raspi-config                     <span class="cm"># enable SPI for e-ink, set locale</span></pre></div>
+      </div>
+    </div>
+    <div class="step-card reveal">
+      <div class="num">6</div>
+      <div class="body"><h4>Close the pocket case</h4>
+      <p>Stack screen, Zero, and battery, route the short cables, and seal it up. Keep the weight balanced so it sits flat in a pocket, and leave the power button and one USB port reachable from outside.</p></div>
+    </div>
+  </div>
+
+  <h3 style="margin-top:56px;font-size:22px;font-weight:700;letter-spacing:-.02em" class="reveal">A terminal loadout</h3>
+  <p class="reveal" style="color:var(--muted);margin-top:12px;max-width:62ch;font-size:15.5px">512&nbsp;MB of RAM rules out heavy apps — and that's the gift. Lean, text-mode tools that work offline and let the Zero be a jump box to your bigger machines:</p>
+  <div class="code reveal"><pre><span class="cmd">sudo</span> apt install -y tmux neovim git ranger micro    <span class="cm"># write &amp; navigate</span>
+<span class="cmd">sudo</span> apt install -y w3m openssh-client mosh          <span class="cm"># browse text, reach anything</span>
+<span class="cmd">sudo</span> apt install -y weechat syncthing                <span class="cm"># chat + own your sync</span>
+<span class="cm"># optional: rtl-sdr tools if you clip on a radio dongle</span></pre></div>
+  <div class="callout co-b reveal">
+    <div class="mk"><svg><use href="#ic-bolt"/></svg></div>
+    <p><strong>Constructive task — ship the headless version tonight:</strong> a Zero 2 W you can SSH into from your phone is <em>already a pocket deck</em>. Use it for a week before you commit to a screen and a case. You'll learn exactly what you want from the finished build.</p>
+  </div>
+</section>
+
+<hr class="rule">
+
+<!-- ───────── CARING / TEND ───────── -->
+<section class="section-pad wrap" id="tend">
+  <div class="mode-banner reveal">
+    <div class="badge b-k"><svg><use href="#ic-heart"/></svg></div>
+    <div><div class="step accent-k">Mode 03 · Caring</div></div>
+  </div>
+  <div class="sec-head reveal">
+    <h2>Tend it.</h2>
+    <p>A pocket machine takes knocks the Field Deck never will — it rides in bags and gets dropped on pavement. A little care keeps it alive, and a little sharing keeps the whole tiny-deck scene alive.</p>
+  </div>
+
+  <div class="cols2">
+    <div class="col-card k reveal">
+      <h4>Keep it healthy</h4>
+      <ul>
+        <li>Image the SD card once it's set up — pocket cards live hard, and a clone turns a dead card into a five-minute fix.</li>
+        <li>Treat the lithium cell with respect: a managed power board, no charging it loose or unattended, and keep it out of a hot car.</li>
+        <li>Strain-relieve the screen and power cables. In a pocket build, a tugged connector is the number-one failure.</li>
+        <li>Back up your notes with Syncthing so the deck holds a copy, not the only copy.</li>
+      </ul>
+    </div>
+    <div class="col-card k reveal">
+      <h4>Give back</h4>
+      <ul>
+        <li>Publish your case STL — pocket enclosures are the hardest part, and a good one helps dozens of builders.</li>
+        <li>Write down the display driver dance. E-ink and small-panel setup trips everyone; your notes save the next person an evening.</li>
+        <li>Show it off where decks gather — <span class="mono">cyberdeck.cafe</span> and r/cyberDeck love a clever small build.</li>
+        <li>Answer one "how did you fit the battery?" question. That's the whole community in one sentence.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<!-- ───────── CHILL / LIVE ───────── -->
+<section class="section-pad wrap" id="live">
+  <div class="mode-banner reveal">
+    <div class="badge b-l"><svg><use href="#ic-waves"/></svg></div>
+    <div><div class="step accent-l">Mode 04 · Chill</div></div>
+  </div>
+  <div class="sec-head reveal">
+    <h2>Live with it.</h2>
+    <p>A pocket deck isn't a small phone — it's the opposite of one. Set it up to do one thing well, and it becomes the calm device you reach for when you want to think, write, or quietly poke at the world.</p>
+  </div>
+
+  <div class="chill-list">
+    <div class="chill-item reveal">
+      <div class="q">01</div>
+      <div><h4>One job, on purpose</h4>
+      <p>Pick a single use — writing, SSH, radio, journaling — and let the deck be excellent at that. A device that does one thing is a device you trust.</p></div>
+    </div>
+    <div class="chill-item reveal">
+      <div class="q">02</div>
+      <div><h4>The constraint is the feature</h4>
+      <p>No browser rabbit-holes, no apps clamouring. The small screen and lean OS quietly protect your attention for you.</p></div>
+    </div>
+    <div class="chill-item reveal">
+      <div class="q">03</div>
+      <div><h4>Carry it like a notebook</h4>
+      <p>The best deck is the one that's with you. Small and low-power means it actually comes along — to the train, the café, the park bench.</p></div>
+    </div>
+    <div class="chill-item reveal">
+      <div class="q">04</div>
+      <div><h4>Off is a valid state</h4>
+      <p>Soft-shutdown, slip it away, be done. A machine you can fully switch off is a small daily permission to switch off yourself.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta wrap">
+  <div class="cta-card reveal">
+    <h2>Be curious. Build it. Be caring.</h2>
+    <p>Start headless this evening — a Zero 2 W and an SD card. The pocket deck you'll carry is the one you switched on tonight.</p>
+    <div class="cta-btns">
+      <a href="https://www.raspberrypi.com/software/" class="btn btn-primary"><svg style="width:16px;height:16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><use href="#ic-cpu"/></svg>Get Raspberry Pi OS</a>
+      <a href="/assets/skills/cyberdeck-pocket-deck.skill" class="btn btn-ghost" download><svg style="width:16px;height:16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><use href="#ic-download"/></svg>Get the build skill</a>
+      <a href="/cyberdeck-build-guide" class="btn btn-ghost">← The full Field Deck guide</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-inner">
+    <div class="foot-top">
+      <div class="foot-tag">Be <span class="c">Curious</span>,<br>Be <span class="b">Constructive</span>,<br>Be <span class="k">Caring</span>.</div>
+      <div class="foot-links">
+        <a href="https://selfdriven.you">selfdriven.you</a>
+        <a href="https://selfdriven.foundation">selfdriven Foundation</a>
+        <a href="https://www.raspberrypi.com">raspberrypi.com</a>
+        <a href="#top">↑ Back to top</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>A personal operating system for the age of intelligence.</span>
+      <span class="mono">curious · caring · constructive · chill</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+const nav=document.getElementById('nav');
+addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>30));
+const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('vis');io.unobserve(x.target);}}),{threshold:.14});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+(function(){
+  var dot=document.getElementById('cdot'),ring=document.getElementById('cring');
+  var rx=0,ry=0,dx=0,dy=0;
+  document.addEventListener('mousemove',function(e){dx=e.clientX;dy=e.clientY;dot.style.left=dx+'px';dot.style.top=dy+'px';});
+  function loop(){rx+=(dx-rx)*.18;ry+=(dy-ry)*.18;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop);}
+  loop();
+  document.querySelectorAll('a,.phase,.arch,.why-card').forEach(function(el){
+    el.addEventListener('mouseenter',function(){ring.style.width='52px';ring.style.height='52px';ring.style.borderColor='rgba(155,143,255,.6)';});
+    el.addEventListener('mouseleave',function(){ring.style.width='34px';ring.style.height='34px';ring.style.borderColor='rgba(240,238,255,.3)';});
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+title: "selfdriven You"
+description: "selfdriven You"
+baseurl: ""
+url: ""
+context: "you"
+repo: "selfdriven-foundation/selfdriven-you"
+
+defaults:
+  - scope:
+      path: "pages"
+      type: "pages"
+    values:
+      layout: selfdriven
+
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+exclude:
+  - _well-known/

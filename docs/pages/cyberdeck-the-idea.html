@@ -1,0 +1,458 @@
+---
+layout: null
+title: The Cyberdeck Idea - selfdriven You
+permalink: /cyberdeck-the-idea
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark">
+<link rel="icon" type="image/png" href="assets/img/selfdriven-logo-round-saffron-white.png">
+<link rel="shortcut icon" href="/assets/img/selfdriven-logo-round-saffron-white.png">
+<link rel="apple-touch-icon" href="/assets/img/selfdriven-logo-round-saffron-white.png" />
+<title>The Cyberdeck Idea · selfdriven.you</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:dark;
+  --bg:#09090f; --surface:#111118; --surface2:#18181f;
+  --border:rgba(255,255,255,.08); --border2:rgba(255,255,255,.14);
+  --text:#f0eeff; --muted:#7e7a9a; --muted2:#3d3a55;
+  --curious:#f5c842; --caring:#ff5f7e; --constructive:#00e5a0; --chill:#7b6cff;
+  --chill-bright:#9b8fff;
+  --curious-dim:rgba(245,200,66,.13); --caring-dim:rgba(255,95,126,.13);
+  --constructive-dim:rgba(0,229,160,.13); --chill-dim:rgba(123,108,255,.13);
+  --pill:999px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;background:#09090f;overflow-x:hidden}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.65;overflow-x:hidden;cursor:none;-webkit-font-smoothing:antialiased}
+a{cursor:none}
+h1,h2,h3,h4{font-family:'Bricolage Grotesque',sans-serif;line-height:1.05}
+.mono{font-family:'JetBrains Mono',monospace}
+
+.glow-wrap{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.gblob{position:absolute;border-radius:50%;filter:blur(95px);opacity:.42}
+.gb1{width:520px;height:520px;background:var(--curious);top:-160px;left:-160px;animation:gb 15s ease-in-out infinite}
+.gb2{width:440px;height:440px;background:var(--caring);top:32%;right:-150px;animation:gb 19s ease-in-out infinite reverse}
+.gb3{width:380px;height:380px;background:var(--constructive);bottom:14%;left:12%;animation:gb 23s ease-in-out infinite 3s}
+.gb4{width:340px;height:340px;background:var(--chill);bottom:-80px;right:18%;animation:gb 17s ease-in-out infinite 8s}
+@keyframes gb{0%,100%{transform:translate(0,0) scale(1)}40%{transform:translate(34px,-26px) scale(1.08)}70%{transform:translate(-22px,30px) scale(.93)}}
+
+.cursor-dot{position:fixed;top:0;left:0;width:8px;height:8px;border-radius:50%;background:var(--curious);pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .12s ease,background .2s}
+.cursor-ring{position:fixed;top:0;left:0;width:34px;height:34px;border-radius:50%;border:1.5px solid rgba(240,238,255,.3);pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .2s,height .2s,border-color .2s}
+@media (hover:none){body{cursor:auto}a{cursor:auto}.cursor-dot,.cursor-ring{display:none}}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:16px 0;transition:background .3s,border-color .3s,padding .3s;border-bottom:1px solid transparent}
+nav.scrolled{background:rgba(9,9,15,.72);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid var(--border);padding:11px 0}
+.nav-inner{max-width:1080px;margin:0 auto;padding:0 28px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:21px;letter-spacing:-.03em;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:11px}
+.brand em{font-style:normal;color:var(--constructive)}
+.markdots{display:inline-flex;gap:3px}
+.markdots i{width:7px;height:7px;border-radius:50%;display:block}
+.markdots i:nth-child(1){background:var(--curious)} .markdots i:nth-child(2){background:var(--caring)}
+.markdots i:nth-child(3){background:var(--constructive)} .markdots i:nth-child(4){background:var(--chill)}
+.nav-cta{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:var(--pill);font-family:'Bricolage Grotesque',sans-serif;font-size:14px;font-weight:600;text-decoration:none;background:var(--constructive-dim);color:var(--constructive);border:1.5px solid rgba(0,229,160,.28);transition:transform .2s}
+.nav-cta:hover{transform:translateY(-3px)}
+@media (max-width:560px){.nav-cta{display:none}}
+
+.wrap{max-width:1080px;margin:0 auto;padding:0 28px;position:relative;z-index:2}
+.narrow{max-width:780px}
+section{position:relative;z-index:2}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+.accent-c{color:var(--curious)} .accent-k{color:var(--caring)} .accent-b{color:var(--constructive)} .accent-l{color:var(--chill-bright)}
+
+/* hero */
+.hero{min-height:78vh;display:flex;flex-direction:column;justify-content:center;padding-top:130px;padding-bottom:32px}
+.hero-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(9,9,15,.55);border:1px solid rgba(255,255,255,.22);border-radius:var(--pill);padding:8px 18px;font-size:12px;font-weight:500;color:rgba(240,238,255,.72);letter-spacing:.08em;text-transform:uppercase;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);width:fit-content}
+.hero-pill .dot{width:7px;height:7px;border-radius:50%;background:var(--curious);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
+.hero h1{font-size:clamp(46px,9vw,104px);font-weight:800;letter-spacing:-.05em;margin:26px 0 0;max-width:15ch;overflow-wrap:break-word}
+.hero h1 .g1{background:linear-gradient(120deg,var(--curious),var(--constructive));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero h1 .g2{background:linear-gradient(120deg,var(--chill-bright),var(--caring));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero p.lead{font-size:clamp(18px,2.3vw,22px);color:rgba(240,238,255,.85);max-width:58ch;margin:32px 0 0;line-height:1.6;overflow-wrap:break-word}
+.hero p.lead strong{color:var(--text);font-weight:600}
+.scrollcue{margin-top:48px;display:inline-flex;align-items:center;gap:10px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.scrollcue .ln{width:42px;height:1px;background:linear-gradient(90deg,var(--muted),transparent)}
+
+/* thesis band */
+.thesis{padding-top:14px;padding-bottom:76px}
+.thesis .big{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:clamp(26px,4.3vw,46px);letter-spacing:-.035em;line-height:1.18;max-width:20ch}
+.thesis .big .hl{color:var(--text)}
+.thesis .big .dim{color:var(--muted)}
+.thesis .q{display:block;margin-top:22px;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:clamp(28px,5vw,52px);letter-spacing:-.04em;background:linear-gradient(120deg,var(--curious),var(--caring),var(--chill-bright));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+
+/* section heads */
+.sec-head{max-width:64ch}
+.sec-head h2{font-size:clamp(30px,5vw,52px);font-weight:800;letter-spacing:-.04em;margin:14px 0 0}
+.sec-head p{color:var(--muted);font-size:18px;margin-top:18px;line-height:1.6}
+.section-pad{padding-block:80px}
+
+/* value blocks */
+.values{margin-top:40px;display:flex;flex-direction:column;gap:20px}
+.value{background:var(--surface);border:1px solid var(--border);border-radius:22px;padding:34px;position:relative;overflow:hidden;transition:transform .25s,border-color .25s}
+.value:hover{transform:translateY(-4px)}
+.value::before{content:'';position:absolute;top:0;left:0;bottom:0;width:4px}
+.value .v-head{display:flex;align-items:center;gap:18px;margin-bottom:24px}
+.value .v-badge{width:50px;height:50px;border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.value .v-badge svg{width:26px;height:26px}
+.value .v-eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.value .v-head h3{font-size:clamp(22px,3vw,30px);font-weight:800;letter-spacing:-.03em;margin-top:5px}
+.value .v-num{margin-left:auto;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:46px;line-height:1;opacity:.16}
+.value .v-cols{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border-radius:14px;overflow:hidden}
+@media (max-width:680px){.value .v-cols{grid-template-columns:1fr}}
+.value .v-col{background:var(--surface);padding:22px 24px}
+.value .v-tag{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;display:inline-block;margin-bottom:10px}
+.value .v-col p{color:#cfcbe8;font-size:15px;line-height:1.62}
+.value .v-col p em{color:var(--text);font-style:normal;font-weight:600}
+.v-curious::before{background:var(--curious)} .v-curious .v-badge{background:var(--curious-dim);color:var(--curious)} .v-curious .v-head h3{color:var(--curious)} .v-curious .v-num{color:var(--curious)} .v-curious .v-tag{color:var(--curious)} .v-curious:hover{border-color:rgba(245,200,66,.35)}
+.v-constructive::before{background:var(--constructive)} .v-constructive .v-badge{background:var(--constructive-dim);color:var(--constructive)} .v-constructive .v-head h3{color:var(--constructive)} .v-constructive .v-num{color:var(--constructive)} .v-constructive .v-tag{color:var(--constructive)} .v-constructive:hover{border-color:rgba(0,229,160,.35)}
+.v-caring::before{background:var(--caring)} .v-caring .v-badge{background:var(--caring-dim);color:var(--caring)} .v-caring .v-head h3{color:var(--caring)} .v-caring .v-num{color:var(--caring)} .v-caring .v-tag{color:var(--caring)} .v-caring:hover{border-color:rgba(255,95,126,.35)}
+.v-chill::before{background:var(--chill)} .v-chill .v-badge{background:var(--chill-dim);color:var(--chill-bright)} .v-chill .v-head h3{color:var(--chill-bright)} .v-chill .v-num{color:var(--chill-bright)} .v-chill .v-tag{color:var(--chill-bright)} .v-chill:hover{border-color:rgba(123,108,255,.35)}
+
+/* pull quote */
+.pull{padding-block:80px}
+.pull .q{font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:clamp(26px,4.4vw,46px);letter-spacing:-.035em;line-height:1.2;max-width:22ch}
+.pull .q .u{color:var(--constructive)}
+.pull .by{margin-top:20px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+
+/* translate grid */
+.tgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:40px}
+@media (max-width:820px){.tgrid{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.tgrid{grid-template-columns:1fr}}
+.tcard{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:24px;transition:transform .25s,border-color .25s}
+.tcard:hover{transform:translateY(-5px);border-color:var(--border2)}
+.tcard .tn{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted)}
+.tcard h4{font-size:18px;font-weight:700;letter-spacing:-.02em;margin:10px 0 8px}
+.tcard p{color:var(--muted);font-size:14px;line-height:1.55}
+.tcard.t1 h4{color:var(--curious)} .tcard.t2 h4{color:var(--constructive)} .tcard.t3 h4{color:var(--caring)}
+.tcard.t4 h4{color:var(--chill-bright)} .tcard.t5 h4{color:var(--curious)} .tcard.t6 h4{color:var(--chill-bright)}
+
+/* builders band */
+.builders{margin-top:30px}
+.builders-card{background:linear-gradient(160deg,var(--surface2),var(--surface));border:1px solid var(--border2);border-radius:26px;padding:50px 44px;position:relative;overflow:hidden}
+.builders-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--constructive),var(--chill))}
+.builders-card .eyebrow{color:var(--constructive)}
+.builders-card h2{font-size:clamp(28px,4.5vw,44px);font-weight:800;letter-spacing:-.035em;margin:14px 0 0;max-width:18ch}
+.builders-card p.intro{color:var(--muted);font-size:17px;margin:18px 0 0;max-width:54ch;line-height:1.6}
+.guide-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:34px}
+@media (max-width:680px){.guide-grid{grid-template-columns:1fr}}
+.guide-card{display:block;text-decoration:none;color:inherit;background:var(--bg);border:1px solid var(--border);border-radius:18px;padding:28px;transition:transform .25s,border-color .25s,box-shadow .25s}
+.guide-card:hover{transform:translateY(-6px);box-shadow:0 18px 44px rgba(0,0,0,.45)}
+.guide-card .gc-ico{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:18px}
+.guide-card .gc-ico svg{width:23px;height:23px}
+.guide-card .gc-tag{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+.guide-card h3{font-size:23px;font-weight:700;letter-spacing:-.025em;margin:7px 0 9px}
+.guide-card p{color:var(--muted);font-size:14.5px;line-height:1.55}
+.guide-card .go{margin-top:16px;font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:14px}
+.gc-field .gc-ico{background:var(--constructive-dim);color:var(--constructive)} .gc-field:hover{border-color:rgba(0,229,160,.4)} .gc-field h3,.gc-field .go{color:var(--constructive)}
+.gc-pocket .gc-ico{background:var(--chill-dim);color:var(--chill-bright)} .gc-pocket:hover{border-color:rgba(123,108,255,.4)} .gc-pocket h3,.gc-pocket .go{color:var(--chill-bright)}
+.builders-note{margin-top:26px;font-size:13.5px;color:var(--muted);display:flex;gap:12px;align-items:flex-start}
+.builders-note .mono{color:var(--constructive)}
+
+/* guide-card buttons */
+.gc-btn{margin-top:20px}
+.btn-field{background:var(--constructive);color:#06241a}
+.btn-field:hover{transform:translateY(-3px);box-shadow:0 14px 34px rgba(0,229,160,.3)}
+.btn-pocket{background:var(--chill-bright);color:#161033}
+.btn-pocket:hover{transform:translateY(-3px);box-shadow:0 14px 34px rgba(123,108,255,.3)}
+
+/* audio / podcast */
+.audio-card{display:flex;gap:24px;align-items:center;background:linear-gradient(160deg,var(--surface2),var(--surface));border:1px solid var(--border2);border-radius:22px;padding:26px 30px;position:relative;overflow:hidden}
+.audio-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--chill),var(--caring))}
+.pp{width:64px;height:64px;border-radius:50%;flex-shrink:0;border:none;background:var(--chill-bright);color:#161033;display:flex;align-items:center;justify-content:center;transition:transform .2s,box-shadow .2s}
+.pp:hover{transform:scale(1.06);box-shadow:0 12px 30px rgba(123,108,255,.4)}
+.pp svg{width:26px;height:26px}
+.pp .i-pause{display:none}
+.pp.playing .i-play{display:none} .pp.playing .i-pause{display:block}
+.audio-body{flex:1;min-width:0}
+.audio-body .eyebrow{color:var(--chill-bright)}
+.audio-body h3{font-size:clamp(19px,2.6vw,25px);font-weight:800;letter-spacing:-.025em;margin:7px 0 14px;color:var(--text)}
+.player{display:flex;align-items:center;gap:14px}
+.abar{flex:1;height:7px;border-radius:99px;background:rgba(255,255,255,.1);position:relative;overflow:hidden}
+.afill{position:absolute;left:0;top:0;bottom:0;width:0;background:linear-gradient(90deg,var(--chill-bright),var(--caring));border-radius:99px}
+.atime{font-size:12px;color:var(--muted);white-space:nowrap}
+.audio-sub{color:var(--muted);font-size:13.5px;margin-top:13px}
+.audio-sub a{color:var(--chill-bright);text-decoration:none}
+.audio-sub a:hover{text-decoration:underline}
+@media(max-width:560px){.audio-card{flex-direction:column;align-items:flex-start;gap:18px;padding:24px}}
+
+/* cta */
+.cta{padding-top:60px;padding-bottom:90px}
+.cta-card{background:linear-gradient(150deg,var(--surface2),var(--surface));border:1px solid var(--border2);border-radius:26px;padding:54px 44px;text-align:center;position:relative;overflow:hidden}
+.cta-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--curious),var(--caring),var(--constructive),var(--chill))}
+.cta-card h2{font-size:clamp(26px,4.4vw,42px);font-weight:800;letter-spacing:-.035em;max-width:20ch;margin:0 auto}
+.cta-card p{color:var(--muted);font-size:17px;margin:16px auto 0;max-width:46ch}
+.cta-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:30px}
+.btn{display:inline-flex;align-items:center;gap:9px;padding:14px 28px;border-radius:var(--pill);font-family:'Bricolage Grotesque',sans-serif;font-weight:600;font-size:15px;text-decoration:none;transition:transform .2s,box-shadow .2s}
+.btn-primary{background:var(--constructive);color:#06241a}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 14px 34px rgba(0,229,160,.3)}
+.btn-ghost{background:transparent;color:var(--text);border:1.5px solid var(--border2)}
+.btn-ghost:hover{transform:translateY(-3px);border-color:var(--text)}
+
+footer{border-top:1px solid var(--border);padding:48px 0 60px;position:relative;z-index:2}
+.foot-inner{max-width:1080px;margin:0 auto;padding:0 28px;display:flex;flex-direction:column;gap:22px}
+.foot-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:24px}
+.foot-tag{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:24px;letter-spacing:-.03em;max-width:18ch}
+.foot-tag .c{color:var(--curious)} .foot-tag .b{color:var(--constructive)} .foot-tag .k{color:var(--caring)}
+.foot-links{display:flex;flex-direction:column;gap:8px;text-align:right}
+.foot-links a{color:var(--muted);text-decoration:none;font-size:14px;transition:color .2s}
+.foot-links a:hover{color:var(--text)}
+.foot-bottom{border-top:1px solid var(--border);padding-top:22px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;font-size:12.5px;color:var(--muted2)}
+.foot-bottom .mono{font-size:11.5px}
+
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .6s,transform .6s cubic-bezier(.34,1.56,.64,1)}
+.reveal.vis{opacity:1;transform:translateY(0)}
+
+@media (max-width:640px){
+  .wrap{padding:0 22px}
+  .nav-inner{padding:0 22px}
+  .hero{min-height:auto;padding-top:116px;padding-bottom:50px;justify-content:flex-start}
+  .hero h1{font-size:clamp(42px,13vw,72px)}
+  .hero p.lead{margin-top:22px;font-size:16.5px}
+  .section-pad{padding-block:58px}
+  .value{padding:26px 22px}
+  .value .v-num{font-size:36px}
+  .builders-card,.cta-card{padding:38px 24px}
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="ic-telescope" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="17" cy="13" r="3"/><path d="M3 7l5.5 2.5"/><path d="M3 7l2-4 14.5 6.5-2 4"/><path d="M8.5 9.5L6 20h5l1.5-4"/><path d="M17 16v4"/></symbol>
+  <symbol id="ic-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></symbol>
+  <symbol id="ic-hammer" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 12-8.5 8.5c-.83.83-2.17.83-3 0a2.12 2.12 0 0 1 0-3L12 9"/><path d="M17.64 15 22 10.64"/><path d="m20.91 11.7-1.25-1.25c-.6-.6-.93-1.4-.93-2.25v-.86L16.01 4.6a5.56 5.56 0 0 0-3.94-1.64H9l.92.82A6.18 6.18 0 0 1 12 8.4v1.56l2 2h2.47l2.26 1.91"/></symbol>
+  <symbol id="ic-waves" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/></symbol>
+  <symbol id="ic-cpu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M15 2v2M9 2v2M15 20v2M9 20v2M20 15h2M20 9h2M2 15h2M2 9h2"/></symbol>
+  <symbol id="ic-chip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v2M15 2v2M9 20v2M15 20v2M20 9h2M20 14h2M2 9h2M2 14h2"/></symbol>
+  <symbol id="ic-play" viewBox="0 0 24 24"><path d="M7 4.5v15a1 1 0 0 0 1.52.86l12-7.5a1 1 0 0 0 0-1.72l-12-7.5A1 1 0 0 0 7 4.5z" fill="currentColor"/></symbol>
+  <symbol id="ic-pause" viewBox="0 0 24 24"><rect x="6" y="4" width="4.4" height="16" rx="1.2" fill="currentColor"/><rect x="13.6" y="4" width="4.4" height="16" rx="1.2" fill="currentColor"/></symbol>
+</svg>
+
+<div class="glow-wrap" aria-hidden="true"><div class="gblob gb1"></div><div class="gblob gb2"></div><div class="gblob gb3"></div><div class="gblob gb4"></div></div>
+<div class="cursor-dot" id="cdot"></div>
+<div class="cursor-ring" id="cring"></div>
+
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="/" class="brand"><span class="markdots"><i></i><i></i><i></i><i></i></span><span class="wm">selfdriven<em>.you</em></span></a>
+    <a href="#builders" class="nav-cta">For builders →</a>
+  </div>
+</nav>
+
+<header class="hero wrap" id="top">
+  <span class="hero-pill"><span class="dot"></span>selfdriven.you · the idea behind the deck</span>
+  <h1>The deck is the <span class="g1">lesson</span>, not the <span class="g2">gadget</span>.</h1>
+  <p class="lead">A hand-built portable computer is a niche hobby. What it stands for — owning your tools, keeping your attention, making instead of only consuming — is for everyone living in the age of intelligence. <strong>You don't have to pick up a soldering iron to keep any of it.</strong></p>
+  <span class="scrollcue"><span class="ln"></span>what it really teaches</span>
+</header>
+
+<section class="thesis wrap">
+  <div class="reveal">
+    <p class="big"><span class="dim">A cyberdeck is just the most literal version of a question worth asking about almost everything you use:</span>
+    <span class="q">Do I own this, or does it own me?</span></p>
+  </div>
+</section>
+
+<section class="section-pad wrap" id="listen">
+  <div class="audio-card reveal">
+    <button class="pp" id="pp" aria-label="Play episode">
+      <svg class="i-play" viewBox="0 0 24 24"><use href="#ic-play"/></svg>
+      <svg class="i-pause" viewBox="0 0 24 24"><use href="#ic-pause"/></svg>
+    </button>
+    <div class="audio-body">
+      <div class="eyebrow">// listen · selfdriven.you podcast</div>
+      <h3>Reclaim your attention with DIY cyberdecks</h3>
+      <div class="player">
+        <div class="abar" id="abar"><div class="afill" id="afill"></div></div>
+        <span class="atime mono" id="atime">0:00 / —:—</span>
+      </div>
+      <p class="audio-sub">The whole idea, read aloud — agency, repair, and calm computing in the age of intelligence. <a href="/assets/audio/selfdriven-you-reclaim-your-attention-with-diy-cyberdecks.m4a" download>Download the episode ↓</a></p>
+      <audio id="aud" preload="metadata">
+        <source src="/assets/audio/selfdriven-you-reclaim-your-attention-with-diy-cyberdecks.m4a" type="audio/mp4">
+        Your browser doesn't support audio playback — <a href="/assets/audio/selfdriven-you-reclaim-your-attention-with-diy-cyberdecks.m4a">download the episode</a> instead.
+      </audio>
+    </div>
+  </div>
+</section>
+
+<section class="section-pad wrap">
+  <div class="sec-head reveal">
+    <span class="eyebrow">// four values, four modes</span>
+    <h2>The deck runs on the same four modes you do.</h2>
+    <p>selfdriven.you is built on four modes — Curious, Constructive, Caring, Chill. A cyberdeck happens to make each one visible in metal and plastic. Here's what the deck does, and what the same value looks like in a life with no workbench in it.</p>
+  </div>
+
+  <div class="values">
+    <div class="value v-curious reveal">
+      <div class="v-head">
+        <div class="v-badge"><svg><use href="#ic-telescope"/></svg></div>
+        <div><div class="v-eyebrow">Mode 01 · Curious</div><h3>Understand your tools</h3></div>
+        <div class="v-num">01</div>
+      </div>
+      <div class="v-cols">
+        <div class="v-col"><span class="v-tag">In the deck</span><p>The builder opens the case and learns every wire. Nothing inside is a mystery they're asked to simply trust.</p></div>
+        <div class="v-col"><span class="v-tag">In your life</span><p>You don't need the soldering iron — just the posture. <em>Ask how the things you use actually work, and who decided they'd work that way.</em> A sealed box is a quiet way of being managed; literacy is leverage.</p></div>
+      </div>
+    </div>
+
+    <div class="value v-constructive reveal">
+      <div class="v-head">
+        <div class="v-badge"><svg><use href="#ic-hammer"/></svg></div>
+        <div><div class="v-eyebrow">Mode 02 · Constructive</div><h3>Make, don't just consume</h3></div>
+        <div class="v-num">02</div>
+      </div>
+      <div class="v-cols">
+        <div class="v-col"><span class="v-tag">In the deck</span><p>It's assembled, not bought whole — accountable to the builder's choices, not a vendor's roadmap or next forced update.</p></div>
+        <div class="v-col"><span class="v-tag">In your life</span><p>Prefer tools you can shape over tools that shape you. <em>Make the thing, write the thing, fix the thing.</em> A life of only consuming is a life lived on someone else's defaults.</p></div>
+      </div>
+    </div>
+
+    <div class="value v-caring reveal">
+      <div class="v-head">
+        <div class="v-badge"><svg><use href="#ic-heart"/></svg></div>
+        <div><div class="v-eyebrow">Mode 03 · Caring</div><h3>Build it to last — and to share</h3></div>
+        <div class="v-num">03</div>
+      </div>
+      <div class="v-cols">
+        <div class="v-col"><span class="v-tag">In the deck</span><p>Standard parts, open plans, repair over replace. Builders publish what they learned so the next person starts further along.</p></div>
+        <div class="v-col"><span class="v-tag">In your life</span><p>Choose durable over disposable — in objects, skills, and relationships. <em>Leave things better documented than you found them.</em> Care is mostly just attention paid forward.</p></div>
+      </div>
+    </div>
+
+    <div class="value v-chill reveal">
+      <div class="v-head">
+        <div class="v-badge"><svg><use href="#ic-waves"/></svg></div>
+        <div><div class="v-eyebrow">Mode 04 · Chill</div><h3>Keep your attention</h3></div>
+        <div class="v-num">04</div>
+      </div>
+      <div class="v-cols">
+        <div class="v-col"><span class="v-tag">In the deck</span><p>There's no feed engineered to pull you back. The deck waits for you; it never competes for you. The constraint is the feature.</p></div>
+        <div class="v-col"><span class="v-tag">In your life</span><p>Pick tools that respect your attention instead of mining it. <em>A thing that does one job won't spend your day for you.</em> Calm is a design choice you're allowed to demand.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pull wrap narrow">
+  <div class="reveal">
+    <p class="q">The deck doesn't make you self-driven. It just makes a <span class="u">self-driven mindset</span> something you can see and hold.</p>
+    <div class="by">— the point</div>
+  </div>
+</section>
+
+<section class="section-pad wrap">
+  <div class="sec-head reveal">
+    <span class="eyebrow">// no workbench required</span>
+    <h2>Even if you never build one.</h2>
+    <p>Six small moves that carry every value of the deck — none of which need a single screw. Pick one this week.</p>
+  </div>
+  <div class="tgrid">
+    <div class="tcard t1 reveal"><div class="tn">curious</div><h4>Run a sealed-box audit</h4><p>Name three tools you use daily. Could you explain how each works, or leave it if you had to? Notice which ones own you.</p></div>
+    <div class="tcard t2 reveal"><div class="tn">constructive</div><h4>Make one finishable thing</h4><p>Something small you can complete this week — a page, a script, a shelf. Ship it rough. Consuming less, making a little, changes the ratio.</p></div>
+    <div class="tcard t3 reveal"><div class="tn">caring</div><h4>Repair instead of replace</h4><p>Fix one thing this month you'd normally bin — a jacket, a lamp, a habit. Durable is a choice you make over and over.</p></div>
+    <div class="tcard t4 reveal"><div class="tn">chill</div><h4>Keep one feed-free device</h4><p>A notebook, an e-reader, an old phone wiped clean. One surface in your life with nothing engineered to pull you back.</p></div>
+    <div class="tcard t5 reveal"><div class="tn">curious → caring</div><h4>Document one thing publicly</h4><p>Write down something you figured out, where a stranger can find it. The whole maker world runs on people who do this.</p></div>
+    <div class="tcard t6 reveal"><div class="tn">chill</div><h4>Choose the tool you can turn off</h4><p>When two options do the job, pick the one that lets you fully stop. "Off" being possible is a feature worth paying for.</p></div>
+  </div>
+</section>
+
+<section class="section-pad wrap" id="builders">
+  <div class="builders reveal">
+    <div class="builders-card">
+      <span class="eyebrow">// and if the metaphor starts to itch</span>
+      <h2>Some of you will reach for a soldering iron anyway.</h2>
+      <p class="intro">If reading all that made your hands restless, good — the deck stops being a metaphor and becomes a weekend. Two ways in, both full build guides with parts lists, assembly steps, and a software loadout. No prior electronics required, just curious and patient.</p>
+
+      <div class="guide-grid">
+        <div class="guide-card gc-field">
+          <div class="gc-ico"><svg><use href="#ic-cpu"/></svg></div>
+          <div class="gc-tag">Raspberry Pi 5 · rugged</div>
+          <h3>The Field Deck</h3>
+          <p>The full build — a Pi 5, 7" screen, mechanical keyboard, and a battery in a case you can take anywhere. A real portable workstation.</p>
+          <a href="/cyberdeck-build-guide" class="btn btn-field gc-btn">Open the build guide →</a>
+        </div>
+        <div class="guide-card gc-pocket">
+          <div class="gc-ico"><svg><use href="#ic-chip"/></svg></div>
+          <div class="gc-tag">Raspberry Pi Zero 2 W · pocket</div>
+          <h3>The Pocket Deck</h3>
+          <p>The palm-sized variant — a Zero 2 W terminal you carry like a notebook. Start it headless tonight; it sips power and runs for hours.</p>
+          <a href="/cyberdeck-pocket-build-guide" class="btn btn-pocket gc-btn">Open the build guide →</a>
+        </div>
+      </div>
+
+      <div class="builders-note">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--constructive);flex-shrink:0;margin-top:1px"><use href="#ic-hammer"/></svg>
+        <span>Both guides also ship as installable <span class="mono">.skill</span> packages, so this whole build system can travel with you and be extended later.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta wrap">
+  <div class="cta-card reveal">
+    <h2>Be curious. Make something. Keep your attention.</h2>
+    <p>You don't need the hardware to live the idea. Start with one move — the workbench is optional.</p>
+    <div class="cta-btns">
+      <a href="#top" class="btn btn-primary"><svg style="width:16px;height:16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><use href="#ic-waves"/></svg>Back to the top</a>
+      <a href="#builders" class="btn btn-ghost">I want to build one →</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-inner">
+    <div class="foot-top">
+      <div class="foot-tag">Be <span class="c">Curious</span>,<br>Be <span class="b">Constructive</span>,<br>Be <span class="k">Caring</span>.</div>
+      <div class="foot-links">
+        <a href="https://selfdriven.you">selfdriven.you</a>
+        <a href="#listen">Listen · podcast</a>
+        <a href="/cyberdeck-build-guide">Field Deck guide</a>
+        <a href="/cyberdeck-pocket-build-guide">Pocket Deck guide</a>
+        <a href="#top">↑ Back to top</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>A personal operating system for the age of intelligence.</span>
+      <span class="mono">curious · caring · constructive · chill</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+const nav=document.getElementById('nav');
+addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>30));
+const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('vis');io.unobserve(x.target);}}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+(function(){
+  var dot=document.getElementById('cdot'),ring=document.getElementById('cring');
+  var rx=0,ry=0,dx=0,dy=0;
+  document.addEventListener('mousemove',function(e){dx=e.clientX;dy=e.clientY;dot.style.left=dx+'px';dot.style.top=dy+'px';});
+  function loop(){rx+=(dx-rx)*.18;ry+=(dy-ry)*.18;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop);}
+  loop();
+  document.querySelectorAll('a,.value,.tcard,.guide-card,.pp,.btn').forEach(function(el){
+    el.addEventListener('mouseenter',function(){ring.style.width='52px';ring.style.height='52px';ring.style.borderColor='rgba(0,229,160,.55)';});
+    el.addEventListener('mouseleave',function(){ring.style.width='34px';ring.style.height='34px';ring.style.borderColor='rgba(240,238,255,.3)';});
+  });
+})();
+(function(){
+  var a=document.getElementById('aud'),pp=document.getElementById('pp'),
+      bar=document.getElementById('abar'),fill=document.getElementById('afill'),t=document.getElementById('atime');
+  if(!a||!pp) return;
+  function fmt(s){if(!isFinite(s)||s<0)return'—:—';s=Math.floor(s);var m=Math.floor(s/60),ss=(s%60).toString().padStart(2,'0');return m+':'+ss;}
+  pp.addEventListener('click',function(){a.paused?a.play():a.pause();});
+  a.addEventListener('play',function(){pp.classList.add('playing');});
+  a.addEventListener('pause',function(){pp.classList.remove('playing');});
+  a.addEventListener('loadedmetadata',function(){t.textContent='0:00 / '+fmt(a.duration);});
+  a.addEventListener('timeupdate',function(){var d=isFinite(a.duration)?a.duration:0;fill.style.width=(d?a.currentTime/d*100:0)+'%';t.textContent=fmt(a.currentTime)+' / '+fmt(d);});
+  a.addEventListener('ended',function(){pp.classList.remove('playing');fill.style.width='0';});
+  bar.addEventListener('click',function(e){var r=bar.getBoundingClientRect();if(isFinite(a.duration))a.currentTime=(e.clientX-r.left)/r.width*a.duration;});
+})();
+</script>
+</body>
+</html>
