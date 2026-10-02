@@ -1,9 +1,9 @@
-title: "selfdriven You"
-description: "selfdriven You"
+title: "selfdriven Build"
+description: "selfdriven Build"
 baseurl: ""
 url: ""
 context: "you"
-repo: "selfdriven-foundation/selfdriven-you"
+repo: "selfdriven-foundation/selfdriven-build"
 
 defaults:
   - scope:
