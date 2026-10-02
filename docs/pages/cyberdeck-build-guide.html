@@ -1,6 +1,6 @@
 ---
 layout: null
-title: Cyberdeck Build Guide - selfdriven You
+title: Cyberdeck Build Guide - selfdriven Build
 permalink: /cyberdeck-build-guide
 ---
 <!DOCTYPE html>
@@ -8,10 +8,10 @@ permalink: /cyberdeck-build-guide
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="icon" type="image/png" href="assets/img/selfdriven-logo-round-saffron-white.png">
-<link rel="shortcut icon" href="/assets/img/selfdriven-logo-round-saffron-white.png">
-<link rel="apple-touch-icon" href="/assets/img/selfdriven-logo-round-saffron-white.png" />
-<title>Build a Cyberdeck · selfdriven.you</title>
+<link rel="icon" type="image/png" href="/assets/img/selfdriven-build-logo-round-mint.png">
+<link rel="shortcut icon" href="/assets/img/selfdriven-build-logo-round-mint.png">
+<link rel="apple-touch-icon" href="/assets/img/selfdriven-build-logo-round-mint.png" />
+<title>Build a Cyberdeck · selfdriven.build</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -276,6 +276,7 @@ footer{border-top:1px solid var(--border);padding:48px 0 60px;position:relative;
 .reveal{opacity:0;transform:translateY(28px);transition:opacity .6s,transform .6s cubic-bezier(.34,1.56,.64,1)}
 .reveal.vis{opacity:1;transform:translateY(0)}
 </style>
+<style id="sdb-brand">.sdb-mark{width:30px;height:30px;border-radius:50%;display:block;flex:none;filter:drop-shadow(0 0 8px rgba(0,229,160,.35))}.sdb-brand em{color:#00e5a0!important}</style>
 </head>
 <body>
 
@@ -320,7 +321,7 @@ footer{border-top:1px solid var(--border);padding:48px 0 60px;position:relative;
 <!-- NAV -->
 <nav id="nav">
   <div class="nav-inner">
-    <a href="/" class="brand"><span class="markdots"><i></i><i></i><i></i><i></i></span><span class="wm">selfdriven<em>.you</em></span></a>
+    <a href="/" class="brand sdb-brand" aria-label="selfdriven.build home"><img class="sdb-mark" src="/assets/img/selfdriven-build-logo-round-mint.png" alt="" width="30" height="30"><span class="wm"><em>build</em></span></a>
     <div class="nav-pills">
       <a href="#plan" class="mode-pill mp-c"><svg><use href="#ic-telescope"/></svg><span>Plan</span></a>
       <a href="#build" class="mode-pill mp-b"><svg><use href="#ic-hammer"/></svg><span>Build</span></a>
@@ -332,7 +333,7 @@ footer{border-top:1px solid var(--border);padding:48px 0 60px;position:relative;
 
 <!-- HERO -->
 <header class="hero wrap" id="top">
-  <span class="hero-pill"><span class="dot"></span>selfdriven.you · build log · raspberry pi</span>
+  <span class="hero-pill"><span class="dot"></span>selfdriven.build · build log · raspberry pi</span>
   <h1>Build a <span class="build">cyberdeck.</span><br>Own your <span class="own">computer.</span></h1>
   <p class="lead">A field guide to building a portable, hand-made Raspberry&nbsp;Pi machine — a self-driven device for the age of intelligence. Tools you understand. Hardware you can open. Attention that stays yours.</p>
   <div class="jump-row">
@@ -714,6 +715,7 @@ ollama run llama3.2:3b                                  <span class="cm"># a sma
     <div class="foot-top">
       <div class="foot-tag">Be <span class="c">Curious</span>,<br>Be <span class="b">Constructive</span>,<br>Be <span class="k">Caring</span>.</div>
       <div class="foot-links">
+        <a href="/">selfdriven.build · all projects</a>
         <a href="/assets/skills/cyberdeck-field-deck.skill" download>Field Deck skill (.skill)</a>
         <a href="/assets/pdf/selfdriven-you-cyberdeck-field-manual.pdf" download>Field Manual (PDF)</a>
         <a href="/assets/pdf/selfdriven-you-the-cyberdeck-blueprint-manual.pdf" download>Blueprint Manual (PDF)</a>

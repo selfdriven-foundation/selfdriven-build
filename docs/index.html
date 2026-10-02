@@ -4,13 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>selfdriven.build · Be Constructive. Let&#x27;s Build!</title>
-<meta name="description" content="The workshop companion to selfdriven.you. Real build projects with parts lists, steps and the reason each one is worth making.">
+<meta name="description" content="The workshop companion to selfdriven.you. Build a cyberdeck, build your world block by block, and help keep the world&#x27;s networks honest.">
 <meta name="theme-color" content="#09090f"><meta name="color-scheme" content="dark">
 <link rel="canonical" href="https://selfdriven.build/">
 <meta property="og:type" content="website"><meta property="og:site_name" content="selfdriven.build">
-<meta property="og:title" content="selfdriven.build · Be Constructive. Let&#x27;s Build!"><meta property="og:description" content="The workshop companion to selfdriven.you. Real build projects with parts lists, steps and the reason each one is worth making."><meta property="og:url" content="https://selfdriven.build/">
+<meta property="og:title" content="selfdriven.build · Be Constructive. Let&#x27;s Build!"><meta property="og:description" content="The workshop companion to selfdriven.you. Build a cyberdeck, build your world block by block, and help keep the world&#x27;s networks honest."><meta property="og:url" content="https://selfdriven.build/">
 <meta name="twitter:card" content="summary">
-<link rel="icon" type="image/png" href="/assets/img/selfdriven-you-logo-round-4colour-blend.png">
+<link rel="icon" type="image/png" href="/assets/img/selfdriven-build-logo-round-mint.png">
+<link rel="apple-touch-icon" href="/assets/img/selfdriven-build-logo-round-mint.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -55,7 +56,7 @@ p{margin:0}
 .nav{position:fixed;top:0;left:0;right:0;z-index:50;padding-top:env(safe-area-inset-top,0px);background:var(--navbg);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid var(--border)}
 .nav-in{display:flex;align-items:center;gap:16px;height:64px}
 .brand{display:inline-flex;align-items:center;gap:11px;font-family:var(--f-display);font-weight:800;font-size:21px;letter-spacing:-.04em;text-decoration:none;white-space:nowrap}
-.brand img{width:34px;height:34px;border-radius:50%;filter:url(#mint-tone) drop-shadow(0 0 10px rgba(0,229,160,.35))}
+.brand img{width:34px;height:34px;border-radius:50%;filter:drop-shadow(0 0 10px rgba(0,229,160,.35))}
 .brand em{font-style:normal;color:var(--constructive)}
 .crumb{font-family:var(--f-mono);font-size:12px;color:var(--muted);letter-spacing:.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
 .crumb a{text-decoration:none}.crumb a:hover{color:var(--text)}
@@ -187,7 +188,7 @@ p{margin:0}
 
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
-  .gblob,.marquee-track,.hero-pill .dot,.d-caret{animation:none}
+  .gblob,.marquee-track,.hero-pill .dot,.d-caret,.px-beam,.v-pulse{animation:none}
   .reveal{transition:none}
   .mode-pill,.btn,.go .icon{transition:none}
 }
@@ -225,6 +226,57 @@ p{margin:0}
 .slot .h3{font-size:22px;margin-bottom:4px}
 @media (max-width:900px){.project{grid-template-columns:1fr}.project-art{border-left:0;border-top:1px solid var(--border);order:-1}.project-copy{padding:32px 26px}}
 @media (max-width:700px){.project-builds{grid-template-columns:1fr}.project-builds .plate+.plate{border-left:0;border-top:1px solid var(--border)}.plate{padding:26px}}
+
+/* project index */
+.pindex{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:20px;overflow:hidden;margin-bottom:28px}
+.pindex a{background:var(--surface);padding:18px 22px;text-decoration:none;display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:14px;row-gap:2px;align-items:center;transition:background .2s}
+.pindex a:hover{background:var(--surface2)}
+.pindex .serial{grid-row:span 2;align-self:center}
+.pindex b{font-family:var(--f-display);font-weight:700;font-size:19px;letter-spacing:-.02em}
+.pindex .pk{display:inline-flex;align-items:center;gap:7px;font-size:13px;color:var(--muted)}
+.pindex .pk .icon{color:var(--constructive);font-size:14px}
+@media (max-width:820px){.pindex{grid-template-columns:1fr}}
+.project+.project{margin-top:24px}
+.project{scroll-margin-top:90px}
+.project.flip{grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr)}
+.project.flip .project-copy{order:2}
+.project.flip .project-art{order:1;border-left:0;border-right:1px solid var(--border)}
+.project-copy .quote.q-c{border-left-color:var(--curious)}
+.project-copy .quote.q-l{border-left-color:var(--chill-bright)}
+.art-sky{background:linear-gradient(180deg,rgba(123,108,255,.10),transparent 70%)}
+.stations{grid-column:1/-1;order:3;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--border);list-style:none;margin:0;padding:0}
+.stations>a,.stations>li>a{display:flex;flex-direction:column;gap:6px;padding:24px 26px;text-decoration:none;height:100%;transition:background .2s;min-width:0}
+.stations>a:hover,.stations>li>a:hover{background:rgba(0,229,160,.035)}
+.stations>*+*{border-left:1px solid var(--border)}
+.stations .sk{font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--constructive)}
+.stations b{font-family:var(--f-display);font-weight:700;font-size:17px;letter-spacing:-.02em;line-height:1.25}
+.stations span:last-child{color:var(--muted);font-size:14.5px}
+.pnote{grid-column:1/-1;order:4;margin:0;padding:16px 26px;border-top:1px solid var(--border);font-size:13.5px;color:var(--muted);background:var(--bg)}
+@media (max-width:980px){.stations{grid-template-columns:repeat(2,minmax(0,1fr))}.stations>*:nth-child(3){border-left:0}.stations>*:nth-child(n+3){border-top:1px solid var(--border)}}
+@media (max-width:900px){.project.flip{grid-template-columns:1fr}.project.flip .project-copy{order:2}.project.flip .project-art{order:1;border-right:0;border-top:0}.project-art{border-top:0!important;border-bottom:1px solid var(--border)}}
+@media (max-width:560px){.stations{grid-template-columns:1fr}.stations>*+*{border-left:0;border-top:1px solid var(--border)}.stations>a,.stations>li>a{padding:20px 22px}.pnote{padding:14px 22px}}
+/* project 02 art: pixel tower */
+.px-svg{width:100%;height:auto;max-width:440px;shape-rendering:crispEdges}
+.px-hi{fill:rgba(255,255,255,.2)}.px-lo{fill:rgba(0,0,0,.32)}
+.px-beam{fill:var(--constructive);opacity:.55;animation:beam 2.4s ease-in-out infinite}
+@keyframes beam{50%{opacity:.25}}
+.px-lbl{fill:var(--muted);font-family:var(--f-mono);font-size:10.5px;letter-spacing:.04em;shape-rendering:auto}
+/* project 03 art: phone mesh */
+.v-svg{width:100%;height:auto;max-width:440px}
+.v-link{fill:none;stroke:rgba(0,229,160,.4);stroke-width:1.4;stroke-dasharray:4 5}
+.v-node{fill:var(--surface);stroke:var(--constructive);stroke-width:1.4}
+.v-phone{fill:var(--surface);stroke:var(--constructive);stroke-width:1.8}
+.v-screen{fill:var(--screen);stroke:var(--mat3);stroke-width:1}
+.v-bar{fill:var(--constructive)}.v-bar-o{fill:rgba(0,229,160,.25)}
+.v-txt{fill:var(--constructive);font-family:var(--f-mono);font-size:11.5px}
+.v-txt-m{fill:rgba(0,229,160,.55);font-family:var(--f-mono);font-size:11.5px}
+.v-txt-k{fill:var(--caring);font-family:var(--f-mono);font-size:11.5px}
+.v-chain{fill:var(--surface2);stroke:rgba(0,229,160,.5);stroke-width:1.2}
+.v-chain-l{stroke:rgba(0,229,160,.5);stroke-width:1.4}
+.v-lbl{fill:var(--muted);font-family:var(--f-mono);font-size:10.5px;letter-spacing:.04em}
+.v-pulse{fill:none;stroke:var(--constructive);stroke-width:1.2;opacity:.5;transform-origin:220px 150px;animation:vp 3s ease-out infinite}
+@keyframes vp{0%{transform:scale(.6);opacity:.55}100%{transform:scale(1.35);opacity:0}}
+.d-c2{fill:var(--curious)}.d-k2{fill:var(--caring)}.d-l2{fill:var(--chill-bright)}
 
 /* cycle */
 .cycle{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px;position:relative;list-style:none;margin:0;padding:0}
@@ -293,15 +345,6 @@ p{margin:0}
 <body id="top">
 <div class="cursor-dot" id="cdot"></div><div class="cursor-ring" id="cring"></div>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
-  <!-- Constructive tone: maps the 4-colour logo's luminance onto a mint ramp, alpha kept. -->
-  <filter id="mint-tone" color-interpolation-filters="sRGB" x="0" y="0" width="100%" height="100%">
-    <feColorMatrix type="matrix" values="0.2126 0.7152 0.0722 0 0  0.2126 0.7152 0.0722 0 0  0.2126 0.7152 0.0722 0 0  0 0 0 1 0"/>
-    <feComponentTransfer>
-      <feFuncR type="table" tableValues="0 0 0 0.55"/>
-      <feFuncG type="table" tableValues="0.06 0.45 0.898 1"/>
-      <feFuncB type="table" tableValues="0.04 0.32 0.627 0.86"/>
-    </feComponentTransfer>
-  </filter>
   <symbol id="ic-telescope" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="17" cy="13" r="3"/><path d="M3 7l5.5 2.5"/><path d="M3 7l2-4 14.5 6.5-2 4"/><path d="M8.5 9.5L6 20h5l1.5-4"/><path d="M17 16v4"/></symbol>
   <symbol id="ic-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></symbol>
   <symbol id="ic-hammer" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 12-8.5 8.5c-.83.83-2.17.83-3 0 0 0 0 0 0 0a2.12 2.12 0 0 1 0-3L12 9"/><path d="M17.64 15 22 10.64"/><path d="m20.91 11.7-1.25-1.25c-.6-.6-.93-1.4-.93-2.25v-.86L16.01 4.6a5.56 5.56 0 0 0-3.94-1.64H9l.92.82A6.18 6.18 0 0 1 12 8.4v1.56l2 2h2.47l2.26 1.91"/></symbol>
@@ -318,12 +361,15 @@ p{margin:0}
   <symbol id="ic-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
   <symbol id="ic-headphones" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"/></symbol>
   <symbol id="ic-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></symbol>
+  <symbol id="ic-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="20" x="5" y="2" rx="2"/><path d="M12 18h.01"/></symbol>
+  <symbol id="ic-blocks" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="13" width="8" height="8"/><rect x="13" y="13" width="8" height="8"/><rect x="8" y="3" width="8" height="8"/></symbol>
+  <symbol id="ic-cpu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M15 2v2M9 2v2M15 20v2M9 20v2M20 15h2M20 9h2M2 15h2M2 9h2"/></symbol>
 </svg>
 
 
 <nav class="nav" aria-label="Main">
   <div class="wrap nav-in">
-    <a class="brand" href="./"><img src="/assets/img/selfdriven-you-logo-round-4colour-blend.png" alt="" width="34" height="34" onerror="this.remove()"><span>selfdriven<em>.build</em></span></a>
+    <a class="brand" href="/"><img src="/assets/img/selfdriven-build-logo-round-mint.png" alt="" width="34" height="34"><span>selfdriven<em>.build</em></span></a>
     <div class="nav-links">
       <a href="#projects">Projects</a>
       <a href="#how">How a build runs</a>
@@ -341,7 +387,7 @@ p{margin:0}
     <span class="hero-pill"><span class="dot"></span>Mode 03 · Constructive<span class="pill-x"> · build · ship · move</span></span>
     <h1>Be Constructive.<span class="l2">Let's Build<span class="bang">!</span></span></h1>
     <div class="hero-sub">
-      <p class="lede"><b>selfdriven.you</b> is the rhythm: four modes for living a fully human life in the age of intelligence. <b>selfdriven.build</b> is the workbench for one of them. Real projects to make with your hands and your head, each with a parts list, the steps, and the reason it's worth building.</p>
+      <p class="lede"><b>selfdriven.you</b> is the rhythm: four modes for living a fully human life in the age of intelligence. <b>selfdriven.build</b> is the workbench for one of them. Real projects to make with your hands, your head and the devices you already own, each with the steps and the reason it's worth doing.</p>
       <div class="btn-row">
         <a class="btn btn-primary" href="#projects">See the projects <svg class="icon"><use href="#ic-arrow"/></svg></a>
         <a class="btn btn-ghost" href="#start">Start in 2 minutes</a>
@@ -365,16 +411,22 @@ p{margin:0}
     <div class="sec-head reveal">
       <span class="eyebrow">on the bench</span>
       <h2 class="h2">Projects you can <em>actually finish.</em></h2>
-      <p class="lede">Each project ships with the idea behind it, a full build guide, and an installable skill package, so the build can travel with you and grow later. No prior experience needed, just curiosity and patience.</p>
+      <p class="lede">Three projects on the bench: a computer you assemble, a world you build block by block, and a network you help keep honest. Each one starts small and runs on all four modes.</p>
     </div>
 
-    <article class="project reveal" aria-labelledby="p01">
+    <nav class="pindex reveal" aria-label="Projects on this page">
+      <a href="#p01"><span class="serial">01</span><b>Cyberdeck</b><span class="pk"><svg class="icon"><use href="#ic-cpu"/></svg>Hardware · a weekend</span></a>
+      <a href="#p02"><span class="serial">02</span><b>Build Your World</b><span class="pk"><svg class="icon"><use href="#ic-blocks"/></svg>Play · kids &amp; adults</span></a>
+      <a href="#p03"><span class="serial">03</span><b>Verify the Network</b><span class="pk"><svg class="icon"><use href="#ic-phone"/></svg>Phone · runs in the background</span></a>
+    </nav>
+
+    <article class="project reveal" id="p01" aria-labelledby="p01-h">
       <div class="project-copy">
         <div class="chips"><span class="serial">PROJECT 01</span><span class="tag t-b">Hardware</span><span class="tag">2 builds</span><span class="tag">Podcast</span></div>
-        <h3 class="h3" id="p01">Cyberdeck</h3>
+        <h3 class="h3" id="p01-h">Cyberdeck</h3>
         <p class="quote">The deck is the lesson, not the gadget.</p>
         <p class="d">A portable computer you assemble yourself. It stands for owning your tools, keeping your attention, and making instead of only consuming. You don't have to pick up a soldering iron to keep any of that, and if you do, the guides take you all the way.</p>
-        <div class="btn-row"><a class="btn btn-ghost" href="cyberdeck/">Read the idea <svg class="icon"><use href="#ic-arrow"/></svg></a><a class="btn btn-ghost" href="cyberdeck/#listen"><svg class="icon"><use href="#ic-headphones"/></svg>Listen</a></div>
+        <div class="btn-row"><a class="btn btn-ghost" href="/cyberdeck-the-idea">Read the idea <svg class="icon"><use href="#ic-arrow"/></svg></a><a class="btn btn-ghost" href="/cyberdeck-the-idea#listen"><svg class="icon"><use href="#ic-headphones"/></svg>Listen</a></div>
       </div>
       <div class="project-art"><div class="mat"></div><svg class="deck-svg" viewBox="0 0 440 336" role="img" aria-label="Line drawing of a hand-built cyberdeck: a hinged lid with a terminal screen above a keyboard, a four-colour battery gauge and a dial.">
   <path class="d-line" d="M338 40 362 10"/><circle class="d-knob" cx="363" cy="8" r="4"/>
@@ -398,7 +450,7 @@ p{margin:0}
   <text class="d-dimtxt" x="215" y="331" text-anchor="middle">FIELD DECK · SD-01·F</text>
 </svg></div>
       <div class="project-builds">
-        <a class="plate" href="cyberdeck/field-deck/">
+        <a class="plate" href="/cyberdeck-build-guide">
           <div class="plate-top"><div><span class="board">Raspberry Pi 5 · rugged</span><h3>Field Deck</h3></div><span class="serial">SD-01·F</span></div>
           <p>The full build: a Pi 5, 7″ touchscreen, mechanical keyboard and a battery, in a case you can take anywhere.</p>
           <dl class="specs">
@@ -409,24 +461,59 @@ p{margin:0}
           </dl>
           <span class="go">Open the build guide <svg class="icon"><use href="#ic-arrow"/></svg></span>
         </a>
-        <a class="plate" href="cyberdeck/pocket-deck/">
+        <a class="plate" href="/cyberdeck-pocket-build-guide">
           <div class="plate-top"><div><span class="board">Raspberry Pi Zero 2 W · pocket</span><h3>Pocket Deck</h3></div><span class="serial">SD-01·P</span></div>
           <p>The palm-sized variant: a terminal you carry like a notebook. Start it headless tonight; it sips power and runs for hours.</p>
           <dl class="specs">
             <div><dt>Time</dt><dd>An evening</dd></div>
             <div><dt>Cost</dt><dd>US$90–160</dd></div>
             <div><dt>Level</dt><dd>Curious + tidy</dd></div>
-            <div><dt>Screen</dt><dd>HDMI, e-ink or none</dd></div>
+            <div><dt>Soldering</dt><dd>A little</dd></div>
           </dl>
           <span class="go">Open the build guide <svg class="icon"><use href="#ic-arrow"/></svg></span>
         </a>
       </div>
     </article>
 
+    <article class="project flip reveal" id="p02" aria-labelledby="p02-h">
+      <div class="project-copy">
+        <div class="chips"><span class="serial">PROJECT 02</span><span class="tag t-c">Play</span><span class="tag">Kids &amp; adults</span><span class="tag">In the browser</span></div>
+        <h3 class="h3" id="p02-h">Build Your World</h3>
+        <p class="quote q-c">Nobody hands you a finished world.</p>
+        <p class="d">A blocky, playable page about becoming who you are by what you build. Mine the landscape, stack a five-layer tower from shelter to becoming, find ten crafting recipes, build what your life looks like when it's going well, then log off for real-world quests. Switch between kids and adults wording, and there's a guide for parents and educators.</p>
+        <div class="btn-row"><a class="btn btn-ghost" href="/build-your-world">Start building <svg class="icon"><use href="#ic-arrow"/></svg></a><a class="btn btn-ghost" href="/build-your-world?for=kids">Open the kids view</a></div>
+      </div>
+      <div class="project-art art-sky"><div class="mat"></div><svg class="px-svg" viewBox="0 0 440 336" role="img" aria-label="Pixel scene: a five-layer block tower with a light beam rising from it, a tree and a square sun."><rect x="332" y="34" width="48" height="48" fill="#f5c842"/><rect x="344" y="46" width="24" height="24" fill="#ffe08a"/><rect x="52" y="52" width="72" height="16" fill="rgba(240,238,255,.16)"/><rect x="68" y="40" width="40" height="12" fill="rgba(240,238,255,.16)"/><rect x="250" y="96" width="56" height="12" fill="rgba(240,238,255,.12)"/><rect x="0" y="264" width="24" height="24" fill="#6b4a2b"/><rect class="px-hi" x="0" y="264" width="24" height="4"/><rect class="px-hi" x="0" y="268" width="4" height="20"/><rect class="px-lo" x="0" y="284" width="24" height="4"/><rect class="px-lo" x="20" y="268" width="4" height="16"/><rect x="0" y="264" width="24" height="8" fill="#3f8a2a"/><rect x="0" y="272" width="24" height="3" fill="#2f6b1f"/><rect x="0" y="288" width="24" height="24" fill="#5a3d24"/><rect class="px-hi" x="0" y="288" width="24" height="4"/><rect class="px-hi" x="0" y="292" width="4" height="20"/><rect class="px-lo" x="0" y="308" width="24" height="4"/><rect class="px-lo" x="20" y="292" width="4" height="16"/><rect x="0" y="312" width="24" height="24" fill="#4a3220"/><rect class="px-hi" x="0" y="312" width="24" height="4"/><rect class="px-hi" x="0" y="316" width="4" height="20"/><rect class="px-lo" x="0" y="332" width="24" height="4"/><rect class="px-lo" x="20" y="316" width="4" height="16"/><rect x="24" y="264" width="24" height="24" fill="#6b4a2b"/><rect class="px-hi" x="24" y="264" width="24" height="4"/><rect class="px-hi" x="24" y="268" width="4" height="20"/><rect class="px-lo" x="24" y="284" width="24" height="4"/><rect class="px-lo" x="44" y="268" width="4" height="16"/><rect x="24" y="264" width="24" height="8" fill="#3f8a2a"/><rect x="24" y="272" width="24" height="3" fill="#2f6b1f"/><rect x="24" y="288" width="24" height="24" fill="#5a3d24"/><rect class="px-hi" x="24" y="288" width="24" height="4"/><rect class="px-hi" x="24" y="292" width="4" height="20"/><rect class="px-lo" x="24" y="308" width="24" height="4"/><rect class="px-lo" x="44" y="292" width="4" height="16"/><rect x="24" y="312" width="24" height="24" fill="#4a3220"/><rect class="px-hi" x="24" y="312" width="24" height="4"/><rect class="px-hi" x="24" y="316" width="4" height="20"/><rect class="px-lo" x="24" y="332" width="24" height="4"/><rect class="px-lo" x="44" y="316" width="4" height="16"/><rect x="48" y="264" width="24" height="24" fill="#6b4a2b"/><rect class="px-hi" x="48" y="264" width="24" height="4"/><rect class="px-hi" x="48" y="268" width="4" height="20"/><rect class="px-lo" x="48" y="284" width="24" height="4"/><rect class="px-lo" x="68" y="268" width="4" height="16"/><rect x="48" y="264" width="24" height="8" fill="#3f8a2a"/><rect x="48" y="272" width="24" height="3" fill="#2f6b1f"/><rect x="48" y="288" width="24" height="24" fill="#5a3d24"/><rect class="px-hi" x="48" y="288" width="24" height="4"/><rect class="px-hi" x="48" y="292" width="4" height="20"/><rect class="px-lo" x="48" y="308" width="24" height="4"/><rect class="px-lo" x="68" y="292" width="4" height="16"/><rect x="48" y="312" width="24" height="24" fill="#4a3220"/><rect class="px-hi" x="48" y="312" width="24" height="4"/><rect class="px-hi" x="48" y="316" width="4" height="20"/><rect class="px-lo" x="48" y="332" width="24" height="4"/><rect class="px-lo" x="68" y="316" width="4" height="16"/><rect x="72" y="264" width="24" height="24" fill="#6b4a2b"/><rect class="px-hi" x="72" y="264" width="24" height="4"/><rect class="px-hi" x="72" y="268" width="4" height="20"/><rect class="px-lo" x="72" y="284" width="24" height="4"/><rect class="px-lo" x="92" y="268" width="4" height="16"/><rect x="72" y="264" width="24" height="8" fill="#3f8a2a"/><rect x="72" y="272" width="24" height="3" fill="#2f6b1f"/><rect x="72" y="288" width="24" height="24" fill="#5a3d24"/><rect class="px-hi" x="72" y="288" width="24" height="4"/><rect class="px-hi" x="72" y="292" width="4" height="20"/><rect class="px-lo" x="72" y="308" width="24" height="4"/><rect class="px-lo" x="92" y="292" width="4" height="16"/><rect x="72" y="312" width="24" height="24" fill="#4a3220"/><rect class="px-hi" x="72" y="312" width="24" height="4"/><rect class="px-hi" x="72" y="316" width="4" height="20"/><rect class="px-lo" x="72" y="332" width="24" height="4"/><rect class="px-lo" x="92" y="316" width="4" height="16"/><rect x="96" y="264" width="24" height="24" fill="#6b4a2b"/><rect class="px-hi" x="96" y="264" width="24" height="4"/><rect class="px-hi" x="96" y="268" width="4" height="20"/><rect class="px-lo" x="96" y="284" width="24" height="4"/><rect class="px-lo" x="116" y="268" width="4" height="16"/><rect x="96" y="264" width="24" height="8" fill="#3f8a2a"/><rect x="96" y="272" width="24" height="3" fill="#2f6b1f"/><rect x="96" y="288" width="24" height="24" fill="#5a3d24"/><rect class="px-hi" x="96" y="288" width="24" height="4"/><rect class="px-hi" x="96" y="292" width="4" height="20"/><rect class="px-lo" x="96" y="308" width="24" height="4"/><rect class="px-lo" x="116" y="292" width="4" height="16"/><rect x="96" y="312" width="24" height="24" fill="#4a3220"/><rect class="px-hi" x="96" y="312" width="24" height="4"/><rect class="px-hi" x="96" y="316" width="4" height="20"/><rect class="px-lo" x="96" y="332" width="24" height="4"/><rect class="px-lo" x="116" y="316" width="4" height="16"/><rect x="120" y="264" width="24" height="24" fill="#6b4a2b"/><rect class="px-hi" x="120" y="264" width="24" height="4"/><rect class="px-hi" x="120" y="268" width="4" height="20"/><rect class="px-lo" x="120" y="284" width="24" height="4"/><rect class="px-lo" x="140" y="268" width="4" height="16"/><rect x="120" y="264" width="24" height="8" fill="#3f8a2a"/><rect x="120" y="272" width="24" height="3" fill="#2f6b1f"/><rect x="120" y="288" width="24" height="24" fill="#5a3d24"/><rect class="px-hi" x="120" y="288" width="24" height="4"/><rect class="px-hi" x="120" y="292" width="4" height="20"/><rect class="px-lo" x="120" y="308" width="24" height="4"/><rect class="px-lo" x="140" y="292" width="4" height="16"/><rect x="120" y="312" width="24" height="24" fill="#4a3220"/><rect class="px-hi" x="120" y="312" width="24" height="4"/><rect class="px-hi" x="120" y="316" width="4" height="20"/><rect class="px-lo" x="120" y="332" width="24" height="4"/><rect class="px-lo" x="140" y="316" width="4" height="16"/><rect x="144" y="264" width="24" height="24" fill="#6b4a2b"/><rect class="px-hi" x="144" y="264" width="24" height="4"/><rect class="px-hi" x="144" y="268" width="4" height="20"/><rect class="px-lo" x="144" y="284" width="24" height="4"/><rect class="px-lo" x="164" y="268" width="4" height="16"/><rect x="144" y="264" width="24" height="8" fill="#3f8a2a"/><rect x="144" y="272" width="24" height="3" fill="#2f6b1f"/><rect x="144" y="288" width="24" height="24" fill="#5a3d24"/><rect class="px-hi" x="144" y="288" width="24" height="4"/><rect class="px-hi" x="144" y="292" width="4" height="20"/><rect class="px-lo" x="144" y="308" width="24" height="4"/><rect class="px-lo" x="164" y="292" width="4" height="16"/><rect x="144" y="312" width="24" height="24" fill="#4a3220"/><rect class="px-hi" x="144" y="312" width="24" height="4"/><rect class="px-hi" x="144" y="316" width="4" height="20"/><rect class="px-lo" x="144" y="332" width="24" height="4"/><rect class="px-lo" x="164" y="316" width="4" height="16"/><rect x="168" y="264" width="24" height="24" fill="#6b4a2b"/><rect class="px-hi" x="168" y="264" width="24" height="4"/><rect class="px-hi" x="168" y="268" width="4" height="20"/><rect class="px-lo" x="168" y="284" width="24" height="4"/><rect class="px-lo" x="188" y="268" width="4" height="16"/><rect x="168" y="264" width="24" height="8" fill="#3f8a2a"/><rect x="168" y="272" width="24" height="3" fill="#2f6b1f"/><rect x="168" y="288" width="24" height="24" fill="#5a3d24"/><rect class="px-hi" x="168" y="288" width="24" height="4"/><rect class="px-hi" x="168" y="292" width="4" height="20"/><rect class="px-lo" x="168" y="308" width="24" height="4"/><rect class="px-lo" x="188" y="292" width="4" height="16"/><rect x="168" y="312" width="24" height="24" fill="#4a3220"/><rect class="px-hi" x="168" y="312" width="24" height="4"/><rect class="px-hi" x="168" y="316" width="4" height="20"/><rect class="px-lo" x="168" y="332" width="24" height="4"/><rect class="px-lo" x="188" y="316" width="4" height="16"/><rect x="192" y="264" width="24" height="24" fill="#6b4a2b"/><rect class="px-hi" x="192" y="264" width="24" height="4"/><rect class="px-hi" x="192" y="268" width="4" height="20"/><rect class="px-lo" x="192" y="284" width="24" height="4"/><rect class="px-lo" x="212" y="268" width="4" height="16"/><rect x="192" y="264" width="24" height="8" fill="#3f8a2a"/><rect x="192" y="272" width="24" height="3" fill="#2f6b1f"/><rect x="192" y="288" width="24" height="24" fill="#5a3d24"/><rect class="px-hi" x="192" y="288" width="24" height="4"/><rect class="px-hi" x="192" y="292" width="4" height="20"/><rect class="px-lo" x="192" y="308" width="24" height="4"/><rect class="px-lo" x="212" y="292" width="4" height="16"/><rect x="192" y="312" width="24" height="24" fill="#4a3220"/><rect class="px-hi" x="192" y="312" width="24" height="4"/><rect class="px-hi" x="192" y="316" width="4" height="20"/><rect class="px-lo" x="192" y="332" width="24" height="4"/><rect class="px-lo" x="212" y="316" width="4" height="16"/><rect x="216" y="264" width="24" height="24" fill="#6b4a2b"/><rect class="px-hi" x="216" y="264" width="24" height="4"/><rect class="px-hi" x="216" y="268" width="4" height="20"/><rect class="px-lo" x="216" y="284" width="24" height="4"/><rect class="px-lo" x="236" y="268" width="4" height="16"/><rect x="216" y="264" width="24" height="8" fill="#3f8a2a"/><rect x="216" y="272" width="24" height="3" fill="#2f6b1f"/><rect x="216" y="288" width="24" height="24" fill="#5a3d24"/><rect class="px-hi" x="216" y="288" width="24" height="4"/><rect class="px-hi" x="216" y="292" width="4" height="20"/><rect class="px-lo" x="216" y="308" width="24" height="4"/><rect class="px-lo" x="236" y="292" width="4" height="16"/><rect x="216" y="312" width="24" height="24" fill="#4a3220"/><rect class="px-hi" x="216" y="312" width="24" height="4"/><rect class="px-hi" x="216" y="316" width="4" height="20"/><rect class="px-lo" x="216" y="332" width="24" height="4"/><rect class="px-lo" x="236" y="316" width="4" height="16"/><rect x="240" y="264" width="24" height="24" fill="#6b4a2b"/><rect class="px-hi" x="240" y="264" width="24" height="4"/><rect class="px-hi" x="240" y="268" width="4" height="20"/><rect class="px-lo" x="240" y="284" width="24" height="4"/><rect class="px-lo" x="260" y="268" width="4" height="16"/><rect x="240" y="264" width="24" height="8" fill="#3f8a2a"/><rect x="240" y="272" width="24" height="3" fill="#2f6b1f"/><rect x="240" y="288" width="24" height="24" fill="#5a3d24"/><rect class="px-hi" x="240" y="288" width="24" height="4"/><rect class="px-hi" x="240" y="292" width="4" height="20"/><rect class="px-lo" x="240" y="308" width="24" height="4"/><rect class="px-lo" x="260" y="292" width="4" height="16"/><rect x="240" y="312" width="24" height="24" fill="#4a3220"/><rect class="px-hi" x="240" y="312" width="24" height="4"/><rect class="px-hi" x="240" y="316" width="4" height="20"/><rect class="px-lo" x="240" y="332" width="24" height="4"/><rect class="px-lo" x="260" y="316" width="4" height="16"/><rect x="264" y="264" width="24" height="24" fill="#6b4a2b"/><rect class="px-hi" x="264" y="264" width="24" height="4"/><rect class="px-hi" x="264" y="268" width="4" height="20"/><rect class="px-lo" x="264" y="284" width="24" height="4"/><rect class="px-lo" x="284" y="268" width="4" height="16"/><rect x="264" y="264" width="24" height="8" fill="#3f8a2a"/><rect x="264" y="272" width="24" height="3" fill="#2f6b1f"/><rect x="264" y="288" width="24" height="24" fill="#5a3d24"/><rect class="px-hi" x="264" y="288" width="24" height="4"/><rect class="px-hi" x="264" y="292" width="4" height="20"/><rect class="px-lo" x="264" y="308" width="24" height="4"/><rect class="px-lo" x="284" y="292" width="4" height="16"/><rect x="264" y="312" width="24" height="24" fill="#4a3220"/><rect class="px-hi" x="264" y="312" width="24" height="4"/><rect class="px-hi" x="264" y="316" width="4" height="20"/><rect class="px-lo" x="264" y="332" width="24" height="4"/><rect class="px-lo" x="284" y="316" width="4" height="16"/><rect x="288" y="264" width="24" height="24" fill="#6b4a2b"/><rect class="px-hi" x="288" y="264" width="24" height="4"/><rect class="px-hi" x="288" y="268" width="4" height="20"/><rect class="px-lo" x="288" y="284" width="24" height="4"/><rect class="px-lo" x="308" y="268" width="4" height="16"/><rect x="288" y="264" width="24" height="8" fill="#3f8a2a"/><rect x="288" y="272" width="24" height="3" fill="#2f6b1f"/><rect x="288" y="288" width="24" height="24" fill="#5a3d24"/><rect class="px-hi" x="288" y="288" width="24" height="4"/><rect class="px-hi" x="288" y="292" width="4" height="20"/><rect class="px-lo" x="288" y="308" width="24" height="4"/><rect class="px-lo" x="308" y="292" width="4" height="16"/><rect x="288" y="312" width="24" height="24" fill="#4a3220"/><rect class="px-hi" x="288" y="312" width="24" height="4"/><rect class="px-hi" x="288" y="316" width="4" height="20"/><rect class="px-lo" x="288" y="332" width="24" height="4"/><rect class="px-lo" x="308" y="316" width="4" height="16"/><rect x="312" y="264" width="24" height="24" fill="#6b4a2b"/><rect class="px-hi" x="312" y="264" width="24" height="4"/><rect class="px-hi" x="312" y="268" width="4" height="20"/><rect class="px-lo" x="312" y="284" width="24" height="4"/><rect class="px-lo" x="332" y="268" width="4" height="16"/><rect x="312" y="264" width="24" height="8" fill="#3f8a2a"/><rect x="312" y="272" width="24" height="3" fill="#2f6b1f"/><rect x="312" y="288" width="24" height="24" fill="#5a3d24"/><rect class="px-hi" x="312" y="288" width="24" height="4"/><rect class="px-hi" x="312" y="292" width="4" height="20"/><rect class="px-lo" x="312" y="308" width="24" height="4"/><rect class="px-lo" x="332" y="292" width="4" height="16"/><rect x="312" y="312" width="24" height="24" fill="#4a3220"/><rect class="px-hi" x="312" y="312" width="24" height="4"/><rect class="px-hi" x="312" y="316" width="4" height="20"/><rect class="px-lo" x="312" y="332" width="24" height="4"/><rect class="px-lo" x="332" y="316" width="4" height="16"/><rect x="336" y="264" width="24" height="24" fill="#6b4a2b"/><rect class="px-hi" x="336" y="264" width="24" height="4"/><rect class="px-hi" x="336" y="268" width="4" height="20"/><rect class="px-lo" x="336" y="284" width="24" height="4"/><rect class="px-lo" x="356" y="268" width="4" height="16"/><rect x="336" y="264" width="24" height="8" fill="#3f8a2a"/><rect x="336" y="272" width="24" height="3" fill="#2f6b1f"/><rect x="336" y="288" width="24" height="24" fill="#5a3d24"/><rect class="px-hi" x="336" y="288" width="24" height="4"/><rect class="px-hi" x="336" y="292" width="4" height="20"/><rect class="px-lo" x="336" y="308" width="24" height="4"/><rect class="px-lo" x="356" y="292" width="4" height="16"/><rect x="336" y="312" width="24" height="24" fill="#4a3220"/><rect class="px-hi" x="336" y="312" width="24" height="4"/><rect class="px-hi" x="336" y="316" width="4" height="20"/><rect class="px-lo" x="336" y="332" width="24" height="4"/><rect class="px-lo" x="356" y="316" width="4" height="16"/><rect x="360" y="264" width="24" height="24" fill="#6b4a2b"/><rect class="px-hi" x="360" y="264" width="24" height="4"/><rect class="px-hi" x="360" y="268" width="4" height="20"/><rect class="px-lo" x="360" y="284" width="24" height="4"/><rect class="px-lo" x="380" y="268" width="4" height="16"/><rect x="360" y="264" width="24" height="8" fill="#3f8a2a"/><rect x="360" y="272" width="24" height="3" fill="#2f6b1f"/><rect x="360" y="288" width="24" height="24" fill="#5a3d24"/><rect class="px-hi" x="360" y="288" width="24" height="4"/><rect class="px-hi" x="360" y="292" width="4" height="20"/><rect class="px-lo" x="360" y="308" width="24" height="4"/><rect class="px-lo" x="380" y="292" width="4" height="16"/><rect x="360" y="312" width="24" height="24" fill="#4a3220"/><rect class="px-hi" x="360" y="312" width="24" height="4"/><rect class="px-hi" x="360" y="316" width="4" height="20"/><rect class="px-lo" x="360" y="332" width="24" height="4"/><rect class="px-lo" x="380" y="316" width="4" height="16"/><rect x="384" y="264" width="24" height="24" fill="#6b4a2b"/><rect class="px-hi" x="384" y="264" width="24" height="4"/><rect class="px-hi" x="384" y="268" width="4" height="20"/><rect class="px-lo" x="384" y="284" width="24" height="4"/><rect class="px-lo" x="404" y="268" width="4" height="16"/><rect x="384" y="264" width="24" height="8" fill="#3f8a2a"/><rect x="384" y="272" width="24" height="3" fill="#2f6b1f"/><rect x="384" y="288" width="24" height="24" fill="#5a3d24"/><rect class="px-hi" x="384" y="288" width="24" height="4"/><rect class="px-hi" x="384" y="292" width="4" height="20"/><rect class="px-lo" x="384" y="308" width="24" height="4"/><rect class="px-lo" x="404" y="292" width="4" height="16"/><rect x="384" y="312" width="24" height="24" fill="#4a3220"/><rect class="px-hi" x="384" y="312" width="24" height="4"/><rect class="px-hi" x="384" y="316" width="4" height="20"/><rect class="px-lo" x="384" y="332" width="24" height="4"/><rect class="px-lo" x="404" y="316" width="4" height="16"/><rect x="408" y="264" width="24" height="24" fill="#6b4a2b"/><rect class="px-hi" x="408" y="264" width="24" height="4"/><rect class="px-hi" x="408" y="268" width="4" height="20"/><rect class="px-lo" x="408" y="284" width="24" height="4"/><rect class="px-lo" x="428" y="268" width="4" height="16"/><rect x="408" y="264" width="24" height="8" fill="#3f8a2a"/><rect x="408" y="272" width="24" height="3" fill="#2f6b1f"/><rect x="408" y="288" width="24" height="24" fill="#5a3d24"/><rect class="px-hi" x="408" y="288" width="24" height="4"/><rect class="px-hi" x="408" y="292" width="4" height="20"/><rect class="px-lo" x="408" y="308" width="24" height="4"/><rect class="px-lo" x="428" y="292" width="4" height="16"/><rect x="408" y="312" width="24" height="24" fill="#4a3220"/><rect class="px-hi" x="408" y="312" width="24" height="4"/><rect class="px-hi" x="408" y="316" width="4" height="20"/><rect class="px-lo" x="408" y="332" width="24" height="4"/><rect class="px-lo" x="428" y="316" width="4" height="16"/><rect x="432" y="264" width="24" height="24" fill="#6b4a2b"/><rect class="px-hi" x="432" y="264" width="24" height="4"/><rect class="px-hi" x="432" y="268" width="4" height="20"/><rect class="px-lo" x="432" y="284" width="24" height="4"/><rect class="px-lo" x="452" y="268" width="4" height="16"/><rect x="432" y="264" width="24" height="8" fill="#3f8a2a"/><rect x="432" y="272" width="24" height="3" fill="#2f6b1f"/><rect x="432" y="288" width="24" height="24" fill="#5a3d24"/><rect class="px-hi" x="432" y="288" width="24" height="4"/><rect class="px-hi" x="432" y="292" width="4" height="20"/><rect class="px-lo" x="432" y="308" width="24" height="4"/><rect class="px-lo" x="452" y="292" width="4" height="16"/><rect x="432" y="312" width="24" height="24" fill="#4a3220"/><rect class="px-hi" x="432" y="312" width="24" height="4"/><rect class="px-hi" x="432" y="316" width="4" height="20"/><rect class="px-lo" x="432" y="332" width="24" height="4"/><rect class="px-lo" x="452" y="316" width="4" height="16"/><rect x="88" y="240" width="24" height="24" fill="#7a5230"/><rect class="px-hi" x="88" y="240" width="24" height="4"/><rect class="px-hi" x="88" y="244" width="4" height="20"/><rect class="px-lo" x="88" y="260" width="24" height="4"/><rect class="px-lo" x="108" y="244" width="4" height="16"/><rect x="88" y="216" width="24" height="24" fill="#7a5230"/><rect class="px-hi" x="88" y="216" width="24" height="4"/><rect class="px-hi" x="88" y="220" width="4" height="20"/><rect class="px-lo" x="88" y="236" width="24" height="4"/><rect class="px-lo" x="108" y="220" width="4" height="16"/><rect x="88" y="192" width="24" height="24" fill="#7a5230"/><rect class="px-hi" x="88" y="192" width="24" height="4"/><rect class="px-hi" x="88" y="196" width="4" height="20"/><rect class="px-lo" x="88" y="212" width="24" height="4"/><rect class="px-lo" x="108" y="196" width="4" height="16"/><rect x="64" y="168" width="24" height="24" fill="#2f8a3a"/><rect class="px-hi" x="64" y="168" width="24" height="4"/><rect class="px-hi" x="64" y="172" width="4" height="20"/><rect class="px-lo" x="64" y="188" width="24" height="4"/><rect class="px-lo" x="84" y="172" width="4" height="16"/><rect x="88" y="168" width="24" height="24" fill="#2f8a3a"/><rect class="px-hi" x="88" y="168" width="24" height="4"/><rect class="px-hi" x="88" y="172" width="4" height="20"/><rect class="px-lo" x="88" y="188" width="24" height="4"/><rect class="px-lo" x="108" y="172" width="4" height="16"/><rect x="112" y="168" width="24" height="24" fill="#2f8a3a"/><rect class="px-hi" x="112" y="168" width="24" height="4"/><rect class="px-hi" x="112" y="172" width="4" height="20"/><rect class="px-lo" x="112" y="188" width="24" height="4"/><rect class="px-lo" x="132" y="172" width="4" height="16"/><rect x="64" y="144" width="24" height="24" fill="#2f8a3a"/><rect class="px-hi" x="64" y="144" width="24" height="4"/><rect class="px-hi" x="64" y="148" width="4" height="20"/><rect class="px-lo" x="64" y="164" width="24" height="4"/><rect class="px-lo" x="84" y="148" width="4" height="16"/><rect x="88" y="144" width="24" height="24" fill="#2f8a3a"/><rect class="px-hi" x="88" y="144" width="24" height="4"/><rect class="px-hi" x="88" y="148" width="4" height="20"/><rect class="px-lo" x="88" y="164" width="24" height="4"/><rect class="px-lo" x="108" y="148" width="4" height="16"/><rect x="112" y="144" width="24" height="24" fill="#2f8a3a"/><rect class="px-hi" x="112" y="144" width="24" height="4"/><rect class="px-hi" x="112" y="148" width="4" height="20"/><rect class="px-lo" x="112" y="164" width="24" height="4"/><rect class="px-lo" x="132" y="148" width="4" height="16"/><rect x="88" y="120" width="24" height="24" fill="#2f8a3a"/><rect class="px-hi" x="88" y="120" width="24" height="4"/><rect class="px-hi" x="88" y="124" width="4" height="20"/><rect class="px-lo" x="88" y="140" width="24" height="4"/><rect class="px-lo" x="108" y="124" width="4" height="16"/><rect x="196" y="240" width="24" height="24" fill="#5c5c6a"/><rect class="px-hi" x="196" y="240" width="24" height="4"/><rect class="px-hi" x="196" y="244" width="4" height="20"/><rect class="px-lo" x="196" y="260" width="24" height="4"/><rect class="px-lo" x="216" y="244" width="4" height="16"/><rect x="220" y="240" width="24" height="24" fill="#5c5c6a"/><rect class="px-hi" x="220" y="240" width="24" height="4"/><rect class="px-hi" x="220" y="244" width="4" height="20"/><rect class="px-lo" x="220" y="260" width="24" height="4"/><rect class="px-lo" x="240" y="244" width="4" height="16"/><rect x="196" y="216" width="24" height="24" fill="#b07b45"/><rect class="px-hi" x="196" y="216" width="24" height="4"/><rect class="px-hi" x="196" y="220" width="4" height="20"/><rect class="px-lo" x="196" y="236" width="24" height="4"/><rect class="px-lo" x="216" y="220" width="4" height="16"/><rect x="220" y="216" width="24" height="24" fill="#b07b45"/><rect class="px-hi" x="220" y="216" width="24" height="4"/><rect class="px-hi" x="220" y="220" width="4" height="20"/><rect class="px-lo" x="220" y="236" width="24" height="4"/><rect class="px-lo" x="240" y="220" width="4" height="16"/><rect x="196" y="192" width="24" height="24" fill="#ff5f7e"/><rect class="px-hi" x="196" y="192" width="24" height="4"/><rect class="px-hi" x="196" y="196" width="4" height="20"/><rect class="px-lo" x="196" y="212" width="24" height="4"/><rect class="px-lo" x="216" y="196" width="4" height="16"/><rect x="220" y="192" width="24" height="24" fill="#ff5f7e"/><rect class="px-hi" x="220" y="192" width="24" height="4"/><rect class="px-hi" x="220" y="196" width="4" height="20"/><rect class="px-lo" x="220" y="212" width="24" height="4"/><rect class="px-lo" x="240" y="196" width="4" height="16"/><rect x="196" y="168" width="24" height="24" fill="#7b6cff"/><rect class="px-hi" x="196" y="168" width="24" height="4"/><rect class="px-hi" x="196" y="172" width="4" height="20"/><rect class="px-lo" x="196" y="188" width="24" height="4"/><rect class="px-lo" x="216" y="172" width="4" height="16"/><rect x="220" y="168" width="24" height="24" fill="#7b6cff"/><rect class="px-hi" x="220" y="168" width="24" height="4"/><rect class="px-hi" x="220" y="172" width="4" height="20"/><rect class="px-lo" x="220" y="188" width="24" height="4"/><rect class="px-lo" x="240" y="172" width="4" height="16"/><rect x="196" y="144" width="24" height="24" fill="#f5c842"/><rect class="px-hi" x="196" y="144" width="24" height="4"/><rect class="px-hi" x="196" y="148" width="4" height="20"/><rect class="px-lo" x="196" y="164" width="24" height="4"/><rect class="px-lo" x="216" y="148" width="4" height="16"/><rect x="220" y="144" width="24" height="24" fill="#f5c842"/><rect class="px-hi" x="220" y="144" width="24" height="4"/><rect class="px-hi" x="220" y="148" width="4" height="20"/><rect class="px-lo" x="220" y="164" width="24" height="4"/><rect class="px-lo" x="240" y="148" width="4" height="16"/><rect class="px-beam" x="210" y="0" width="20" height="144"/><rect x="300" y="236" width="6" height="28" fill="#7a5230"/><rect x="298" y="226" width="10" height="10" fill="#f5c842"/><rect x="352" y="248" width="4" height="16" fill="#2f8a3a"/><rect x="346" y="236" width="16" height="12" fill="#ff5f7e"/><rect x="350" y="240" width="8" height="4" fill="#ffe08a"/></svg></div>
+      <div class="stations">
+        <a href="/build-your-world#tower"><span class="sk">The tower</span><b>Survive the first night. Then build upward.</b><span>Five layers, one at a time.</span></a>
+        <a href="/build-your-world#craft"><span class="sk">Crafting table</span><b>Combine what you've got.</b><span>Ten recipes to discover.</span></a>
+        <a href="/build-your-world#build"><span class="sk">The builder</span><b>Every block means something.</b><span>Read what your world says, then share a link.</span></a>
+        <a href="/build-your-world#grownups"><span class="sk">Parents &amp; educators</span><b>Talk about the build, not the screen time.</b><span>A 45-minute session plan.</span></a>
+      </div>
+    </article>
+
+    <article class="project reveal" id="p03" aria-labelledby="p03-h">
+      <div class="project-copy">
+        <div class="chips"><span class="serial">PROJECT 03</span><span class="tag t-l">Network</span><span class="tag">Your phone</span><span class="tag">selfdriven.tel</span></div>
+        <h3 class="h3" id="p03-h">Verify the Network</h3>
+        <p class="quote q-l">Your phone can help keep the world's networks honest.</p>
+        <p class="d">Instead of trusting carriers to grade their own homework, a mesh of ordinary phones checks coverage in real time and logs every check on-chain. Run the Unity app as a licence operator on a phone you already own, or one sitting in a drawer, and earn a share of network revenue for it. A small, real enterprise you set up once and keep running.</p>
+        <div class="btn-row"><a class="btn btn-ghost" href="/verify-the-network">See how it works <svg class="icon"><use href="#ic-arrow"/></svg></a><a class="btn btn-ghost" href="https://www.selfdriven.tel/become-an-operator">Become an operator <svg class="icon"><use href="#ic-out"/></svg></a></div>
+      </div>
+      <div class="project-art"><div class="mat"></div><svg class="v-svg" viewBox="0 0 440 336" role="img" aria-label="Line drawing of a phone running verification checks against four other phones, with each check added to a chain of blocks below."><circle class="v-pulse" cx="220" cy="150" r="118"/><path class="v-link" d="M220 150 L70 70"/><path class="v-link" d="M220 150 L370 62"/><path class="v-link" d="M220 150 L62 228"/><path class="v-link" d="M220 150 L378 226"/><rect class="v-node" x="55" y="44" width="30" height="52" rx="6"/><rect class="v-screen" x="60" y="51" width="20" height="32" rx="2"/><circle class="d-c2" cx="70" cy="89" r="2.6"/><rect class="v-node" x="355" y="36" width="30" height="52" rx="6"/><rect class="v-screen" x="360" y="43" width="20" height="32" rx="2"/><circle class="d-k2" cx="370" cy="81" r="2.6"/><rect class="v-node" x="47" y="202" width="30" height="52" rx="6"/><rect class="v-screen" x="52" y="209" width="20" height="32" rx="2"/><circle class="d-l2" cx="62" cy="247" r="2.6"/><rect class="v-node" x="363" y="200" width="30" height="52" rx="6"/><rect class="v-screen" x="368" y="207" width="20" height="32" rx="2"/><circle class="d-b" cx="378" cy="245" r="2.6"/><rect class="v-phone" x="168" y="44" width="104" height="196" rx="16"/><rect class="v-screen" x="178" y="62" width="84" height="150" rx="6"/><rect class="v-node" x="208" y="51" width="24" height="5" rx="2.5"/><rect class="v-bar" x="190" y="92" width="6" height="10" rx="1"/><rect class="v-bar" x="200" y="86" width="6" height="16" rx="1"/><rect class="v-bar" x="210" y="80" width="6" height="22" rx="1"/><rect class="v-bar" x="220" y="74" width="6" height="28" rx="1"/><rect class="v-bar-o" x="230" y="74" width="6" height="28" rx="1"/><text class="v-txt" x="188" y="126">VERIFY</text><text class="v-txt-m" x="188" y="150">#24 <tspan class="v-txt">ok</tspan></text><text class="v-txt-m" x="188" y="170">#25 <tspan class="v-txt">ok</tspan></text><text class="v-txt-m" x="188" y="190">#26 <tspan class="v-txt-k">fault</tspan></text><circle class="v-node" cx="220" cy="226" r="6"/><rect class="v-chain" x="110" y="272" width="34" height="24" rx="4"/><rect class="v-chain" x="156" y="272" width="34" height="24" rx="4"/><path class="v-chain-l" d="M144 284h12"/><rect class="v-chain" x="202" y="272" width="34" height="24" rx="4"/><path class="v-chain-l" d="M190 284h12"/><rect class="v-chain" x="248" y="272" width="34" height="24" rx="4"/><path class="v-chain-l" d="M236 284h12"/><rect class="v-chain" x="294" y="272" width="34" height="24" rx="4"/><path class="v-chain-l" d="M282 284h12"/><path class="v-link" d="M220 240 V272"/><text class="v-lbl" x="220" y="320" text-anchor="middle">EVERY CHECK LOGGED ON-CHAIN</text></svg></div>
+      <ol class="stations steps4">
+        <li><a href="/verify-the-network#how"><span class="sk">Step 01</span><b>Get your operator code</b><span>Fill in the short expression of interest form.</span></a></li>
+        <li><a href="/verify-the-network#how"><span class="sk">Step 02</span><b>Install the Unity app</b><span>Android or iOS, everyday phone or an old one.</span></a></li>
+        <li><a href="/verify-the-network#how"><span class="sk">Step 03</span><b>Run it</b><span>Enter your code, sign in, leave it running.</span></a></li>
+        <li><a href="/verify-the-network#how"><span class="sk">Step 04</span><b>Get rewarded</b><span>Paid in UP tokens (1 UP = 1 USD).</span></a></li>
+      </ol>
+      <p class="pnote">No activation credits are required right now. Later, keeping the app running is expected to cost about US$2 a month (to be confirmed), taken from rewards. The app shows the current terms before you commit.</p>
+    </article>
+
     <div class="slot reveal">
       <div class="l">
         <span class="plus"><svg class="icon"><use href="#ic-plus"/></svg></span>
-        <div><span class="serial">PROJECT 02</span><h3 class="h3" style="margin-top:10px">The next bench space is open.</h3><p>Built something others could make? selfdriven.build grows one finished, documented project at a time. Activators help shape what comes next.</p></div>
+        <div><span class="serial">PROJECT 04</span><h3 class="h3" style="margin-top:10px">The next bench space is open.</h3><p>Built something others could make? selfdriven.build grows one finished, documented project at a time. Activators help shape what comes next.</p></div>
       </div>
       <a class="btn btn-ghost" href="https://selfdriven.you/activators">Become an Activator <svg class="icon"><use href="#ic-out"/></svg></a>
     </div>
@@ -438,18 +525,18 @@ p{margin:0}
     <div class="sec-head reveal">
       <span class="eyebrow">how a build runs</span>
       <h2 class="h2">One project. <em>All four modes.</em></h2>
-      <p class="lede">Constructive leads here, but no build runs on it alone. Every guide on selfdriven.build moves through the same four phases, one for each mode.</p>
+      <p class="lede">Constructive leads here, but no project runs on it alone. Each one moves through the same four phases, one for each mode.</p>
     </div>
     <ol class="cycle reveal">
-      <li class="step s-c"><span class="node"><svg class="icon"><use href="#ic-telescope"/></svg></span><span class="k">01 · Curious</span><h3 class="h3">Plan it</h3><p>Understand what you're making and why. Pick a shape, choose the parts, learn what's inside before you trust it.</p></li>
-      <li class="step s-b"><span class="node"><svg class="icon"><use href="#ic-hammer"/></svg></span><span class="k">02 · Constructive</span><h3 class="h3">Build it</h3><p>Parts list, assembly, software loadout. Ship a rough version first. It gets better once it exists.</p></li>
+      <li class="step s-c"><span class="node"><svg class="icon"><use href="#ic-telescope"/></svg></span><span class="k">01 · Curious</span><h3 class="h3">Plan it</h3><p>Understand what you're making and why. Pick a shape, learn what's inside before you trust it.</p></li>
+      <li class="step s-b"><span class="node"><svg class="icon"><use href="#ic-hammer"/></svg></span><span class="k">02 · Constructive</span><h3 class="h3">Build it</h3><p>The parts, the steps or the setup. Ship a rough version first. It gets better once it exists.</p></li>
       <li class="step s-k"><span class="node"><svg class="icon"><use href="#ic-heart"/></svg></span><span class="k">03 · Caring</span><h3 class="h3">Tend it</h3><p>Keep it healthy, repair before you replace, and give back what you learned so the next builder starts further along.</p></li>
       <li class="step s-l"><span class="node"><svg class="icon"><use href="#ic-waves"/></svg></span><span class="k">04 · Chill</span><h3 class="h3">Live with it</h3><p>Use the thing. A tool that does one job and waits for you is a calm tool. That was the point all along.</p></li>
     </ol>
     <div class="ships reveal">
-      <div><svg class="icon"><use href="#ic-file"/></svg><p><b>The idea</b><span>Why it matters in a life, for people who never pick up a tool.</span></p></div>
-      <div><svg class="icon"><use href="#ic-hammer"/></svg><p><b>The build guide</b><span>Parts, steps and software, written for first-timers.</span></p></div>
-      <div><svg class="icon"><use href="#ic-package"/></svg><p><b>The .skill package</b><span>The whole build system, installable, so it travels and extends.</span></p></div>
+      <div><svg class="icon"><use href="#ic-file"/></svg><p><b>The idea</b><span>Why it matters in a life, even if you never build it.</span></p></div>
+      <div><svg class="icon"><use href="#ic-hammer"/></svg><p><b>The how-to</b><span>Parts, steps or setup, written for first-timers.</span></p></div>
+      <div><svg class="icon"><use href="#ic-check"/></svg><p><b>A first small step</b><span>Something you can start tonight, sized so starting is easy.</span></p></div>
     </div>
   </div>
 </section>
@@ -499,7 +586,7 @@ p{margin:0}
     <p class="big reveal">Let's<br><span>build.</span></p>
     <div class="reveal" style="max-width:420px">
       <p class="lede" style="margin:0 0 22px">Pick a project. Shrink the first step. Start before you feel ready.</p>
-      <div class="btn-row"><a class="btn btn-primary" href="cyberdeck/">Open the Cyberdeck <svg class="icon"><use href="#ic-arrow"/></svg></a><a class="btn btn-ghost" href="#top"><svg class="icon"><use href="#ic-up"/></svg>Top</a></div>
+      <div class="btn-row"><a class="btn btn-primary" href="#projects">Pick a project <svg class="icon"><use href="#ic-arrow"/></svg></a><a class="btn btn-ghost" href="#top"><svg class="icon"><use href="#ic-up"/></svg>Top</a></div>
     </div>
   </div>
 </section>
@@ -508,16 +595,18 @@ p{margin:0}
   <div class="wrap">
     <div class="foot-grid">
       <div>
-        <a class="brand" href="./"><img src="/assets/img/selfdriven-you-logo-round-4colour-blend.png" alt="" width="34" height="34" onerror="this.remove()"><span>selfdriven<em>.build</em></span></a>
+        <a class="brand" href="/"><img src="/assets/img/selfdriven-build-logo-round-mint.png" alt="" width="34" height="34"><span>selfdriven<em>.build</em></span></a>
         <p class="sign"><span class="b">Be Constructive.</span><span>Let's Build!</span></p>
-        <p class="foot-note">The workshop companion to selfdriven.you. Real projects to make, with the reason each one is worth making.</p>
+        <p class="foot-note">The workshop companion to selfdriven.you. Real projects to make, with the reason each one is worth doing.</p>
       </div>
       <div>
         <h4>Projects</h4>
         <ul>
-          <li><a href="cyberdeck/">Cyberdeck · the idea</a></li>
-          <li><a href="cyberdeck/field-deck/">Field Deck build guide</a></li>
-          <li><a href="cyberdeck/pocket-deck/">Pocket Deck build guide</a></li>
+          <li><a href="/cyberdeck-the-idea">Cyberdeck · the idea</a></li>
+          <li><a href="/cyberdeck-build-guide">Field Deck build guide</a></li>
+          <li><a href="/cyberdeck-pocket-build-guide">Pocket Deck build guide</a></li>
+          <li><a href="/build-your-world">Build Your World</a></li>
+          <li><a href="/verify-the-network">Verify the Network</a></li>
         </ul>
       </div>
       <div>
@@ -526,6 +615,7 @@ p{margin:0}
           <li><a href="https://selfdriven.you">selfdriven.you</a></li>
           <li><a href="https://selfdriven.you/where-you-at">Where you at?</a></li>
           <li><a href="https://selfdriven.you/activators">Become an Activator</a></li>
+          <li><a href="https://www.selfdriven.tel">selfdriven.tel</a></li>
           <li><a href="https://selfdriven.shop">selfdriven merch</a></li>
           <li><a href="https://selfdriven.foundation">selfdriven Foundation</a></li>
         </ul>

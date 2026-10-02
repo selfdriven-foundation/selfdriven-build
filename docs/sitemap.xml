@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://selfdriven.build/</loc><lastmod>2026-10-02</lastmod></url>
-  <url><loc>https://selfdriven.build/cyberdeck/</loc><lastmod>2026-10-02</lastmod></url>
-  <url><loc>https://selfdriven.build/cyberdeck/field-deck/</loc><lastmod>2026-10-02</lastmod></url>
-  <url><loc>https://selfdriven.build/cyberdeck/pocket-deck/</loc><lastmod>2026-10-02</lastmod></url>
+  <url><loc>https://selfdriven.build/</loc><lastmod>2026-10-03</lastmod></url>
+  <url><loc>https://selfdriven.build/cyberdeck-the-idea</loc><lastmod>2026-10-03</lastmod></url>
+  <url><loc>https://selfdriven.build/cyberdeck-build-guide</loc><lastmod>2026-10-03</lastmod></url>
+  <url><loc>https://selfdriven.build/cyberdeck-pocket-build-guide</loc><lastmod>2026-10-03</lastmod></url>
+  <url><loc>https://selfdriven.build/build-your-world</loc><lastmod>2026-10-03</lastmod></url>
+  <url><loc>https://selfdriven.build/verify-the-network</loc><lastmod>2026-10-03</lastmod></url>
 </urlset>

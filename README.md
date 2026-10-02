@@ -1,54 +1,69 @@
 # selfdriven.build
 
-**Be Constructive. Let's Build!** The workshop companion to [selfdriven.you](https://selfdriven.you): real projects to make, each with the idea behind it, a full build guide, and an installable `.skill` package.
+**Be Constructive. Let's Build!** The workshop companion to [selfdriven.you](https://selfdriven.you): real projects to make, each with the idea behind it, the how-to, and a first small step.
 
-Every page is a single self-contained HTML file in the selfdriven.you dark 4Cs system (Bricolage Grotesque, DM Sans, JetBrains Mono), led by Constructive mint `#00e5a0`.
+The site is the Jekyll source in `docs/`, deployed to GitHub Pages by `docs/_workflows/jekyll-gh-pages.yml`. Pages use the selfdriven.you dark 4Cs system (Bricolage Grotesque, DM Sans, JetBrains Mono), led by Constructive mint `#00e5a0`, with the mint logo in every header.
+
+## Projects
+
+| # | Project | URL | Source |
+|---|---------|-----|--------|
+| 01 | Cyberdeck · the idea | `/cyberdeck-the-idea` | `docs/pages/cyberdeck-the-idea.html` |
+| 01 | Field Deck build guide | `/cyberdeck-build-guide` | `docs/pages/cyberdeck-build-guide.html` |
+| 01 | Pocket Deck build guide | `/cyberdeck-pocket-build-guide` | `docs/pages/cyberdeck-pocket-build-guide.html` |
+| 02 | Build Your World | `/build-your-world` | `docs/pages/build-your-world.html` |
+| 03 | Verify the Network | `/verify-the-network` | `docs/pages/verify-the-network.html` |
+
+Project pages are self-contained HTML with `layout: null` and a `permalink` in their front matter.
 
 ## Layout
 
 ```
-index.html                 Home: projects, how a build runs, why build, start now
-cyberdeck/index.html       Project 01, the idea (was selfdriven.you/cyberdeck-the-idea)
-cyberdeck/field-deck/      Field Deck guide   ← copied in by tools/migrate-cyberdeck.mjs
-cyberdeck/pocket-deck/     Pocket Deck guide  ← copied in by tools/migrate-cyberdeck.mjs
-assets/                    audio, pdf, skills, img ← copied in by the script
-404.html  CNAME  .nojekyll  robots.txt  sitemap.xml
-tools/migrate-cyberdeck.mjs
+docs/
+  index.html          Home: project index, the three project cards, how a build runs, why build, start now
+  404.html            Not-found page
+  pages/              Project pages (front matter sets the permalink)
+  assets/img/         selfdriven-build-logo-round-mint.png (header + favicon) and the selfdriven.you logos
+  assets/audio/       Cyberdeck podcast episode, ESP32 episode
+  assets/pdf/         Cyberdeck Field Manual, Blueprint Manual
+  assets/skills/      cyberdeck-field-deck.skill, cyberdeck-pocket-deck.skill
+  sitemap.xml  robots.txt  CNAME  _config.yml  _layouts/  _well-known/  _workflows/
 ```
 
-## Moving the cyberdeck over from selfdriven.you
+## Header
 
-The two build guides and their downloads still live in the selfdriven.you repo. One script moves them:
-
-```bash
-node tools/migrate-cyberdeck.mjs --you ../selfdriven.you            # dry run, prints every change
-node tools/migrate-cyberdeck.mjs --you ../selfdriven.you --apply    # writes it
-```
-
-| Old (selfdriven.you)            | New (selfdriven.build)    |
-|---------------------------------|---------------------------|
-| `/cyberdeck-the-idea`           | `/cyberdeck/`             |
-| `/cyberdeck-build-guide`        | `/cyberdeck/field-deck/`  |
-| `/cyberdeck-pocket-build-guide` | `/cyberdeck/pocket-deck/` |
-
-It copies the guides (links rewritten, nav wordmark switched to `.build`, canonical and og:url updated), copies every `/assets/` file the selfdriven.build pages reference, replaces the three old pages with redirect stubs that keep the `#anchor`, repoints the "Build a cyberdeck" footer link and any other links on selfdriven.you, and drops the old URLs from its `sitemap.xml`. Asset originals stay on selfdriven.you so existing download links keep working. Re-running is safe.
-
-Then commit both repos. Optional: add a companion link to the selfdriven.you footer next to "Build a cyberdeck":
+Every page header and the home footer use the mint logo followed by the word `build`, linking to `/`:
 
 ```html
-<a href="https://selfdriven.build">Be Constructive → selfdriven.build</a>
+<a href="/" class="brand" aria-label="selfdriven.build home"><img src="/assets/img/selfdriven-build-logo-round-mint.png" alt="" width="30" height="30"><span><em>build</em></span></a>
 ```
 
-## Going live on GitHub Pages
-
-1. Settings → Pages → deploy from the default branch, root folder. Custom domain `selfdriven.build` (the `CNAME` file is included), then Enforce HTTPS.
-2. DNS: apex `A` records `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`; `www` as a `CNAME` to `<owner>.github.io`.
+`build` is Constructive mint (`#00e5a0`). Project pages carry a small `<style id="sdb-brand">` block for the logo size and glow.
 
 ## Adding a project
 
-1. Copy `cyberdeck/index.html` to `<project>/index.html`. Sections: hero → listen (optional) → four modes → no-workbench moves → builds (`#builders`) → closing.
-2. On `index.html`, duplicate the `<article class="project">` block in `#projects`, set its serial (`PROJECT 02`), and keep the dashed "next bench space" slot last.
-3. Build guides run Plan it (Curious) → Build it (Constructive) → Tend it (Caring) → Live with it (Chill) and ship a `.skill` package in `assets/skills/`.
-4. Add the new URLs to `sitemap.xml`.
+1. Add `docs/pages/<slug>.html` with front matter `layout: null`, `title`, `permalink: /<slug>`, using the header above and a `selfdriven.build · all projects` link in the footer.
+2. On `docs/index.html`, add a row to the `.pindex` strip and a `<article class="project">` card in `#projects` (alternate `project flip` for art-left). Number it, and move the dashed "next bench space" slot to the next number.
+3. Add the URL to `docs/sitemap.xml`.
+
+## Moving pages off selfdriven.you
+
+The cyberdeck pages and Verify the Network still exist on selfdriven.you at the same paths. Once selfdriven.build is live, replace each one in `selfdriven-you/docs/pages/` with a redirect that keeps its permalink:
+
+```html
+---
+layout: null
+permalink: /cyberdeck-build-guide
+---
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<link rel="canonical" href="https://selfdriven.build/cyberdeck-build-guide">
+<meta name="robots" content="noindex, follow">
+<meta http-equiv="refresh" content="0; url=https://selfdriven.build/cyberdeck-build-guide">
+<script>location.replace('https://selfdriven.build/cyberdeck-build-guide' + location.hash)</script>
+</head><body><a href="https://selfdriven.build/cyberdeck-build-guide">This page moved to selfdriven.build</a></body></html>
+```
+
+Then point the "Build a cyberdeck" link in the selfdriven.you footer at `https://selfdriven.build/cyberdeck-the-idea`.
 
 CC BY 4.0, selfdriven Foundation.
