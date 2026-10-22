@@ -1,0 +1,541 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>TrialThread</title>
+<meta name="description" content="The TrialThread story in one animated scene: the problem a CRA lives with, and the observed, signed answer a board can buy.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* Layout: one cinematic isometric stage up top that plays the 8-frame storyboard; the storyboard itself below as a contact sheet. */
+:root{
+  --bg:#F6F4EE; --surface:#FFFFFF; --surface-2:#EFEDE6; --ink:#2A2522; --muted:#6E6963; --line:#E2DFD7;
+  --accent:#DE5A31; --accent-soft:#F8E1D7; --human:#2E6F9E; --human-soft:#DCE8F3;
+  --ok:#2F7D55; --ok-soft:#DCEFE4; --warn:#B7791F; --bad:#B23A2E; --bad-soft:#F5DCD8;
+  --stage:#EEEBE3; --blk:#FBFAF6; --blk-2:#D9D4C9; --wall:#E6E0D4; --wood:#C9B8A0; --cool:#5B7A99; --leaf:#7FA27F;
+  --f-display:"Poppins",system-ui,sans-serif; --f-mono:"JetBrains Mono",ui-monospace,monospace;
+  --shadow:0 1px 2px rgba(42,37,34,.06),0 10px 30px rgba(42,37,34,.08); --radius:16px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#15110E; --surface:#1F1A16; --surface-2:#29231E; --ink:#EFEAE0; --muted:#A79F94; --line:#3A322B;
+    --accent:#F07A4F; --accent-soft:#3E241A; --human:#6FA9D6; --human-soft:#1B2C3A;
+    --ok:#5DBB88; --ok-soft:#1C3328; --warn:#E0A84A; --bad:#E57366; --bad-soft:#3D1F1B;
+    --stage:#1C1814; --blk:#3A332C; --blk-2:#2C2620; --wall:#332C25; --wood:#5C4C3A; --cool:#3F5B78; --leaf:#4F7A57;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.3); color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#15110E; --surface:#1F1A16; --surface-2:#29231E; --ink:#EFEAE0; --muted:#A79F94; --line:#3A322B;
+  --accent:#F07A4F; --accent-soft:#3E241A; --human:#6FA9D6; --human-soft:#1B2C3A;
+  --ok:#5DBB88; --ok-soft:#1C3328; --warn:#E0A84A; --bad:#E57366; --bad-soft:#3D1F1B;
+  --stage:#1C1814; --blk:#3A332C; --blk-2:#2C2620; --wall:#332C25; --wood:#5C4C3A; --cool:#3F5B78; --leaf:#4F7A57;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.3); color-scheme:dark;
+}
+*{box-sizing:border-box}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--bg)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-display);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:var(--accent)}
+h1,h2,h3{line-height:1.15;margin:0 0 .4em;font-weight:600;letter-spacing:-.015em;text-wrap:balance}
+h2{font-size:clamp(1.5rem,3vw,2.1rem)}
+p{margin:0 0 1em}
+.wrap{max-width:1200px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.eyebrow{font-size:.76rem;text-transform:uppercase;letter-spacing:.14em;color:var(--accent);font-weight:600;margin-bottom:.5em}
+.lede{font-size:1.05rem;color:var(--muted);max-width:66ch}
+.btn{cursor:pointer;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:8px 15px;border-radius:999px;font:500 .86rem var(--f-display);transition:border-color .2s,color .2s,background .2s;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.primary:hover{color:#fff;filter:brightness(1.05)}
+
+nav.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+nav.top .wrap{display:flex;align-items:center;gap:12px;min-height:58px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;font-weight:600;margin-right:auto}
+#themeBtn{width:36px;height:36px;padding:0;justify-content:center}
+
+/* hero */
+.intro{padding-block:44px 18px;display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap}
+.intro h1{font-size:clamp(2rem,5vw,3.4rem);letter-spacing:-.03em;margin:0}
+.intro h1 em{font-style:normal;color:var(--accent)}
+.intro p{margin:.4em 0 0;color:var(--muted);max-width:56ch}
+.stagebox{position:relative;border-radius:22px;overflow:hidden;background:var(--stage);border:1px solid var(--line);box-shadow:var(--shadow)}
+#stage{display:block;width:100%;max-width:100%;aspect-ratio:1200/620;height:auto}
+.cap{position:absolute;left:0;right:0;bottom:0;padding:18px 22px 16px;background:linear-gradient(to top,color-mix(in srgb,var(--stage) 96%,transparent) 55%,transparent);display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;align-items:end;pointer-events:none}
+.cap .fn{font:500 .74rem var(--f-mono);color:var(--accent);letter-spacing:.06em}
+.cap .ct{font-size:clamp(1.05rem,2.6vw,1.9rem);font-weight:600;letter-spacing:-.02em;line-height:1.15;text-wrap:balance}
+.cap .bq{font-size:.82rem;color:var(--muted);margin-top:4px}
+.cap .side{pointer-events:auto;display:flex;gap:6px}
+.cap .side .btn{background:var(--surface)}
+.chips{display:flex;gap:6px;padding:12px 0 0}
+.chips button{flex:1;min-width:0;border:none;background:none;padding:6px 0 0;cursor:pointer;text-align:left;color:var(--muted);font:500 .7rem var(--f-display);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chips button i{display:block;height:4px;border-radius:99px;background:var(--line);margin-bottom:6px;overflow:hidden;position:relative}
+.chips button i b{position:absolute;inset:0;background:var(--accent);transform-origin:left;transform:scaleX(0)}
+.chips button.done i b{transform:scaleX(1)}
+.chips button.cur{color:var(--ink)}
+.chips button:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+@media (max-width:640px){.chips button{font-size:0}.cap{position:static;background:var(--surface);border-top:1px solid var(--line)}}
+
+/* svg text */
+#stage text,.thumb text{font-family:var(--f-display)}
+.lbl{font-size:13px;font-weight:600;fill:var(--ink)}
+.lbl-s{font-size:11px;font-weight:500;fill:var(--muted)}
+.mono{font-family:var(--f-mono)!important}
+
+/* storyboard */
+section{padding-block:72px;border-top:1px solid var(--line)}
+.sheet{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:26px}
+@media (max-width:1000px){.sheet{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.sheet{grid-template-columns:1fr}}
+.frame{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;min-width:0}
+.frame .thumb{display:block;width:100%;aspect-ratio:1200/620;background:var(--stage);cursor:pointer;border-bottom:1px solid var(--line)}
+.frame .fb{padding:14px 16px 16px;display:flex;flex-direction:column;gap:8px;flex:1}
+.frame .fno{font:500 .72rem var(--f-mono);color:var(--accent)}
+.frame h3{font-size:1rem;margin:0}
+.frame .vo{font-size:.82rem;color:var(--muted);margin:0}
+.frame .q{font-size:.76rem;background:var(--surface-2);border-radius:8px;padding:6px 9px;margin-top:auto}
+.frame .q b{color:var(--ink)}
+.arc{display:grid;grid-template-columns:repeat(8,1fr);gap:4px;margin-top:22px;font-size:.72rem;color:var(--muted);text-align:center}
+.arc span{padding:6px 2px;border-radius:6px;background:var(--surface-2)}
+.arc span.turn{background:var(--accent);color:#fff;font-weight:600}
+@media (max-width:640px){.arc{grid-template-columns:repeat(4,1fr)}}
+
+.prompts{display:grid;gap:10px;margin-top:20px}
+.prompt{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.prompt .n{font:500 .8rem var(--f-mono);color:var(--accent);padding-top:2px}
+.prompt p{margin:0;font-size:.85rem}
+.prompt .btn{padding:5px 11px;font-size:.76rem}
+.styleline{font:400 .8rem var(--f-mono);background:var(--surface-2);border:1px dashed var(--line);border-radius:12px;padding:12px 14px;margin-top:14px}
+.roadmap{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:22px}
+@media (max-width:760px){.roadmap{grid-template-columns:1fr}}
+.step{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px}
+.step .tag{font:500 .72rem var(--f-mono);color:var(--muted)}
+.step.now{border-color:var(--accent)}
+.step.now .tag{color:var(--accent)}
+.step h3{font-size:1rem;margin:.3em 0}
+.step p{font-size:.84rem;color:var(--muted);margin:0}
+.go{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:22px}
+@media (max-width:640px){.go{grid-template-columns:1fr}}
+.go a{display:block;text-decoration:none;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px;transition:border-color .2s,transform .2s}
+.go a:hover{border-color:var(--accent);transform:translateY(-2px)}
+.go a h3{font-size:1.1rem}
+.go a p{font-size:.86rem;color:var(--muted);margin:0}
+footer{padding-block:40px 56px;color:var(--muted);font-size:.8rem;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<nav class="top"><div class="wrap">
+  <div class="brand"><svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><circle cx="13" cy="13" r="12" fill="none" stroke="var(--accent)" stroke-width="2"/><path d="M4 16 C9 6, 17 20, 22 9" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round"/></svg>TrialThread</div>
+  <a class="btn" href="#storyboard">Storyboard</a>
+  <a class="btn" href="trialthread-plan.html" target="_blank" rel="noopener">The plan ↗</a>
+  <a class="btn" href="areas-of-focus/02-enablement/workings/trialthread-observer-app.html" target="_blank" rel="noopener">The Observer app ↗</a>
+  <button class="btn" id="themeBtn" aria-label="Toggle colour theme">◐</button>
+</div></nav>
+
+<header class="wrap">
+  <div class="intro">
+    <div>
+      <div class="eyebrow">For presidents, CEOs and heads of clinical operations</div>
+      <h1>Every trial runs on trust. <em>Now you can prove it.</em></h1>
+      <p>48 seconds, eight frames: the problem your CRAs live with, and the observed, signed answer you can put in front of a regulator.</p>
+    </div>
+  </div>
+  <div class="stagebox">
+    <svg id="stage" viewBox="0 0 1200 620" role="img" aria-label="Animated storyboard of the TrialThread story"></svg>
+    <div class="cap" aria-live="polite">
+      <div><div class="fn" id="capN"></div><div class="ct" id="capT"></div><div class="bq" id="capQ"></div></div>
+      <div class="side"><button class="btn" id="bPrev" aria-label="Previous frame">◀</button><button class="btn" id="bPlay" aria-label="Pause">❚❚</button><button class="btn" id="bNext" aria-label="Next frame">▶</button></div>
+    </div>
+  </div>
+  <div class="chips" id="chips"></div>
+</header>
+
+<section id="storyboard"><div class="wrap">
+  <div class="eyebrow">Storyboard</div>
+  <h2>Four frames of problem, four of answer.</h2>
+  <p class="lede">Each frame answers one question a buyer asks. The turn lands at the midpoint: the tangle becomes a thread. Click a frame to play it above.</p>
+  <div class="arc" aria-label="Story arc"><span>trust</span><span>overload</span><span>hidden risk</span><span>consequence</span><span class="turn">the turn</span><span>coverage</span><span>judgement</span><span>proof &amp; ask</span></div>
+  <div class="sheet" id="sheet"></div>
+</div></section>
+
+<section id="imagery"><div class="wrap">
+  <div class="eyebrow">Imagery roadmap</div>
+  <h2>Vector now. Generated later, on the same storyboard.</h2>
+  <p class="lede">The scenes above are drawn in code: simple isometric blocks, no image costs. When the story has been tested with a buyer, the same eight frames move to generated images, then to video. The prompts are ready below.</p>
+  <div class="roadmap">
+    <div class="step now"><div class="tag">NOW · free</div><h3>Isometric vector scenes</h3><p>Drawn in code on this page. Easy to change while the story is still moving.</p></div>
+    <div class="step"><div class="tag">NEXT · free or cheap tiers</div><h3>Generated stills</h3><p>ChatGPT images or Higgsfield, one frame first to lock the style, then the batch. Swap into the page frame by frame.</p></div>
+    <div class="step"><div class="tag">LATER · paid, with a go-ahead</div><h3>Higgsfield video</h3><p>The eight stills become keyframes, 6 seconds each, with the motion notes from the storyboard.</p></div>
+  </div>
+  <h3 style="margin-top:34px;font-size:1.05rem">Style line: append to every prompt</h3>
+  <div class="styleline" id="styleLine">isometric 3D illustration, soft clay render, warm off-white background, muted warm greys, single ember-orange accent, small blue accent for people's decisions, gentle studio lighting, no text, no logos, faceless stylised figures, clean and calm, 16:9</div>
+  <div class="prompts" id="prompts"></div>
+</div></section>
+
+<section id="go"><div class="wrap">
+  <div class="eyebrow">Go deeper</div>
+  <h2>The plan and the product.</h2>
+  <div class="go">
+    <a href="trialthread-plan.html" target="_blank" rel="noopener"><h3>The plan ↗</h3><p>Problem, regulations, architecture, the context graph, roles, the business model and the roadmap, with all eight Areas of Focus readable inline.</p></a>
+    <a href="areas-of-focus/02-enablement/workings/trialthread-observer-app.html" target="_blank" rel="noopener"><h3>The Observer app ↗</h3><p>AI observers check 100% of CRA work; the conductor reviews, signs and presents. Synthetic case, seven screens, try the sign-off.</p></a>
+  </div>
+</div></section>
+
+<footer><div class="wrap">TrialThread (working name): a concept by Peter and Giau, 22 Oct 2026. All people, studies and numbers are synthetic. Not legal, regulatory or medical advice.</div></footer>
+
+<script>
+(function(){
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const NS='http://www.w3.org/2000/svg';
+const el=(t,a={},p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+try{const t=localStorage.getItem('tt-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}
+$('#themeBtn').onclick=()=>{const cur=document.documentElement.dataset.theme||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');const nx=cur==='dark'?'light':'dark';document.documentElement.dataset.theme=nx;try{localStorage.setItem('tt-theme',nx)}catch(e){}};
+
+/* ---------- isometric kit ---------- */
+const C30=Math.cos(Math.PI/6);
+const OX=600, OY=112, U=26;
+const P=(x,y,z=0)=>[OX+(x-y)*C30*U, OY+(x+y)*.5*U - z*U];
+const pts=a=>a.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ');
+const shade=(c,k)=>`color-mix(in srgb, ${c} ${k}%, #000)`;
+function box(g,x,y,z,w,d,h,col,o={}){
+  const b=el('g',{},g);
+  const st='stroke:'+(o.stroke||'color-mix(in srgb, var(--ink) 14%, transparent)')+';stroke-width:.8;stroke-linejoin:round';
+  el('polygon',{points:pts([P(x,y+d,z+h),P(x+w,y+d,z+h),P(x+w,y+d,z),P(x,y+d,z)]),style:`fill:${shade(col,o.k1||86)};${st}`},b);
+  el('polygon',{points:pts([P(x+w,y,z+h),P(x+w,y+d,z+h),P(x+w,y+d,z),P(x+w,y,z)]),style:`fill:${shade(col,o.k2||72)};${st}`},b);
+  el('polygon',{points:pts([P(x,y,z+h),P(x+w,y,z+h),P(x+w,y+d,z+h),P(x,y+d,z+h)]),style:`fill:${col};${st}`},b);
+  return b;
+}
+function faceY(g,x,y,z,w,h,col){ return el('polygon',{points:pts([P(x,y,z+h),P(x+w,y,z+h),P(x+w,y,z),P(x,y,z)]),style:`fill:${col}`},g) } // on a +y face
+function faceX(g,x,y,z,d,h,col){ return el('polygon',{points:pts([P(x,y,z+h),P(x,y+d,z+h),P(x,y+d,z),P(x,y,z)]),style:`fill:${col}`},g) } // on a +x face
+function shadow(g,x,y,r=.7){const [sx,sy]=P(x,y,0);return el('ellipse',{cx:sx,cy:sy,rx:r*U*.9,ry:r*U*.45,style:'fill:color-mix(in srgb, var(--ink) 14%, transparent)'},g)}
+function person(g,col,o={}){ // drawn at origin, feet at (0,0)
+  const p=el('g',{},g);
+  el('ellipse',{cx:0,cy:0,rx:11,ry:5,style:'fill:color-mix(in srgb, var(--ink) 16%, transparent)'},p);
+  el('rect',{x:-8,y:-30,width:16,height:28,rx:7,style:`fill:${col}`},p);
+  el('circle',{cx:0,cy:-38,r:8,style:`fill:${o.head||'color-mix(in srgb, var(--wood) 70%, var(--blk))'}`},p);
+  if(o.bag) el('rect',{x:6,y:-18,width:10,height:9,rx:2,style:'fill:var(--ink);opacity:.75'},p);
+  return p;
+}
+function place(node,x,y,z=0){const [sx,sy]=P(x,y,z);node.setAttribute('transform',`translate(${sx.toFixed(1)},${sy.toFixed(1)})`)}
+function doc(g,col='var(--surface)',o={}){
+  const d=el('g',{},g);
+  el('rect',{x:-9,y:-12,width:18,height:23,rx:2,style:`fill:${col};stroke:color-mix(in srgb, var(--ink) 30%, transparent);stroke-width:1`},d);
+  for(let i=0;i<3;i++) el('line',{x1:-5,x2:5-(i===2?4:0),y1:-6+i*5,y2:-6+i*5,style:`stroke:${o.lines||'color-mix(in srgb, var(--ink) 35%, transparent)'};stroke-width:1.4;stroke-linecap:round`},d);
+  return d;
+}
+function text(g,x,y,s,cls='lbl',anchor='middle'){const t=el('text',{x,y,'text-anchor':anchor,class:cls},g);t.textContent=s;return t}
+function floor(g,x,y,w,d,col='var(--blk-2)'){return box(g,x,y,-.35,w,d,.35,col,{k1:80,k2:68})}
+function sysBlock(g,x,y,z,label,col='var(--blk)'){
+  const b=el('g',{},g); shadow(b,x+.9,y+.9,.8); box(b,x,y,z,1.8,1.8,1.1,col);
+  const [tx,ty]=P(x+.9,y+.9,z+1.1); text(b,tx,ty+4,label,'lbl'); return b;
+}
+const SYS=['CTMS','EDC','eTMF','ISF','Safety','IxRS','Email','Excel'];
+const ringPos=(i,n=8,cx=8,cy=8,r=6.3)=>{const a=-Math.PI*0.75+i*2*Math.PI/n;return [cx+r*Math.cos(a)-.9,cy+r*Math.sin(a)-.9]};
+
+/* ---------- tween ---------- */
+let run=0;
+const ease=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
+function tw(dur,fn,delay=0){const id=run;dur=reduce?1:dur;return new Promise(res=>{const st=performance.now()+(reduce?0:delay);(function f(t){if(id!==run)return res();if(t<st){requestAnimationFrame(f);return}const p=Math.min(1,(t-st)/dur);fn(ease(p),p);if(p<1)requestAnimationFrame(f);else res()})(performance.now())})}
+const wait=ms=>tw(ms,()=>{});
+const alive=id=>id===run;
+
+/* ---------- scenes ---------- */
+const SCENES=[
+{ t:'Every trial runs on trust.', q:'Sets the stakes: participants protected, data real.',
+  vo:'Every clinical trial runs on trust. The person who checks it, site by site, is the CRA.',
+  build(g){
+    const r={};
+    floor(g,0,0,16,15);
+    // paths
+    box(g,8.6,9,0,1.4,6,.05,'var(--wall)');
+    // trees
+    [[1.5,1.5],[2.5,11.5],[13.5,2],[14,12]].forEach(([x,y])=>{shadow(g,x,y,.6);const [sx,sy]=P(x,y,0);el('rect',{x:sx-2,y:sy-22,width:4,height:22,style:'fill:var(--wood)'},g);el('circle',{cx:sx,cy:sy-30,r:15,style:'fill:var(--leaf)'},g)});
+    // clinic
+    shadow(g,8,6.5,3.6);
+    box(g,5,3,0,7,6,4.2,'var(--blk)');
+    box(g,4.8,2.8,4.2,7.4,6.4,.45,'var(--blk-2)');
+    faceY(g,8.6,9,0,1.4,2.3,'color-mix(in srgb, var(--human) 55%, var(--blk))');
+    for(let i=0;i<3;i++) faceY(g,5.6+i*(i===2?2.2:1.3)+(i===2?.7:0),9,2.6,.9,1,'color-mix(in srgb, var(--human) 28%, var(--blk))');
+    for(let i=0;i<3;i++) faceX(g,12,3.7+i*1.8,2.6,1,1,'color-mix(in srgb, var(--human) 28%, var(--blk))');
+    // cross sign
+    const [cx,cy]=P(12,6,3.4); el('rect',{x:cx-3,y:cy-9,width:6,height:18,rx:1,style:'fill:var(--accent)'},g); el('rect',{x:cx-9,y:cy-3,width:18,height:6,rx:1,style:'fill:var(--accent)'},g);
+    const [lx,ly]=P(8.5,6,5.2); text(g,lx,ly-10,'Site 012','lbl-s');
+    // sun
+    r.sun=el('circle',{cx:1040,cy:96,r:30,style:'fill:color-mix(in srgb, var(--warn) 55%, var(--stage))'},g);
+    r.pt=person(g,'var(--ok)'); place(r.pt,9.3,13.2);
+    r.cra=person(g,'var(--ink)',{bag:true}); place(r.cra,10.4,14.4);
+    const [ax,ay]=P(10.4,14.4,0); r.lab=text(g,ax+40,ay-20,'CRA','lbl','start');
+    const [bx,by]=P(9.3,13.2,0); r.lab2=text(g,bx-34,by-40,'participant','lbl-s','end');
+    return r;
+  },
+  async play(r,id){
+    tw(3000,t=>r.sun.setAttribute('cy',150-54*t));
+    tw(4200,t=>{place(r.pt,lerp(14.5,9.3,t),lerp(13.6,10.6,t));place(r.cra,lerp(16,10.4,t),lerp(15.2,11.6,t))},300);
+    r.lab.style.opacity=0;r.lab2.style.opacity=0;
+    await wait(4400); if(!alive(id))return; r.lab.style.opacity=1;r.lab2.style.opacity=1;
+    const [ax,ay]=P(10.4,11.6,0); r.lab.setAttribute('x',ax+18);r.lab.setAttribute('y',ay-20);
+    const [bx,by]=P(9.3,10.6,0); r.lab2.setAttribute('x',bx-16);r.lab2.setAttribute('y',by-40);
+  }
+},
+{ t:'Eight systems. One person. Every week.', q:'Is this real? Yes, and it is structural.',
+  vo:'The same facts are copied between eight systems, spreadsheets and email. Each copy is a chance for an error.',
+  build(g){
+    const r={blocks:[]};
+    floor(g,1,1,14,14);
+    const order=SYS.map((s,i)=>({s,i,p:ringPos(i)})).sort((a,b)=>(a.p[0]+a.p[1])-(b.p[0]+b.p[1]));
+    r.lines=el('g',{},g);
+    order.filter(o=>o.p[0]+o.p[1]<14).forEach(o=>{r.blocks[o.i]=sysBlock(g,o.p[0],o.p[1],1.6,o.s)});
+    // desk + cra
+    shadow(g,8,8,1.6); box(g,6.8,7.2,0,2.6,1.6,1.3,'var(--wood)');
+    box(g,7.4,7.4,1.3,1.4,.25,1,'var(--ink)',{k1:90,k2:80});
+    r.cra=person(g,'var(--ink)'); place(r.cra,8.6,9.6);
+    order.filter(o=>o.p[0]+o.p[1]>=14).forEach(o=>{r.blocks[o.i]=sysBlock(g,o.p[0],o.p[1],1.6,o.s)});
+    // tangled lines (screen space between block tops)
+    r.centers=SYS.map((s,i)=>{const p=ringPos(i);return P(p[0]+.9,p[1]+.9,2.7)});
+    const pairs=[[0,3],[3,1],[1,6],[6,7],[7,2],[2,5],[5,0],[4,6],[7,1],[3,5],[4,2],[0,7]];
+    pairs.forEach(([a,b],k)=>{const A=r.centers[a],B=r.centers[b];const mx=(A[0]+B[0])/2+((k*53)%120-60),my=(A[1]+B[1])/2+((k*37)%90-45);
+      el('path',{d:`M${A[0]},${A[1]} Q${mx},${my} ${B[0]},${B[1]}`,style:'fill:none;stroke:color-mix(in srgb, var(--ink) 28%, transparent);stroke-width:1.4;stroke-dasharray:4 4'},r.lines)});
+    r.doc=doc(g); r.doc.setAttribute('transform',`translate(${r.centers[0][0]},${r.centers[0][1]-16})`);
+    const pill=el('g',{transform:'translate(600,48)'},g);
+    el('rect',{x:-82,y:-18,width:164,height:36,rx:18,style:'fill:var(--surface);stroke:var(--line)'},pill);
+    r.count=text(pill,0,6,'re-keyed ×5','lbl mono');
+    return r;
+  },
+  async play(r,id){
+    const route=[0,1,7,6,2,3]; let n=0; r.count.textContent='re-keyed ×0';
+    for(let k=0;k<route.length-1&&alive(id);k++){
+      const A=r.centers[route[k]],B=r.centers[route[k+1]];const dur=900-k*110;
+      await tw(dur,t=>{const x=lerp(A[0],B[0],t),y=lerp(A[1],B[1],t)-16-Math.sin(t*Math.PI)*60;r.doc.setAttribute('transform',`translate(${x},${y})`)});
+      if(!alive(id))return; n++; r.count.textContent='re-keyed ×'+n;
+      const bl=r.blocks[route[k+1]]; bl.style.transition='transform .2s'; bl.style.transform='translateY(-6px)'; setTimeout(()=>bl.style.transform='',200);
+    }
+  }
+},
+{ t:'Errors hide in the gaps.', q:'Why hasn\'t it been fixed? The risk sits between systems.',
+  vo:'Checks are sampled, so a consent on an old form is found weeks later, at the next visit.',
+  build(g){
+    const r={};
+    floor(g,1,2,14,12);
+    // gap: dark slot in floor
+    box(g,7.6,4,-.36,.8,8,.02,'color-mix(in srgb, var(--ink) 55%, var(--stage))');
+    sysBlock(g,4.2,6.2,1.4,'EDC'); sysBlock(g,9.8,6.2,1.4,'ISF');
+    // calendar
+    const cal=el('g',{},g); shadow(cal,13.2,3.6,.9); box(cal,12.4,2.8,0,1.6,1.6,2.4,'var(--blk)');
+    const [cx,cy]=P(13.2,4.4,1.3); r.calT=text(g,cx,cy-24,'Week 7','lbl mono'); text(g,cx,cy-8,'next visit','lbl-s');
+    // red doc (rest: found, below gap)
+    const [gx,gy]=P(8,8,0);
+    r.doc=doc(g,'var(--bad-soft)',{lines:'var(--bad)'}); r.doc.setAttribute('transform',`translate(${gx},${gy+20})`);
+    r.mag=el('g',{transform:`translate(${gx+26},${gy+6})`},g);
+    el('circle',{cx:0,cy:0,r:24,style:'fill:color-mix(in srgb, var(--human) 14%, transparent);stroke:var(--ink);stroke-width:4'},r.mag);
+    el('line',{x1:17,y1:17,x2:36,y2:36,style:'stroke:var(--ink);stroke-width:6;stroke-linecap:round'},r.mag);
+    r.found=text(g,gx+70,gy+58,'found at the next visit','lbl','start'); r.found.style.fill='var(--bad)';
+    r.gx=gx;r.gy=gy; return r;
+  },
+  async play(r,id){
+    const [ax,ay]=P(5.1,7.1,2.7); r.mag.style.opacity=0; r.found.style.opacity=0; r.calT.textContent='Week 1';
+    await tw(1400,t=>{const x=lerp(ax,r.gx,t),y=lerp(ay-14,r.gy-6,t)-Math.sin(t*Math.PI)*50;r.doc.setAttribute('transform',`translate(${x},${y}) rotate(${t*25})`)});
+    if(!alive(id))return;
+    await tw(600,t=>{r.doc.setAttribute('transform',`translate(${r.gx},${r.gy-6+t*26}) rotate(25)`);r.doc.style.opacity=1-t*.75});
+    for(let w=2;w<=7&&alive(id);w++){await wait(260);r.calT.textContent='Week '+w}
+    if(!alive(id))return;
+    r.mag.style.opacity=1; r.doc.style.opacity=1;
+    await tw(900,t=>r.mag.setAttribute('transform',`translate(${r.gx+120-94*t},${r.gy+6-40*(1-t)})`));
+    if(alive(id)) r.found.style.opacity=1;
+  }
+},
+{ t:'And the risk lands on your desk.', q:'What does it cost? Findings, delay, credibility.',
+  vo:'When it surfaces, it surfaces here: an inspection finding, a delayed submission, a question you must answer.',
+  build(g){ const r=boardroom(g,'cool'); r.tokens=[];
+    ['inspection finding','delay','reputation'].forEach((s,i)=>{const t=el('g',{},g);const [x,y]=P(6+i*2.3,6.5,1.25);
+      el('ellipse',{cx:0,cy:8,rx:20,ry:9,style:`fill:${shade('var(--bad)',70)}`},t);el('rect',{x:-20,y:0,width:40,height:8,style:`fill:${shade('var(--bad)',70)}`},t);el('ellipse',{cx:0,cy:0,rx:20,ry:9,style:'fill:var(--bad)'},t);
+      text(t,0,-18,s,'lbl'); t.dataset.x=x;t.dataset.y=y; t.setAttribute('transform',`translate(${x},${y})`); r.tokens.push(t)});
+    return r },
+  async play(r,id){
+    r.tint.style.opacity=0; r.tokens.forEach(t=>t.style.opacity=0);
+    tw(2400,t=>r.tint.style.opacity=.16*t);
+    for(const [i,t] of r.tokens.entries()){ if(!alive(id))return; t.style.opacity=1;
+      await tw(650,p=>t.setAttribute('transform',`translate(${t.dataset.x},${+t.dataset.y-160*(1-p)})`),i?150:400) }
+  }
+},
+{ t:'TrialThread: capture once. Check on arrival.', q:'Do I replace my systems? No. They stay where they are.',
+  vo:'Each record is captured once, checked against protocol and regulation as it arrives, and fed to the systems you already run.',
+  build(g){
+    const r={};
+    floor(g,0,1,16,14);
+    r.src=el('g',{},g); shadow(r.src,2.6,8.6,1); box(r.src,1.6,7.6,0,2,2,1.6,'var(--accent)'); const [sx,sy]=P(2.6,8.6,1.6); text(g,sx,sy-18,'Source, captured once','lbl');
+    r.pos=SYS.map((s,i)=>[12.2,0.9+i*1.75]);
+    r.ends=r.pos.map(p=>P(p[0]+.2,p[1]+.8,1.9));
+    r.S=P(3.6,8.6,1.2); r.H=P(7.5,8,1.2);
+    r.paths=r.ends.map((E,i)=>el('path',{d:'',style:'fill:none;stroke:var(--accent);stroke-width:2.4;stroke-linecap:round'},g));
+    r.pos.forEach((p,i)=>sysBlock(g,p[0],p[1],0.8,SYS[i]));
+    r.chaos=r.ends.map((E,i)=>[[300+((i*173)%600),80+((i*97)%400)],[200+((i*251)%700),120+((i*131)%380)]]);
+    r.clean=r.ends.map(E=>[[r.H[0],r.H[1]],[E[0]-90,E[1]]]);
+    setPaths(r,1); r.pulses=el('g',{},g);
+    const [nx,ny]=P(14.6,15,0); text(g,nx+10,ny-12,'your systems stay where they are','lbl-s','start');
+    return r;
+  },
+  async play(r,id){
+    setPaths(r,0); r.paths.forEach(p=>p.style.stroke='color-mix(in srgb, var(--ink) 35%, transparent)');
+    await wait(700); if(!alive(id))return;
+    await tw(2000,t=>setPaths(r,t)); if(!alive(id))return;
+    r.paths.forEach(p=>p.style.stroke='var(--accent)');
+    for(let k=0;k<3&&alive(id);k++){ r.paths.forEach((p,i)=>{const L=p.getTotalLength();const d=el('circle',{r:5,style:'fill:var(--accent)'},r.pulses);tw(1100,t=>{const q=p.getPointAtLength(L*t);d.setAttribute('cx',q.x);d.setAttribute('cy',q.y)},i*40).then(()=>d.remove())}); await wait(1000) }
+  }
+},
+{ t:'Eight AI observers check 100%. Not a sample.', q:'Can AI be trusted? It checks. It never decides.',
+  vo:'Every consent form and every report statement is checked as it happens. Observers read; they never change anything.',
+  build(g){
+    const r={};
+    floor(g,1,3,14,10);
+    box(g,1.5,7,0,13,2,.6,'var(--blk-2)');
+    r.docs=[]; r.ticks=[];
+    for(let i=0;i<7;i++){const x=2.4+i*1.85; const d=doc(g,i===3?'var(--bad-soft)':'var(--surface)',i===3?{lines:'var(--bad)'}:{}); place(d,x,8,1); r.docs.push(d);
+      const tk=el('g',{},g); const [tx,ty]=P(x,8,1); tk.setAttribute('transform',`translate(${tx+12},${ty-18})`);
+      el('circle',{r:8,style:`fill:${i===3?'var(--bad)':'var(--ok)'}`},tk); el('path',{d:i===3?'M-3,-4 L-3,4 M-3,-4 L4,-2 L-3,1':'M-4,0 L-1,3 L4,-3',style:'fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round'},tk); r.ticks.push(tk)}
+    r.c=P(8,8,4.4); r.orbs=[];
+    for(let i=0;i<8;i++){const o=el('g',{},g); el('circle',{r:13,style:'fill:color-mix(in srgb, var(--accent) 18%, var(--surface));stroke:var(--accent);stroke-width:1.5'},o);
+      const t=el('text',{y:4,'text-anchor':'middle',class:'mono',style:'font-size:10px;fill:var(--accent)'},o); t.textContent='0'+(i+1);
+      const ring=el('circle',{r:13,style:'fill:none;stroke:var(--accent);opacity:0'},o); o.ring=ring; r.orbs.push(o)}
+    setOrbs(r,0); const [lx,ly]=P(8,3,0); text(g,lx,ly-6,'100% of work observed · signed','lbl');
+    return r;
+  },
+  async play(r,id){
+    r.ticks.forEach(t=>t.style.opacity=0); r.docs[3].style.transform='';
+    let a=0; (function spin(){ if(!alive(id))return; a+=reduce?0:.012; setOrbs(r,a); requestAnimationFrame(spin) })();
+    r.orbs.forEach((o,i)=>{ if(reduce)return; const loop=()=>{ if(!alive(id))return; tw(1400,t=>{o.ring.setAttribute('r',13+16*t);o.ring.style.opacity=.6*(1-t)},i*170).then(loop)}; loop() });
+    for(let i=0;i<r.ticks.length&&alive(id);i++){ await wait(420); r.ticks[i].style.opacity=1 }
+    if(!alive(id))return;
+    await tw(900,t=>{r.docs[3].style.transform=`translateY(${-70*t}px)`;r.ticks[3].style.transform=`translateY(${-70*t}px)`});
+  }
+},
+{ t:'Giau observes. Judges. Signs.', q:'Who is accountable? A named person, with a verifiable signature.',
+  vo:'The conductor reviews only what the observers raise. She didn\'t do the work, so she can judge it.',
+  build(g){
+    const r={};
+    floor(g,0,0,9,16,'var(--blk-2)');
+    box(g,1,5,0,7,1.6,.5,'var(--surface-2)');
+    [2,4,6].forEach(x=>{const p=person(g,'var(--muted)');place(p,x+.4,7.6)});
+    const [dx,dy]=P(4.5,1,0); text(g,dx-20,dy+30,'doing the work','lbl-s','end');
+    // gap line
+    const a=P(9.6,1.5,0), b=P(9.6,15,0); el('line',{x1:a[0],y1:a[1],x2:b[0],y2:b[1],style:'stroke:var(--human);stroke-width:2;stroke-dasharray:6 6'},g);
+    const [gx,gy]=P(9.6,14,0); text(g,gx-14,gy+16,'once removed','lbl','end').style.fill='var(--human)';
+    // observer platform
+    floor(g,10.4,5,5.2,7,'var(--human-soft)');
+    shadow(g,12.6,8.2,1.2); box(g,11.6,7.2,0,2.2,1.2,1.2,'var(--blk)');
+    box(g,11.9,7.25,1.2,1.6,.2,.9,'var(--ink)',{k1:92,k2:84});
+    r.giau=person(g,'var(--human)'); place(r.giau,13.2,9.7);
+    const [nx,ny]=P(13.2,9.7,0); text(g,nx+20,ny-26,'Giau · conductor','lbl','start');
+    const fpo=el('g',{},g); const [fx,fy]=P(12.6,7.8,1.25); fpo.setAttribute('transform',`translate(${fx},${fy})`); r.fp=el('g',{},fpo);
+    el('circle',{r:11,style:'fill:var(--human)'},r.fp); el('path',{d:'M-4,3 Q-4,-5 0,-5 Q4,-5 4,3 M-1.5,4 Q-1.5,-2 0,-2 Q1.5,-2 1.5,4',style:'fill:none;stroke:#fff;stroke-width:1.4;stroke-linecap:round'},r.fp);
+    r.ripple=el('circle',{cx:fx,cy:fy,r:11,style:'fill:none;stroke:var(--human);stroke-width:2;opacity:0'},g);
+    r.flag=doc(g,'var(--bad-soft)',{lines:'var(--bad)'}); r.flagEnd=P(12.2,7.6,2.6); r.flagStart=P(4.5,5.8,1.2);
+    r.flag.setAttribute('transform',`translate(${r.flagEnd[0]},${r.flagEnd[1]})`);
+    r.seal=el('g',{transform:`translate(${r.flagEnd[0]+14},${r.flagEnd[1]-12})`},g);
+    el('circle',{r:10,style:'fill:var(--human)'},r.seal); el('path',{d:'M-4,0 L-1,3 L4,-3',style:'fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round'},r.seal);
+    return r;
+  },
+  async play(r,id){
+    r.seal.style.opacity=0;
+    await tw(1600,t=>{const x=lerp(r.flagStart[0],r.flagEnd[0],t),y=lerp(r.flagStart[1],r.flagEnd[1],t)-Math.sin(t*Math.PI)*90;r.flag.setAttribute('transform',`translate(${x},${y})`)},300);
+    if(!alive(id))return; await wait(500);
+    
+    await tw(500,t=>{r.fp.style.transform=`scale(${1+.25*Math.sin(t*Math.PI)})`});
+    if(!alive(id))return; r.seal.style.opacity=1;
+    tw(1200,t=>{r.ripple.setAttribute('r',11+50*t);r.ripple.style.opacity=.8*(1-t)});
+  }
+},
+{ t:'Proof on one page. Start with one study.', q:'What do you need from me? One study, eight weeks.',
+  vo:'Three answers on one page each month, every number linked to a signed record. Prove it on one study in eight weeks.',
+  build(g){ const r=boardroom(g,'warm');
+    r.page=el('g',{},g); const [px,py]=P(8,6.6,1.25); r.px=px;r.py=py; r.page.setAttribute('transform',`translate(${px},${py})`);
+    el('polygon',{points:'-46,0 0,-24 46,0 0,24',style:'fill:var(--surface);stroke:var(--line)'},r.page);
+    r.lights=['var(--ok)','var(--ok)','var(--warn)'].map((c,i)=>el('circle',{cx:-18+i*18,cy:-1+(i-1)*0,r:5.5,style:`fill:${c}`},r.page));
+    el('circle',{cx:26,cy:6,r:7,style:'fill:var(--human)'},r.page);
+    const lab=['participants protected','data trustworthy','on track'];
+    r.labels=lab.map((s,i)=>{const t=text(g,px-130+i*130,py-44,s,'lbl-s');return t});
+    r.badge=el('g',{transform:'translate(600,44)'},g); el('rect',{x:-150,y:-20,width:300,height:40,rx:20,style:'fill:var(--accent)'},r.badge);
+    const bt=text(r.badge,0,6,'Approve an eight-week pilot','lbl'); bt.style.fill='#fff';
+    return r },
+  async play(r,id){
+    r.tint.style.opacity=0; r.lights.forEach(l=>l.style.opacity=0); r.labels.forEach(l=>l.style.opacity=0); r.badge.style.opacity=0;
+    tw(1800,t=>r.tint.style.opacity=.1*t);
+    await tw(1300,t=>r.page.setAttribute('transform',`translate(${r.px-180*(1-t)},${r.py+90*(1-t)})`),200);
+    for(let i=0;i<3&&alive(id);i++){await wait(380);r.lights[i].style.opacity=1;r.labels[i].style.opacity=1}
+    await wait(500); if(alive(id)) r.badge.style.opacity=1;
+  }
+},
+];
+function lerp(a,b,t){return a+(b-a)*t}
+function setPaths(r,t){ r.paths.forEach((p,i)=>{const E=r.ends[i],c=r.chaos[i],k=r.clean[i];
+  const c1=[lerp(c[0][0],k[0][0],t),lerp(c[0][1],k[0][1],t)], c2=[lerp(c[1][0],k[1][0],t),lerp(c[1][1],k[1][1],t)];
+  p.setAttribute('d',`M${r.S[0]},${r.S[1]} C${c1[0]},${c1[1]} ${c2[0]},${c2[1]} ${E[0]},${E[1]}`)}) }
+function setOrbs(r,a){ r.orbs.forEach((o,i)=>{const t=a+i*Math.PI/4;o.setAttribute('transform',`translate(${r.c[0]+Math.cos(t)*250},${r.c[1]+Math.sin(t)*62})`)}) }
+function boardroom(g,mood){
+  const r={};
+  floor(g,0,0,16,14,mood==='cool'?'color-mix(in srgb, var(--cool) 22%, var(--blk-2))':'var(--blk-2)');
+  // back walls
+  box(g,0,0,0,16,.3,5,'var(--wall)'); box(g,0,0,0,.3,14,5,'var(--wall)');
+  faceY(g,3,.3,1.6,4,2.2,mood==='cool'?'color-mix(in srgb, var(--cool) 40%, var(--wall))':'color-mix(in srgb, var(--warn) 25%, var(--wall))');
+  faceY(g,9,.3,1.6,4,2.2,mood==='cool'?'color-mix(in srgb, var(--cool) 40%, var(--wall))':'color-mix(in srgb, var(--warn) 25%, var(--wall))');
+  [5,7.3,9.6].forEach(x=>{box(g,x,3.6,0,1.2,1.1,1.6,'var(--blk-2)',{k1:82,k2:70})});
+  shadow(g,8.5,6.5,3.6); box(g,4,5,0,9,3,1.2,'var(--wood)');
+  [5,7.3,9.6].forEach(x=>{box(g,x,8.6,0,1.2,1.1,1.6,'var(--blk-2)',{k1:82,k2:70})});
+  box(g,13.6,5.8,0,1.5,1.5,2.6,'var(--ink)',{k1:88,k2:76});
+  const [cx,cy]=P(14.3,6.5,2.6); text(g,cx+10,cy-18,'President','lbl-s','start');
+  r.tint=el('rect',{x:0,y:0,width:1200,height:620,style:`fill:${mood==='cool'?'var(--cool)':'var(--accent)'};opacity:${mood==='cool'?.16:.1};pointer-events:none`},g);
+  return r;
+}
+
+/* ---------- player ---------- */
+const stage=$('#stage'); let cur=0, paused=false, timer=null; const DUR=6800;
+const chips=$('#chips');
+SCENES.forEach((s,i)=>{const b=document.createElement('button');b.innerHTML=`<i><b></b></i>${i+1} · ${['Trust','Overload','Hidden risk','Consequence','The turn','Coverage','Judgement','Proof'][i]}`;b.setAttribute('aria-label',`Frame ${i+1}: ${s.t}`);b.onclick=()=>show(i);chips.appendChild(b)});
+function show(i){
+  run++; const id=run; cur=(i+SCENES.length)%SCENES.length; const S=SCENES[cur];
+  stage.innerHTML=''; const g=el('g',{style:'opacity:0;transition:opacity .45s ease'},stage);
+  const refs=S.build(g); requestAnimationFrame(()=>g.style.opacity=1);
+  $('#capN').textContent=`FRAME ${cur+1} / ${SCENES.length}`; $('#capT').textContent=S.t; $('#capQ').textContent=S.q;
+  $$('#chips button').forEach((b,j)=>{b.classList.toggle('done',j<cur);b.classList.toggle('cur',j===cur);const bar=b.querySelector('b');bar.style.transition='none';bar.style.transform=j<cur?'scaleX(1)':'scaleX(0)';
+    if(j===cur&&!paused){requestAnimationFrame(()=>{bar.style.transition=`transform ${DUR}ms linear`;bar.style.transform='scaleX(1)'})}});
+  S.play(refs,id);
+  clearTimeout(timer); if(!paused) timer=setTimeout(()=>show(cur+1),DUR);
+}
+$('#bPlay').onclick=()=>{paused=!paused;$('#bPlay').textContent=paused?'▶':'❚❚';$('#bPlay').setAttribute('aria-label',paused?'Play':'Pause');if(paused){clearTimeout(timer);const b=$('#chips .cur b');if(b){const m=getComputedStyle(b).transform;b.style.transition='none';b.style.transform=m}}else show(cur)};
+$('#bPrev').onclick=()=>show(cur-1); $('#bNext').onclick=()=>show(cur+1);
+if(reduce){paused=true;$('#bPlay').textContent='▶'}
+show(0);
+
+/* ---------- storyboard sheet ---------- */
+const sheet=$('#sheet');
+SCENES.forEach((s,i)=>{
+  const f=document.createElement('article'); f.className='frame';
+  f.innerHTML=`<svg class="thumb" viewBox="0 0 1200 620" role="img" aria-label="Frame ${i+1}: ${esc(s.t)}" tabindex="0"></svg><div class="fb"><div class="fno">FRAME ${i+1} · ${((i)*6).toString().padStart(2,'0')}–${((i+1)*6).toString().padStart(2,'0')} s</div><h3>${esc(s.t)}</h3><p class="vo">${esc(s.vo)}</p><div class="q"><b>Buyer asks:</b> ${esc(s.q)}</div></div>`;
+  sheet.appendChild(f);
+  const svg=f.querySelector('svg'); s.build(el('g',{},svg));
+  const go=()=>{show(i);document.querySelector('.stagebox').scrollIntoView({behavior:reduce?'auto':'smooth',block:'center'})};
+  svg.addEventListener('click',go); svg.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go()}});
+});
+
+/* ---------- prompts ---------- */
+const PROMPTS=['A small modern clinic building on a floating isometric tile, a patient walking toward the entrance, a clinical research associate with a laptop bag arriving, morning light',
+ 'A person at a desk surrounded by eight floating blocks like servers and folders, tangled cables between them, a single paper document hopping between blocks, a feeling of overload',
+ 'A red paper document slipping through a gap between two floating blocks, a wall calendar flipping forward, a magnifying glass finding the document weeks later',
+ 'An empty executive boardroom table with one large chair, three red tokens on the table, cool blue-grey light, sense of consequence',
+ 'Tangled cables between eight floating blocks straightening into one glowing orange thread, a document entering at one end and branching to every block, sense of relief',
+ 'Eight small glowing orbs orbiting a conveyor of documents, each document getting a green tick, one document with a red flag lifting away',
+ 'A calm person at a minimal console one step back from a busy workflow lane, pressing a fingerprint key, a blue seal appearing on a document',
+ 'The same boardroom now warm and bright, a single page on the table with three soft lights (two green, one amber), a confident and simple mood'];
+const style=$('#styleLine').textContent.trim();
+$('#prompts').innerHTML=PROMPTS.map((p,i)=>`<div class="prompt"><span class="n">F${i+1}</span><p id="pr${i}">${esc(p)}</p><button class="btn" data-i="${i}">Copy</button></div>`).join('');
+$$('#prompts .btn').forEach(b=>b.onclick=async()=>{const txt=PROMPTS[+b.dataset.i]+', '+style;
+  try{await navigator.clipboard.writeText(txt);b.textContent='Copied'}catch(e){const r=document.createRange();r.selectNodeContents($('#pr'+b.dataset.i));const s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent='Selected'}
+  setTimeout(()=>b.textContent='Copy',1600)});
+})();
+</script>
+</body>
+</html>

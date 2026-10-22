@@ -1,0 +1,79 @@
+{
+  "$comment": "The one roster. Written by /conducting init, read by /conducting and /conductor-console. Do not hand-maintain a second roster anywhere else.",
+  "portfolio": "Peter & Giau — conducting portfolio",
+  "conductor": "Peter & Giau",
+  "ai_operators": [
+    "Claude"
+  ],
+  "created": "2026-10-22",
+  "numbering": "01-direction … 08-organisational",
+  "horizon": {
+    "date": "2027-01-31",
+    "name": "Discovery complete",
+    "scope": "12 interviews done, process map + systems inventory + breaches map drafted, clickable prototype tested, go/no-go decided."
+  },
+  "$comment_projects": "Projects are TAGS, not folders. Each lives in its own repo with its own docs/ tree.",
+  "projects": [
+    {
+      "tag": "trialthread",
+      "name": "TrialThread (working name)",
+      "summary": "Clinical-research records ingestion + workflow layer: capture once, check in bounds, route by role, prove with KERI/ACDC + Emergence context graph.",
+      "status": "concept",
+      "plan": "TRIALTHREAD-PLAN.md",
+      "page": "trialthread-plan.html"
+    }
+  ],
+  "$comment_areas": "All eight always present. 'dormant' is a legitimate recorded state.",
+  "areas": {
+    "direction": {
+      "num": "01",
+      "name": "Direction",
+      "conductor": "Peter & Giau",
+      "state": "active"
+    },
+    "enablement": {
+      "num": "02",
+      "name": "Enablement",
+      "conductor": "Peter & Giau",
+      "state": "active"
+    },
+    "protocols": {
+      "num": "03",
+      "name": "Protocols",
+      "conductor": "Peter & Giau",
+      "state": "active"
+    },
+    "sustainability": {
+      "num": "04",
+      "name": "Sustainability",
+      "conductor": "Peter & Giau",
+      "state": "active"
+    },
+    "processes": {
+      "num": "05",
+      "name": "Processes",
+      "conductor": "Peter & Giau",
+      "state": "active"
+    },
+    "accountability": {
+      "num": "06",
+      "name": "Accountability",
+      "conductor": "Peter & Giau",
+      "state": "active"
+    },
+    "engagement": {
+      "num": "07",
+      "name": "Engagement",
+      "conductor": "Peter & Giau",
+      "state": "active"
+    },
+    "organisational": {
+      "num": "08",
+      "name": "Organisational",
+      "conductor": "Peter & Giau",
+      "state": "active"
+    }
+  },
+  "$comment_agents": "One entry per skill / command / subagent / routine delegated to, each against exactly ONE area. See the conducting skill's references/agent-mandates.md.",
+  "agents": []
+}
