@@ -1,0 +1,60 @@
+deck, model frame: highest z 53.00 (back plate face 53.0)
+
+Now (a plain box)
+  size: x 48.0..98.0  y -20.0..28.6  z 53.1..77.0  -> 24.0 mm out from the back plate
+  pod sits on top of the back plate (lowest point above z 53.0)                        53.05                ok
+  no deck part under it rises above z 53.0                                             53.00                ok
+  stays inside the deck's width (model x <= 104)                                       98.0                 ok
+  bed fit (A1 256 mm)                                                                  50 mm                ok
+  camera's full view (60 x 47 deg) clear of the pod itself                             0 of 4725 rays hit   ok
+  camera's full view (60 x 47 deg) clear of the deck                                   0 of 4725 rays hit   ok
+  camera's full view (60 x 47 deg) clear of dock base, lips, posts, mast socket        0 of 4725 rays hit   ok
+  camera's full view (60 x 47 deg) clear of cables (deck lead, camera lead, charger)   0 of 4725 rays hit   ok
+  docked: gap to the dock base, lips, posts, mast socket                               25.6 mm              ok
+  docked: gap to the cables (deck lead, camera lead, charger)                          16.5 mm              ok
+
+A  Film lens (like a 1960s cine camera)
+  size: x 48.0..98.0  y -20.0..28.6  z 53.1..85.0  -> 32.0 mm out from the back plate
+  pod sits on top of the back plate (lowest point above z 53.0)                        53.05                ok
+  no deck part under it rises above z 53.0                                             53.00                ok
+  stays inside the deck's width (model x <= 104)                                       98.0                 ok
+  bed fit (A1 256 mm)                                                                  50 mm                ok
+  camera's full view (60 x 47 deg) clear of the pod itself                             0 of 4725 rays hit   ok
+  camera's full view (60 x 47 deg) clear of the deck                                   0 of 4725 rays hit   ok
+  camera's full view (60 x 47 deg) clear of dock base, lips, posts, mast socket        0 of 4725 rays hit   ok
+  camera's full view (60 x 47 deg) clear of cables (deck lead, camera lead, charger)   0 of 4725 rays hit   ok
+  docked: gap to the dock base, lips, posts, mast socket                               25.6 mm              ok
+  docked: gap to the cables (deck lead, camera lead, charger)                          2.5 mm               ok
+
+B  Bellows (like a 1930s folding camera)
+  size: x 48.0..98.0  y -20.0..28.6  z 53.1..86.6  -> 33.6 mm out from the back plate
+  pod sits on top of the back plate (lowest point above z 53.0)                        53.05                ok
+  no deck part under it rises above z 53.0                                             53.00                ok
+  stays inside the deck's width (model x <= 104)                                       98.0                 ok
+  bed fit (A1 256 mm)                                                                  50 mm                ok
+  camera's full view (60 x 47 deg) clear of the pod itself                             0 of 4725 rays hit   ok
+  camera's full view (60 x 47 deg) clear of the deck                                   0 of 4725 rays hit   ok
+  camera's full view (60 x 47 deg) clear of dock base, lips, posts, mast socket        0 of 4725 rays hit   ok
+  camera's full view (60 x 47 deg) clear of cables (deck lead, camera lead, charger)   0 of 4725 rays hit   ok
+  docked: gap to the dock base, lips, posts, mast socket                               25.6 mm              ok
+  docked: gap to the cables (deck lead, camera lead, charger)                          14.6 mm              ok
+
+C  Lens turret (like a 1950s film camera)
+  size: x 42.5..98.0  y -21.5..28.6  z 53.1..85.4  -> 32.4 mm out from the back plate
+  pod sits on top of the back plate (lowest point above z 53.0)                        53.05                ok
+  no deck part under it rises above z 53.0                                             53.00                ok
+  stays inside the deck's width (model x <= 104)                                       98.0                 ok
+  bed fit (A1 256 mm)                                                                  56 mm                ok
+  camera's full view (60 x 47 deg) clear of the pod itself                             0 of 4725 rays hit   ok
+  camera's full view (60 x 47 deg) clear of the deck                                   0 of 4725 rays hit   ok
+  camera's full view (60 x 47 deg) clear of dock base, lips, posts, mast socket        0 of 4725 rays hit   ok
+  camera's full view (60 x 47 deg) clear of cables (deck lead, camera lead, charger)   0 of 4725 rays hit   ok
+  docked: gap to the dock base, lips, posts, mast socket                               23.7 mm              ok
+  docked: gap to the cables (deck lead, camera lead, charger)                          10.3 mm              ok
+
+PRINT NOTES (lens up, back on the bed)
+  A: the front barrel (r 17.6) steps out 1.1 mm over the scale ring (r 16.5), the lip 0.6 more: short ledges, no support
+  B: pleats 1.4 mm in per side over 1.4 mm = 45 deg; the front panel overhangs the last pleat by 1.5 mm
+  C: the turret is its own flat print (barrels up) on an M3 pivot; the body prints like A's
+
+ALL CHECKS PASS

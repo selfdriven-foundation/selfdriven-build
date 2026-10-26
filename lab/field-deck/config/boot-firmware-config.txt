@@ -1,0 +1,12 @@
+# Field Deck: the lines added at the end of /boot/firmware/config.txt (guide v3).
+# Each block starts with [all], so it applies whatever conditional section comes before it.
+
+[all]
+# Lift the USB current limit. (PSU_MAX_CURRENT=5000 in the bootloader does the same; this makes it explicit.)
+usb_max_current_enable=1
+# Hold GPIO16 low = X1201 charging on. A precaution: the pack also charged without it (errata E15).
+gpio=16=op,dl
+
+[all]
+# INMP441 I2S microphone on GPIO18/19/20 (guide Step 7). Never use googlevoicehat-soundcard: it drives GPIO16.
+dtoverlay=adau7002-simple

@@ -1,0 +1,207 @@
+1. THE ITEM (readback/item_r9_hud.step, 58 solids) AGAINST THE ONE READ BACK BEFORE (readback/item_r8_vents.step, 52 solids)
+  solids: 6 more than before (the cap r9 + 5 pieces of the real OLED)                                                  6.0000      ok
+  one solid near the new body's volume (115715.2078; within 50 mm3)                                                    1.0000      ok
+  one solid near the new cap's volume (3782.2976; within 1 mm3)                                                        1.0000      ok
+  every old solid but the body found again, identical (volume, area, box, every face's area and centre): missing       0.0000      ok
+  new solids that are not an old one: the 5 OLED pieces                                                                5.0000      ok
+    the real OLED's pcb: one solid with the trial's volume (1250.7768) and box                                         1.0000      ok
+    the real OLED's glass: one solid with the trial's volume (754.1682) and box                                        1.0000      ok
+    the real OLED's flex: one solid with the trial's volume (33.1200) and box                                          1.0000      ok
+    the real OLED's joints: one solid with the trial's volume (48.9600) and box                                        1.0000      ok
+    the real OLED's plugs: one solid with the trial's volume (505.0836) and box                                        1.0000      ok
+
+2. FUSION'S BODY AND CAP ARE THE TRIAL'S (cell by cell)
+  body: one valid solid                                                                                                1.0000      ok
+  body: volume, Fusion's minus the trial's                                                                             0.0000 mm3  ok
+  body: bounding boxes, largest difference of any corner                                                               0.0000 mm   ok
+  body cell by cell (29 cells crossing a tool, 170 not): largest difference, Fusion's against the trial                0.0000 mm3  ok
+    body cells away from the tools: largest difference, Fusion's against the old one                                   0.0000 mm3  ok
+  the old body minus Fusion's = what the eight steps change in all (805.5780)                                        805.5780 mm3  ok
+  faces: Fusion's body 1192, the trial 1192, the old body 1171                                                         0.0000      
+  cap: one valid solid                                                                                                 1.0000      ok
+  cap: volume, Fusion's minus the trial's                                                                              0.0000 mm3  ok
+  cap: bounding boxes, largest difference                                                                              0.0000 mm   ok
+  cap cell by cell (154 cells crossing a tool, 0 not): largest difference, Fusion's against the trial                  0.0000 mm3  ok
+
+3. EVERY CHECK OF THE TRIAL AGAIN, ON FUSION'S BODY AND CAP
+MK-I r9 - the HUD pod and cap for the real OLED board: TRIAL (cloud), on readback/item_r8_vents.step
+
+1. THE POD AND CAP THEY START FROM ARE R3's (so R3's code is reused with new numbers)
+  probes in the old pod (6 solid, 6 air) as R3 drew it: wrong                                                          0.0000      ok
+  the cap in the file is r4's hud_cap() (R3's + the dummy fourth bolt): volume difference                             -0.0000 mm3  ok
+    ... and its box                                                                                                    0.0000 mm   ok
+  R3's pod outline: the body has no material outside it (box x 59.5 .. 92.9, y 36.7 .. 100, z 7 .. 57)                 0.0000 mm3  ok
+
+2. THE NEW BODY AND CAP
+  body: one valid solid                                                                                                1.0000      ok
+  step volumes for Fusion (mm3): start 116520.7858, outer 118822.3858, tube 115754.4834, fill 116813.5085, posts 117020.6522, pocket 116048.1066, window 115742.9582, chin 115732.1979, pilots 115715.2078
+  step changes (mm3): outer +2301.6000, tube -3067.9024, fill +1059.0251, posts +207.1437, pocket -972.5456, window -305.1484, chin -10.7603, pilots -16.9901
+  tool 'outer' (join): valid, 2 solid(s)                                                                               2.0000      ok
+  tool 'tube' (cut): valid, 1 solid(s)                                                                                 1.0000      ok
+  tool 'fill' (join): valid, 1 solid(s)                                                                                1.0000      ok
+  tool 'posts' (join): valid, 4 solid(s)                                                                               4.0000      ok
+  tool 'pocket' (cut): valid, 1 solid(s)                                                                               1.0000      ok
+  tool 'window' (cut): valid, 1 solid(s)                                                                               1.0000      ok
+  tool 'chin' (cut): valid, 1 solid(s)                                                                                 1.0000      ok
+  tool 'pilots' (cut): valid, 4 solid(s)                                                                               4.0000      ok
+  outside the pod's region the body is unchanged (volume)                                                              0.0000 mm3  ok
+    tool 'outer' lies inside that region                                                                               0.0000 mm3  ok
+      ... what it adds (the tool minus the old body) lies inside the new pod's outline or R3's cavity                  0.0000 mm3  ok
+    tool 'tube' lies inside that region                                                                                0.0000 mm3  ok
+      ... what it takes (the tool and the old body) lies inside the new pod's outline or R3's cavity (or the 0.4 strips)     0.0000 mm3  ok
+        the tube's lower end 0.4 wider a side, where R3's tube already passes the skirt's top wall (x 62.1 .. 62.5, 90.5 .. 90.9)     9.5283 mm3  
+    tool 'fill' lies inside that region                                                                                0.0000 mm3  ok
+      ... what it adds (the tool minus the old body) lies inside the new pod's outline or R3's cavity                  0.0000 mm3  ok
+    tool 'posts' lies inside that region                                                                               0.0000 mm3  ok
+      ... what it adds (the tool minus the old body) lies inside the new pod's outline or R3's cavity                  0.0000 mm3  ok
+    tool 'pocket' lies inside that region                                                                              0.0000 mm3  ok
+      ... what it takes (the tool and the old body) lies inside the new pod's outline or R3's cavity                   0.0000 mm3  ok
+    tool 'window' lies inside that region                                                                              0.0000 mm3  ok
+      ... what it takes (the tool and the old body) lies inside the new pod's outline or R3's cavity                   0.0000 mm3  ok
+    tool 'chin' lies inside that region                                                                                0.0000 mm3  ok
+      ... what it takes (the tool and the old body) lies inside the new pod's outline or R3's cavity                   0.0000 mm3  ok
+    tool 'pilots' lies inside that region                                                                              0.0000 mm3  ok
+      ... what it takes (the tool and the old body) lies inside the new pod's outline or R3's cavity                   0.0000 mm3  ok
+  FUSION: one body near the trial's volume in readback/item_r9_hud.step (within 50 mm3)                                1.0000      ok
+  FUSION: one cap near the trial's volume (within 1 mm3)                                                               1.0000      ok
+  FROM HERE ON THE CHECKS RUN ON FUSION'S BODY (115715.2078 mm3; the trial's 115715.2078) AND CAP (3782.2976; the trial's 3782.2976)
+  body: one valid solid (Fusion's)                                                                                     1.0000      ok
+  outside the pod's region the body is unchanged (Fusion's)                                                            0.0000 mm3  ok
+  cap: one valid solid                                                                                                 1.0000      ok
+  cap volume: 3782.2976 (was 3701.0170)                                                                             3782.2976 mm3  
+  body: the pod is 33 wide as before (x 60 .. 93): largest difference                                                  0.0000 mm   ok
+
+3. THE BOARD IN THE TUBE (header up; the PCB at its largest; the board up to 0.2 off the hole pattern either way)
+    pcb: nearest body wall at the worst of 9 positions (0 would be touching; the posts left out)                       0.4000 mm   ok
+    glass: nearest body wall at the worst of 9 positions (0 would be touching)                                         0.4000 mm   ok
+    flex: nearest body wall at the worst of 9 positions (0 would be touching)                                          0.4700 mm   ok
+    joints: nearest body wall at the worst of 9 positions (0 would be touching)                                        0.4000 mm   ok
+    plugs: nearest body wall at the worst of 9 positions (0 would be touching)                                         0.9800 mm   ok
+    post (64.82, along 4.62): solid under the PCB round the hole (r 0.65 .. 1.4; the M1.6 head is r 1.6)               1.0000      ok
+    post (88.18, along 4.62): solid under the PCB round the hole (r 0.65 .. 1.4; the M1.6 head is r 1.6)               1.0000      ok
+    post (64.82, along 28.42): solid under the PCB round the hole (r 0.65 .. 1.4; the M1.6 head is r 1.6)              1.0000      ok
+    post (88.18, along 28.42): solid under the PCB round the hole (r 0.65 .. 1.4; the M1.6 head is r 1.6)              1.0000      ok
+    nothing but the posts within 0.05 in front of the PCB                                                              0.0000 mm3  ok
+    pilot at (64.82, along 4.62): open on its axis at deep 1.2 and 2.5, solid 1.0 beside it and 0.4 before the face     1.0000      ok
+    pilot at (88.18, along 4.62): open on its axis at deep 1.2 and 2.5, solid 1.0 beside it and 0.4 before the face     1.0000      ok
+    pilot at (64.82, along 28.42): open on its axis at deep 1.2 and 2.5, solid 1.0 beside it and 0.4 before the face     1.0000      ok
+    pilot at (88.18, along 28.42): open on its axis at deep 1.2 and 2.5, solid 1.0 beside it and 0.4 before the face     1.0000      ok
+  the window covers the lit area (with the 0.2 shift): margin below                                                    0.8300 mm   ok
+    ... above (the window's inner top edge, at the lip's back face)                                                    0.8400 mm   ok
+    ... across                                                                                                         0.7300 mm   ok
+  the window's outer top edge (z 19.2 on the facet) stays inside the glass's top edge (with the 0.2 shift)             0.3539 mm   ok
+    ... and the window's lower edge inside the glass's lower edge                                                      4.8900 mm   ok
+  the glass inside its pocket, every side (glass 26.7 x 19.48, pocket 27.9 x 20.68, 0.2 shift)                         0.4000 mm   ok
+    room in front of the glass (glass face to the pocket's floor)                                                      1.7500 mm   
+    room in front of the PCB at the solder joints (R3: 1.7 - the joints stand about 1.5 .. 2)                          3.2000 mm   
+  the board's lowest point (the flex) against R3's board's lowest point (along 2.22): no lower than                   -0.2000 mm   ok
+    the flex's lowest point along the facet (R3's board: 2.22)                                                         2.0200 mm   
+  room behind the plugs to the rear plane (where the cap sits) for the wires' bend (R3: the same)                     10.3000 mm   
+
+4. THE POD AS BUILT (probes on the solid) AND THE CAP
+  window open (probe through the lip, 0.2 inside its edges)                                                            0.0000 mm3  ok
+  lip round the window (probe 0.1 .. 0.6 beside it, deep 0.1 .. 0.9)                                                   3.2000 mm3  ok
+  glass pocket open (deep 1.05 .. 4.15)                                                                                0.0000 mm3  ok
+  joint relief open (deep 1.05 .. 2.95)                                                                                0.0000 mm3  ok
+  board space open (the PCB at its largest + 0.2 shift, deep 4.25 .. 5.9)                                              0.0000 mm3  ok
+  30 mm free behind the OLED's front: plugs on the board's upper edge                                                  0.0000 mm3  ok
+  30 mm free behind the OLED's front: behind the board's lower edge                                                    0.0000 mm3  ok
+  30 mm free behind the OLED's front: behind the board's centre                                                        0.0000 mm3  ok
+  pod side wall (probe, x 91.0 .. 92.9)                                                                              228.0000 mm3  ok
+  facet skin beside the window (probe)                                                                                 0.9800 mm3  ok
+  tube top wall (probe)                                                                                              252.0000 mm3  ok
+  tube side walls (pod x 60 .. 93, cavity 62.1 .. 90.9)                                                                2.1000 mm   ok
+    ... where the pod's 2.5 chamfer runs along their outer edge: wall (R3: 1.77)                                       1.4849 mm   ok
+  cap <-> body: no overlap                                                                                             0.0000 mm3  ok
+  cap covers the tube's rear opening: overlap at the sides / below / above (at least 2)                                2.0000 mm   ok
+  cap's highest point below the back plate (z 53.0): the deck lies on the plate, not on the cap                        0.3893 mm   ok
+    the cap's highest point z (R3's: 51.87)                                                                           52.6107 mm   
+  cap keeps off the body's top wall (0.3 band beside it)                                                               0.0000 mm3  ok
+  cap: wall from an upper counterbore to the cap's upper edge, below the chamfer (review P: 0.25)                      1.2500 mm   ok
+    ... at the cap's outer face, where the 0.8 chamfer is (the last 0.8 mm printed)                                    0.4500 mm   ok
+  brow: wall from an upper cap pilot (d 2.5) down to the tube (R3: 3.85)                                               1.4500 mm   ok
+    ... and up to the brow's top                                                                                       3.0500 mm   ok
+    cap pilot at (66.0, along 33.9) still open (8 deep)                                                                0.0000 mm3  ok
+      ... with solid 1.15 round it                                                                                     1.0000      ok
+    cap pilot at (87.0, along 33.9) still open (8 deep)                                                                0.0000 mm3  ok
+      ... with solid 1.15 round it                                                                                     1.0000      ok
+    cap pilot at (87.0, along -5.0) still open (8 deep)                                                                0.0000 mm3  ok
+      ... with solid 1.15 round it                                                                                     1.0000      ok
+
+5. THE OTHER PARTS (the board at its largest, every position)
+  front <-> the real board (R3's board: 2.72)                                                                          2.0573 mm   ok
+  ring <-> the real board (R3's board: 2.00)                                                                           1.8036 mm   ok
+  handle <-> the real board (R3's board: 17.29)                                                                       16.3443 mm   ok
+  screen <-> the real board (R3's board: 10.19)                                                                        9.5812 mm   ok
+  plate <-> the real board (R3's board: 60.04)                                                                        45.8419 mm   ok
+  front <-> the new cap: no overlap                                                                                    0.0000 mm3  ok
+  front <-> the new body's pod: no overlap                                                                             0.0000 mm3  ok
+  ring <-> the new cap: no overlap                                                                                     0.0000 mm3  ok
+  ring <-> the new body's pod: no overlap                                                                              0.0000 mm3  ok
+  handle <-> the new cap: no overlap                                                                                   0.0000 mm3  ok
+  handle <-> the new body's pod: no overlap                                                                            0.0000 mm3  ok
+  screen <-> the new cap: no overlap                                                                                   0.0000 mm3  ok
+  screen <-> the new body's pod: no overlap                                                                            0.0000 mm3  ok
+  plate <-> the new cap: no overlap                                                                                    0.0000 mm3  ok
+  plate <-> the new body's pod: no overlap                                                                             0.0000 mm3  ok
+  the new cap <-> the board and its plugs: no overlap                                                                  0.0000 mm3  ok
+  the red film (reference, in R3's window at along 7.3 .. 22.7) inside the new body: hide it in Fusion (this OLED is yellow/blue)    43.6160 mm3  
+
+6. ROUTE IN: the OLED goes straight in from the back (R3's standing check)
+  the board's path (PCB at its largest + 0.17 a side, and the flex) from its seat to the rear plane: body              0.0000 mm3  ok
+    ... and the cap off: nothing else in the tube's mouth (front, handle)                                              0.0000 mm3  ok
+  the glass's path (with the 0.2 shift) into its pocket                                                                0.0000 mm3  ok
+  the solder joints' path into the relief                                                                              0.0000 mm3  ok
+  the flex's path (round the lower edge, in front of the PCB)                                                          0.0000 mm3  ok
+  and 12 mm beyond the rear plane (the bare module is 9.4 thick)                                                       0.0000 mm3  ok
+  straight approach room behind the rear plane, whole board (R3: 14)                                                  14.0000 mm   
+  room for the plugs on the pins, header on the UPPER edge (this design): at least 23 (R3: 80)                        80.0000 mm   ok
+  room for the plugs on the pins, header on the LOWER edge (R3: 20)                                                   18.0000 mm   
+
+7. DRIVER: a straight 3 mm shaft + 10 mm handle on each OLED screw (cap off), a T9 driver on each cap screw
+  lower inner screw (x 64.82, along 4.62): driver path blocked                                                       408.7448 mm3  
+  lower handle-side screw (x 88.18, along 4.62): driver path REACHABLE                                                 0.0000 mm3  
+  upper inner screw (x 64.82, along 28.42): driver path REACHABLE                                                      0.0000 mm3  
+  upper handle-side screw (x 88.18, along 28.42): driver path REACHABLE                                                0.0000 mm3  
+  both UPPER screws reachable                                                                                          1.0000      ok
+  at least 3 of the 4 reachable (R3: 3 - the lower inner one is behind the body's corner)                              3.0000      ok
+  T9 driver reaches the cap screw at (x 66.0, along 33.9)                                                              0.0000 mm3  ok
+  T9 driver reaches the cap screw at (x 87.0, along 33.9)                                                              0.0000 mm3  ok
+  T9 driver reaches the cap screw at (x 87.0, along -5.0)                                                              0.0000 mm3  ok
+
+8. THE HUD CAN BE SEEN (R3's views, through the new window)
+  view square-on: nothing in the way                                                                                   0.0000 mm3  ok
+  view from the front, 10 deg low: nothing in the way                                                                  0.0000 mm3  ok
+  view from 25 deg to the right (reader in front of the screen's middle): nothing in the way                           0.0000 mm3  ok
+
+9. PRINTING: the new flats on the 0.2 grid, and the gates (the body z up as it prints; the cap flat)
+  the window's flat top at z 19.2 on the 0.2 grid                                                                      0.0000      ok
+coupon (0.3 mm band)   erosion: EMPTY LAYERS [(np.float64(4.0), np.float64(6.0))]
+coupon clean box: ATTACHED-CLEAN
+coupon 2.5mm tab (must flag): 1 findings: [('JUT', np.float64(5.1), 9.0, (21.4, 9.8))]
+coupon gusset on a wall (must be clean): ATTACHED-CLEAN
+coupon gusset 0.5 mm beside the wall's end (must flag): 3 findings: [('ISLAND', np.float64(3.3), 0.4, (0.2, 11.1)), ('JUT', np.float64(9.1), 7.2, (3.1, 9.5)), ('JUT', np.float64(9.1), 1.1, (-0.6, 11.1))]
+attachment instrument validated
+  new body: watertight True, 147.0 g PETG
+  new body             erosion: CLEAN
+  new body attachment: 24 findings: [('JUT', np.float64(0.9), 180.4, (-101.7, -9.3)), ('JUT', np.float64(4.5), 17266.6, (-68.5, -18.5)), ('JUT', np.float64(14.3), 1.6, (-94.2, -71.5)), ('JUT', np.float64(14.3), 1.6, (-94.2, 55.0)), ('JUT', np.float64(14.3), 1.6, (94.2, -71.5)), ('JUT', np.float64(14.3), 1.5, (94.4, 55.0)), ('JUT', np.float64(19.3), 31.1, (76.5, 88.1)), ('JUT', np.float64(31.9), 4.5, (-32.5, -47.7)), ('JUT', np.float64(32.3), 1.2, (-36.5, -47.8)), ('JUT', np.float64(36.1), 7.1, (72.4, 29.8))]
+  old body: watertight True, 148.0 g PETG
+  old body             erosion: CLEAN
+  old body attachment: 24 findings: [('JUT', np.float64(0.9), 180.4, (-101.7, -9.3)), ('JUT', np.float64(4.5), 17267.0, (-68.5, -18.5)), ('JUT', np.float64(14.3), 1.6, (-94.2, -71.5)), ('JUT', np.float64(14.3), 1.6, (-94.2, 55.0)), ('JUT', np.float64(14.3), 1.6, (94.2, -71.5)), ('JUT', np.float64(14.3), 1.5, (94.4, 55.0)), ('JUT', np.float64(17.1), 3.8, (76.5, 86.8)), ('JUT', np.float64(31.9), 4.5, (-32.5, -47.7)), ('JUT', np.float64(32.3), 1.2, (-36.5, -47.8)), ('JUT', np.float64(36.1), 7.1, (72.4, 29.8))]
+  erosion (new body): layers that leave no printable line                                                              0.0000      ok
+     GONE  JUT    z  17.10  area      3.8  at (   76.5,    86.8)  pod
+     NEW   JUT    z  19.30  area     31.1  at (   76.5,    88.1)  pod
+  attachment: changes outside the pod                                                                                  0.0000      ok
+  attachment: islands in the new body                                                                                  0.0000      ok
+    the lip over the window now starts at z 19.3 as one strip (23.6 x 1.35 = 32)                                      31.1000 mm2  ok
+    no line in the pod starts as a thread at R3's chin (z 16.9 .. 17.5)                                                0.0000      ok
+  support survey above z 5 (only the bed under them): old z 7.0 0.1 mm2, z 38.6 2.7 mm2, z 46.6 273.5 mm2
+                                                    new z 7.0 0.1 mm2, z 19.2 31.8 mm2, z 38.6 2.7 mm2, z 46.6 273.5 mm2
+  cap                  erosion: CLEAN
+  cap (flat): erosion                                                                                                  0.0000      ok
+  cap attachment: ATTACHED-CLEAN
+  cap (flat): attachment lines                                                                                         0.0000      ok
+  cap: 4.8 g PETG (R3's: 4.7)
+
+ALL CHECKS PASS
+exit 0

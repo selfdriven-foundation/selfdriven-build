@@ -1,0 +1,17 @@
+deck in the dock (world): X -164.0..104.0  Y 129.9..228.1  Z 45.0..218.1
+  base left half fits the A1 bed: 152 x 226 x 45                                                        ok
+  base right half fits the A1 bed: 152 x 226 x 45                                                       ok
+  deck's lowest point sits on the dock top (Z = 45.0)                            45.000                 ok
+  stand-face points over the base (X -152..152, Y 109..226)                      X -102.9..102.9 Y 131.6..196.7 ok
+  grip clears the base top where it is over it                                   1.48 mm                ok
+  front lip: no point inside the deck, nearest gap                               1.13 mm                ok
+  right lip: no point inside the deck, nearest gap                               1.11 mm                ok
+  post 1: no point inside the deck, nearest gap                                  0.73 mm                ok
+  post 2: no point inside the deck, nearest gap                                  0.73 mm                ok
+  power lever face (world): X 38.7  Y 164.3..187.7  Z 60.8..81.3
+  lever's bottom is above the dock top                                           15.8 mm above          ok
+  knob is clear of the lever's finger space (X > lever + 60)                     77.3 mm                ok
+  posts are left of the lever face                                                                      ok
+  deck lead path (hub to the plug's end) under the hub's 200 mm lead             121 mm                 ok
+  screen bottom/top above the desk: 76 / 193 mm
+ALL CHECKS PASS

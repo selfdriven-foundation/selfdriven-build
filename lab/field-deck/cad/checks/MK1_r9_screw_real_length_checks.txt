@@ -1,0 +1,103 @@
+REAL M3x8 (8.0 under the head) AGAINST EVERY BLIND PILOT, from readback/item_r9_hud.step (md5 27ac9090494c23498127d68d768120ef)
+
+  back plate / HUD cap screw, seat at (-34.90, -67.61, 51.30), into (-0.000, -0.000, -1.000); the model: 0.000 under its head
+    under the head to the body's face (the clamped part): 0.800 -> a real M3x8 has 7.200 of thread in the body
+    the pilot: 8.180 deep from the body's face
+      back plate / HUD cap at (-34.9, -67.6, 51.3): hole left below a real M3x8's tip                     0.980 mm  ok
+      back plate / HUD cap at (-34.9, -67.6, 51.3): real thread in the body                               7.200 mm  ok
+
+  back plate / HUD cap screw, seat at (-34.90, 19.10, 51.30), into (-0.000, -0.000, -1.000); the model: 0.000 under its head
+    under the head to the body's face (the clamped part): 0.800 -> a real M3x8 has 7.200 of thread in the body
+    the pilot: 8.180 deep from the body's face
+      back plate / HUD cap at (-34.9, 19.1, 51.3): hole left below a real M3x8's tip                      0.980 mm  ok
+      back plate / HUD cap at (-34.9, 19.1, 51.3): real thread in the body                                7.200 mm  ok
+
+  back plate / HUD cap screw, seat at (72.40, -67.61, 51.30), into (-0.000, -0.000, -1.000); the model: 0.000 under its head
+    under the head to the body's face (the clamped part): 0.800 -> a real M3x8 has 7.200 of thread in the body
+    the pilot: 8.180 deep from the body's face
+      back plate / HUD cap at (72.4, -67.6, 51.3): hole left below a real M3x8's tip                      0.980 mm  ok
+      back plate / HUD cap at (72.4, -67.6, 51.3): real thread in the body                                7.200 mm  ok
+
+  back plate / HUD cap screw, seat at (72.40, 19.10, 51.30), into (-0.000, -0.000, -1.000); the model: 0.000 under its head
+    under the head to the body's face (the clamped part): 0.800 -> a real M3x8 has 7.200 of thread in the body
+    the pilot: 8.180 deep from the body's face
+      back plate / HUD cap at (72.4, 19.1, 51.3): hole left below a real M3x8's tip                       0.980 mm  ok
+      back plate / HUD cap at (72.4, 19.1, 51.3): real thread in the body                                 7.200 mm  ok
+
+  back plate / HUD cap screw, seat at (66.00, 67.95, 48.81), into (-0.000, 0.743, -0.669); the model: 0.000 under its head
+    under the head to the body's face (the clamped part): 0.800 -> a real M3x8 has 7.200 of thread in the body
+    the pilot: 7.980 deep from the body's face
+      back plate / HUD cap at (66.0, 68.0, 48.8): hole left below a real M3x8's tip                       0.780 mm  ok
+      back plate / HUD cap at (66.0, 68.0, 48.8): real thread in the body                                 7.200 mm  ok
+
+  back plate / HUD cap screw, seat at (87.00, 67.95, 48.81), into (-0.000, 0.743, -0.669); the model: 0.000 under its head
+    under the head to the body's face (the clamped part): 0.800 -> a real M3x8 has 7.200 of thread in the body
+    the pilot: 7.980 deep from the body's face
+      back plate / HUD cap at (87.0, 68.0, 48.8): hole left below a real M3x8's tip                       0.780 mm  ok
+      back plate / HUD cap at (87.0, 68.0, 48.8): real thread in the body                                 7.200 mm  ok
+
+  back plate / HUD cap screw, seat at (87.00, 41.92, 19.90), into (-0.000, 0.743, -0.669); the model: 0.000 under its head
+    under the head to the body's face (the clamped part): 0.800 -> a real M3x8 has 7.200 of thread in the body
+    the pilot: 7.980 deep from the body's face
+      back plate / HUD cap at (87.0, 41.9, 19.9): hole left below a real M3x8's tip                       0.780 mm  ok
+      back plate / HUD cap at (87.0, 41.9, 19.9): real thread in the body                                 7.200 mm  ok
+
+  handle screw, seat at (99.80, 48.00, -14.57), into (0.000, 0.000, 1.000); the model: 6.975 under its head
+    under the head to the front's face (the clamped part): 2.975 -> a real M3x8 has 5.025 of thread in the front
+    the pilot: 6.980 deep from the front's face
+      handle at (99.8, 48.0, -14.6): hole left below a real M3x8's tip                                    1.955 mm  ok
+      handle at (99.8, 48.0, -14.6): real thread in the front                                             5.025 mm  ok
+
+  handle screw, seat at (99.80, 56.00, -14.57), into (0.000, 0.000, 1.000); the model: 6.975 under its head
+    under the head to the front's face (the clamped part): 2.975 -> a real M3x8 has 5.025 of thread in the front
+    the pilot: 6.980 deep from the front's face
+      handle at (99.8, 56.0, -14.6): hole left below a real M3x8's tip                                    1.955 mm  ok
+      handle at (99.8, 56.0, -14.6): real thread in the front                                             5.025 mm  ok
+
+  handle screw, seat at (99.80, -74.00, -14.57), into (0.000, 0.000, 1.000); the model: 6.975 under its head
+    under the head to the front's face (the clamped part): 2.975 -> a real M3x8 has 5.025 of thread in the front
+    the pilot: 6.980 deep from the front's face
+      handle at (99.8, -74.0, -14.6): hole left below a real M3x8's tip                                   1.955 mm  ok
+      handle at (99.8, -74.0, -14.6): real thread in the front                                            5.025 mm  ok
+
+  handle screw, seat at (99.80, -82.00, -14.57), into (0.000, 0.000, 1.000); the model: 6.975 under its head
+    under the head to the front's face (the clamped part): 2.975 -> a real M3x8 has 5.025 of thread in the front
+    the pilot: 6.980 deep from the front's face
+      handle at (99.8, -82.0, -14.6): hole left below a real M3x8's tip                                   1.955 mm  ok
+      handle at (99.8, -82.0, -14.6): real thread in the front                                            5.025 mm  ok
+
+  power lever screw, seat at (-38.00, -47.75, 30.60), into (1.000, -0.000, 0.000); the model: 7.350 under its head
+    under the head to the body's face (the clamped part): 1.000 -> a real M3x8 has 7.000 of thread in the body
+    the pilot runs through; the plastic round it ends 8.800 from the seat
+      power lever at (-38.0, -47.8, 30.6): a real M3x8's tip stays inside the boss by                     0.800 mm  ok
+
+  speaker cover screw, seat at (-98.00, 40.30, 16.00), into (-0.000, -0.000, -1.000); the model: 8.000 under its head
+    under the head to the body's face (the clamped part): 2.000 -> a real M3x8 has 6.000 of thread in the body
+    the pilot: 7.680 deep from the body's face
+      speaker cover at (-98.0, 40.3, 16.0): hole left below a real M3x8's tip                             1.680 mm  ok
+      speaker cover at (-98.0, 40.3, 16.0): real thread in the body                                       6.000 mm  ok
+  (left out: the speaker cover's OLD screw 2 at x -6.6 - hidden in Fusion, no hole there; mk1_final_r9_check)
+
+  speaker cover screw, seat at (-11.00, 66.10, 16.00), into (-0.000, -0.000, -1.000); the model: 8.000 under its head
+    under the head to the body's face (the clamped part): 2.000 -> a real M3x8 has 6.000 of thread in the body
+    the pilot: 7.680 deep from the body's face
+      speaker cover at (-11.0, 66.1, 16.0): hole left below a real M3x8's tip                             1.680 mm  ok
+      speaker cover at (-11.0, 66.1, 16.0): real thread in the body                                       6.000 mm  ok
+
+  screw                  seat                        clamped   thread    pilot    spare
+  back plate / HUD cap   ( -34.90,  -67.61,  51.30)    0.800    7.200    8.180    0.980
+  back plate / HUD cap   ( -34.90,   19.10,  51.30)    0.800    7.200    8.180    0.980
+  back plate / HUD cap   (  72.40,  -67.61,  51.30)    0.800    7.200    8.180    0.980
+  back plate / HUD cap   (  72.40,   19.10,  51.30)    0.800    7.200    8.180    0.980
+  back plate / HUD cap   (  66.00,   67.95,  48.81)    0.800    7.200    7.980    0.780
+  back plate / HUD cap   (  87.00,   67.95,  48.81)    0.800    7.200    7.980    0.780
+  back plate / HUD cap   (  87.00,   41.92,  19.90)    0.800    7.200    7.980    0.780
+  handle                 (  99.80,   48.00, -14.57)    2.975    5.025    6.980    1.955
+  handle                 (  99.80,   56.00, -14.57)    2.975    5.025    6.980    1.955
+  handle                 (  99.80,  -74.00, -14.57)    2.975    5.025    6.980    1.955
+  handle                 (  99.80,  -82.00, -14.57)    2.975    5.025    6.980    1.955
+  power lever            ( -38.00,  -47.75,  30.60)    1.000    7.000  through        -
+  speaker cover          ( -98.00,   40.30,  16.00)    2.000    6.000    7.680    1.680
+  speaker cover          ( -11.00,   66.10,  16.00)    2.000    6.000    7.680    1.680
+
+ALL CHECKS PASS

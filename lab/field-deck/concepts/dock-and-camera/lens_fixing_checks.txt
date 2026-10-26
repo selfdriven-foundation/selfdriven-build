@@ -1,0 +1,53 @@
+deck's highest point (model z): 53.000
+
+SCREW (the back plate's upper grip-side screw, (72.4, 19.1))
+  pilot bottom straight under the screw: z 42.30
+  his M3x8 now (7.35 under the head, measured 9.0 overall - 1.65 head) seat z 51.30  tip z 43.95  thread 6.55  hole to spare 1.65
+  his M3x8 through the base would leave too little thread (< 5)                          3.85 mm                ok
+  M3x10 (10.0 under the head)                                    seat z 54.00  tip z 44.00  thread 6.50  hole to spare 1.70
+  M3x10 through the base: thread at least 6.0 (now 6.55)                                 6.50 mm                ok
+  M3x10 through the base: does not bottom out (0.5 to spare)                             1.70 mm                ok
+  an M3x10 up to 0.5 long still does not bottom out                                      1.20 mm                ok
+  M3x12                                                          seat z 54.00  tip z 42.00  thread 8.50  hole to spare -0.30
+  an M3x12 WOULD bottom out (so: use the 10)                                             -0.30 mm               ok
+  pan head (2.1 tall) sits below the base's top (56.5)                                   top z 56.10            ok
+  lens channel ceiling clears the head                                                   0.65 mm                ok
+  plastic under the head: base + spigot down to the seat floor (z 51.3)                  2.70 mm                ok
+
+BASE ON THE BACK PLATE
+  spigot d6.0: the screw's seat is free down to its floor (z 51.3)                       highest 51.30          ok
+    ... and the seat's wall is just outside it (d6.1+): spigot is located                53.00                  ok
+  pin d3.6 x 0.5: the hex mark is free under it                                          highest 52.40          ok
+  hex mark: walls 2.00 (flats) .. 2.32 (corners) from its centre -> A/F 4.00
+    ... and its walls hold the pin: play at the flats 0.1 .. 0.4                         0.20 mm                ok
+  pin to screw: 12.0 mm apart -> the base cannot turn
+  nothing under the base's flat underside stands above z 53.0                            53.000                 ok
+  the underside rests on the armour over a fair area (>= 80 mm2)                         162 mm2 of 280         ok
+
+LENS ON THE BASE
+  dovetail: the channel's mouth (at the lens's back) is narrower than the base's top     17.7 vs 24.0 mm        ok
+  clearance on the base's top and sides                                                  0.25 mm                ok
+  the lens's back face floats over the deck while it slides                              0.10 mm                ok
+  lens wall above the channel (top)                                                      2.25 mm                ok
+  lens floor over the channel                                                            1.5 mm                 ok
+  stop: the channel's closed end 0.1 past the base's end                                 x 80.1 vs 80.0         ok
+  click: the tongue bends 0.35 mm; PETG strain under 2 %                                 0.79 %                 ok
+  lens body is one valid solid                                                           17.3 cm3               ok
+  lens barrel is one valid solid                                                         8.6 cm3                ok
+  base is one valid solid                                                                1.46 cm3               ok
+  fitted, the lens and the base do not overlap                                           0.000 mm3              ok
+  out from the back plate: 35.0 mm (the looks picture said ~32; the channel and plug room add 3)
+
+CAMERA VIEW, DOCK, LEAD (world frame)
+  camera's full view (60 x 47 deg) clear of the lens itself                              0 of 4725 rays hit     ok
+  camera's full view (60 x 47 deg) clear of the deck                                     0 of 4725 rays hit     ok
+  camera's full view (60 x 47 deg) clear of the dock                                     0 of 4725 rays hit     ok
+  docked: lens to the dock                                                               29.7 mm                ok
+  camera plug clear of the dock's own lead and plug                                      2.3 mm                 ok
+  lead from the lens to the plug: about 46 mm (the camera comes with 1 m)
+
+PRINT (rough, not sliced)
+  base                 1.5 cm3 solid -> about 1 g PETG at 70 % fill
+  lens body + barrel   25.9 cm3 solid -> about 23 g PETG at 70 % fill
+
+ALL CHECKS PASS

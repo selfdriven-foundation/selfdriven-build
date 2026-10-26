@@ -1,0 +1,20 @@
+# macOS / editors
+.DS_Store
+*.swp
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# What the CAD scripts write when re-run
+out/
+readback/
+
+# Big media stays out of git (the making-of video, raw photos, recordings)
+*.mp4
+*.mov
+*.wav
+*.HEIC
+*.heic

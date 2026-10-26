@@ -1,0 +1,13 @@
+[Unit]
+Description=Field Deck HUD (SSD1306 + X1201 fuel gauge)
+After=multi-user.target
+
+[Service]
+Type=simple
+User=YOURUSER
+ExecStart=/home/YOURUSER/hud/bin/python /home/YOURUSER/hud/hud.py
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

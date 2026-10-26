@@ -1,0 +1,24 @@
+PUBLIC r9 CAD WITHOUT THE NAMES, from readback/item_r9_hud.step (md5 27ac9090494c23498127d68d768120ef)
+  one body solid of 115715.2078 mm3 in the read-back                                           1 found                    ok
+  name 1: before, only the face and the letter floor under the fill (z 7.0 / 6.6)              [6.6, 7.0]                 ok
+  name 2: before, only the face and the letter floor under the fill (z 7.0 / 6.6)              [6.6, 7.0]                 ok
+  filled body: one valid solid                                                                 1 solid(s)                 ok
+  volume added = the letters only (between 10 and 120 mm3)                                     +26.45 mm3                 ok
+  same outside size as the printed body                                                                                   ok
+  name 1: after, the face is plain (one height, z 7.0)                                         [7.0]                      ok
+  name 2: after, the face is plain (one height, z 7.0)                                         [7.0]                      ok
+  the rest of the body unchanged (4000 surface points, away from the fills)                    max 0.0000 mm              ok
+  the body swapped once in the design (its part name kept)                                     1                          ok
+  public STEP read back: same 58 solids, only the body changed (each within 1e-5 + 0.02 mm3)   58 solids, worst 0.33 of the allowance ok
+  none of the private words (FD_PRIVATE_WORDS, 2 given) anywhere in the STEP text                                         ok
+  part names kept in the STEP                                                                  28 named parts             ok
+  body STL: one closed mesh                                                                                               ok
+  body STL: volume against the solid's                                                         115741.6 mm3               ok
+  body STL lies exactly like the printed one (same bounds)                                     [[0.0, 0.0, 0.0], [0.0, 0.0, 0.0]] ok
+  body STL against the printed one: same shape except the names (95th pct gap)                 p95 0.0000, max 0.400 mm   ok
+
+  files:
+    MK1-r9_design_public_NOT-FOR-PRINT.step                       10792514 bytes  md5 ca91eb53298902e91a3b60720323774f
+    MK1-r9-Body_PRINT-THIS.stl                                      945784 bytes  md5 72125765ae73e12b17e18691d48d064f
+
+ALL CHECKS PASS
