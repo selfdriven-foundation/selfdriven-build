@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>build · Be Constructive. Let&#x27;s Build!</title>
-<meta name="description" content="The workshop companion to selfdriven.you. Build a cyberdeck, build your world block by block, and help keep the world&#x27;s networks honest.">
+<meta name="description" content="The workshop companion to selfdriven.you. Build a cyberdeck, build your world block by block, help keep the world&#x27;s networks honest, and make a chip you can verify.">
 <meta name="theme-color" content="#09090f"><meta name="color-scheme" content="dark">
 <link rel="canonical" href="https://selfdriven.build/">
 <meta property="og:type" content="website"><meta property="og:site_name" content="selfdriven.build">
-<meta property="og:title" content="build · Be Constructive. Let&#x27;s Build!"><meta property="og:description" content="The workshop companion to selfdriven.you. Build a cyberdeck, build your world block by block, and help keep the world&#x27;s networks honest."><meta property="og:url" content="https://selfdriven.build/">
+<meta property="og:title" content="build · Be Constructive. Let&#x27;s Build!"><meta property="og:description" content="The workshop companion to selfdriven.you. Build a cyberdeck, build your world block by block, help keep the world&#x27;s networks honest, and make a chip you can verify."><meta property="og:url" content="https://selfdriven.build/">
 <meta name="twitter:card" content="summary">
 <link rel="icon" type="image/png" href="/assets/img/selfdriven-build-logo-round-mint.png">
 <link rel="apple-touch-icon" href="/assets/img/selfdriven-build-logo-round-mint.png">
@@ -188,7 +188,7 @@ p{margin:0}
 
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
-  .gblob,.marquee-track,.hero-pill .dot,.d-caret,.px-beam,.v-pulse{animation:none}
+  .gblob,.marquee-track,.hero-pill .dot,.d-caret,.px-beam,.v-pulse,.si-glow{animation:none}
   .reveal{transition:none}
   .mode-pill,.btn,.go .icon{transition:none}
 }
@@ -228,14 +228,15 @@ p{margin:0}
 @media (max-width:700px){.project-builds{grid-template-columns:1fr}.project-builds .plate+.plate{border-left:0;border-top:1px solid var(--border)}.plate{padding:26px}}
 
 /* project index */
-.pindex{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:20px;overflow:hidden;margin-bottom:28px}
+.pindex{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:20px;overflow:hidden;margin-bottom:28px}
 .pindex a{background:var(--surface);padding:18px 22px;text-decoration:none;display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:14px;row-gap:2px;align-items:center;transition:background .2s}
 .pindex a:hover{background:var(--surface2)}
 .pindex .serial{grid-row:span 2;align-self:center}
 .pindex b{font-family:var(--f-display);font-weight:700;font-size:19px;letter-spacing:-.02em}
 .pindex .pk{display:inline-flex;align-items:center;gap:7px;font-size:13px;color:var(--muted)}
 .pindex .pk .icon{color:var(--constructive);font-size:14px}
-@media (max-width:820px){.pindex{grid-template-columns:1fr}}
+@media (max-width:1040px){.pindex{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:600px){.pindex{grid-template-columns:1fr}}
 .project+.project{margin-top:24px}
 .project{scroll-margin-top:90px}
 .project.flip{grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr)}
@@ -243,6 +244,7 @@ p{margin:0}
 .project.flip .project-art{order:1;border-left:0;border-right:1px solid var(--border)}
 .project-copy .quote.q-c{border-left-color:var(--curious)}
 .project-copy .quote.q-l{border-left-color:var(--chill-bright)}
+.project-copy .quote.q-k{border-left-color:var(--caring)}
 .art-sky{background:linear-gradient(180deg,rgba(123,108,255,.10),transparent 70%)}
 .stations{grid-column:1/-1;order:3;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--border);list-style:none;margin:0;padding:0}
 .stations>a,.stations>li>a{display:flex;flex-direction:column;gap:6px;padding:24px 26px;text-decoration:none;height:100%;transition:background .2s;min-width:0}
@@ -277,6 +279,29 @@ p{margin:0}
 .v-pulse{fill:none;stroke:var(--constructive);stroke-width:1.2;opacity:.5;transform-origin:220px 150px;animation:vp 3s ease-out infinite}
 @keyframes vp{0%{transform:scale(.6);opacity:.55}100%{transform:scale(1.35);opacity:0}}
 .d-c2{fill:var(--curious)}.d-k2{fill:var(--caring)}.d-l2{fill:var(--chill-bright)}
+
+/* project 04 art: shared die */
+.si-svg{width:100%;height:auto;max-width:460px}
+.si-die{fill:var(--surface);stroke:var(--constructive);stroke-width:1.6}
+.si-pad{fill:var(--surface2);stroke:rgba(0,229,160,.45);stroke-width:1}
+.si-core{fill:var(--screen);stroke:var(--mat3);stroke-width:1}
+.si-tile{fill:rgba(0,229,160,.05);stroke:rgba(0,229,160,.28);stroke-width:1}
+.si-o-c{fill:rgba(245,200,66,.16);stroke:rgba(245,200,66,.55);stroke-width:1}
+.si-o-k{fill:rgba(255,95,126,.16);stroke:rgba(255,95,126,.55);stroke-width:1}
+.si-o-l{fill:rgba(123,108,255,.2);stroke:rgba(155,143,255,.6);stroke-width:1}
+.si-open{fill:none;stroke:var(--muted);stroke-width:1;stroke-dasharray:3 3}
+.si-mine{fill:rgba(0,229,160,.34);stroke:var(--constructive);stroke-width:1.6}
+.si-glow{fill:none;stroke:var(--constructive);stroke-width:1.2;animation:sig 2.4s ease-in-out infinite}
+@keyframes sig{50%{opacity:.12}}
+.si-cells{fill:none;stroke:var(--text);stroke-width:1;opacity:.6}
+.si-spine{fill:rgba(0,229,160,.18);stroke:rgba(0,229,160,.5);stroke-width:1}
+.si-ctrl{fill:var(--surface2);stroke:rgba(0,229,160,.35);stroke-width:1}
+.si-ctxt{fill:rgba(0,229,160,.6);font-family:var(--f-mono);font-size:8.5px;letter-spacing:.08em}
+.si-call{fill:none;stroke:var(--constructive);stroke-width:1.2}
+.si-call-m{stroke:var(--muted)}
+.si-dot{fill:var(--constructive)}
+.si-lbl{fill:var(--muted);font-family:var(--f-mono);font-size:10.5px;letter-spacing:.03em}
+.si-lbl-b{fill:var(--constructive);font-family:var(--f-mono);font-size:10.5px;font-weight:600;letter-spacing:.06em}
 
 /* cycle */
 .cycle{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px;position:relative;list-style:none;margin:0;padding:0}
@@ -363,6 +388,7 @@ p{margin:0}
   <symbol id="ic-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></symbol>
   <symbol id="ic-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="20" x="5" y="2" rx="2"/><path d="M12 18h.01"/></symbol>
   <symbol id="ic-blocks" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="13" width="8" height="8"/><rect x="13" y="13" width="8" height="8"/><rect x="8" y="3" width="8" height="8"/></symbol>
+  <symbol id="ic-wafer" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 8h3v3H8zM13 8h3v3h-3zM8 13h3v3H8zM13 13h3v3h-3z"/></symbol>
   <symbol id="ic-cpu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M15 2v2M9 2v2M15 20v2M9 20v2M20 15h2M20 9h2M2 15h2M2 9h2"/></symbol>
 </svg>
 
@@ -411,13 +437,14 @@ p{margin:0}
     <div class="sec-head reveal">
       <span class="eyebrow">on the bench</span>
       <h2 class="h2">Projects you can <em>actually finish.</em></h2>
-      <p class="lede">Three projects on the bench: a computer you assemble, a world you build block by block, and a network you help keep honest. Each one starts small and runs on all four modes.</p>
+      <p class="lede">Four projects on the bench: a computer you assemble, a world you build block by block, a network you help keep honest, and a chip you design and learn to verify. Each one starts small and runs on all four modes.</p>
     </div>
 
     <nav class="pindex reveal" aria-label="Projects on this page">
       <a href="#p01"><span class="serial">01</span><b>Cyberdeck</b><span class="pk"><svg class="icon"><use href="#ic-cpu"/></svg>Hardware · a weekend</span></a>
       <a href="#p02"><span class="serial">02</span><b>Build Your World</b><span class="pk"><svg class="icon"><use href="#ic-blocks"/></svg>Play · kids &amp; adults</span></a>
       <a href="#p03"><span class="serial">03</span><b>Verify the Network</b><span class="pk"><svg class="icon"><use href="#ic-phone"/></svg>Phone · runs in the background</span></a>
+      <a href="#p04"><span class="serial">04</span><b>Open Silicon</b><span class="pk"><svg class="icon"><use href="#ic-wafer"/></svg>Silicon · browser to wafer</span></a>
     </nav>
 
     <article class="project reveal" id="p01" aria-labelledby="p01-h">
@@ -510,10 +537,48 @@ p{margin:0}
       <p class="pnote">No activation credits are required right now. Later, keeping the app running is expected to cost about US$2 a month (to be confirmed), taken from rewards. The app shows the current terms before you commit.</p>
     </article>
 
+    <article class="project flip reveal" id="p04" aria-labelledby="p04-h">
+      <div class="project-copy">
+        <div class="chips"><span class="serial">PROJECT 04</span><span class="tag t-k">Silicon</span><span class="tag">3 build paths</span><span class="tag">selfdriven.computer</span></div>
+        <h3 class="h3" id="p04-h">Open Silicon</h3>
+        <p class="quote q-k">Trust needs a verifiable floor.</p>
+        <p class="d">Every key and signature in a trust stack finally runs on a chip. Design one with free tools, put it on a shared wafer with hundreds of others, and learn what it takes to check one. Start in the browser tonight; hold your own silicon in about a year.</p>
+        <div class="btn-row"><a class="btn btn-ghost" href="/open-silicon">Make a chip <svg class="icon"><use href="#ic-arrow"/></svg></a><a class="btn btn-ghost" href="https://www.selfdriven.computer/open-silicon">Why it matters <svg class="icon"><use href="#ic-out"/></svg></a></div>
+      </div>
+      <div class="project-art"><div class="mat"></div><svg class="si-svg" viewBox="0 0 440 336" role="img" aria-label="Line drawing of a shared chip die: a ring of bond pads around a grid of small design tiles in several colours, a selector spine across the middle, and one highlighted tile labelled your tile.">
+  <path class="d-dim" d="M12 20v276M8 20h8M8 296h8"/>
+  <text class="d-dimtxt" transform="translate(9 158) rotate(-90)" text-anchor="middle">ONE SHARED DIE</text>
+  <rect class="si-die" x="24" y="20" width="296" height="276" rx="12"/>
+  <rect class="si-pad" x="44" y="26" width="10" height="10" rx="1.5"/><rect class="si-pad" x="44" y="280" width="10" height="10" rx="1.5"/><rect class="si-pad" x="62" y="26" width="10" height="10" rx="1.5"/><rect class="si-pad" x="62" y="280" width="10" height="10" rx="1.5"/><rect class="si-pad" x="80" y="26" width="10" height="10" rx="1.5"/><rect class="si-pad" x="80" y="280" width="10" height="10" rx="1.5"/><rect class="si-pad" x="98" y="26" width="10" height="10" rx="1.5"/><rect class="si-pad" x="98" y="280" width="10" height="10" rx="1.5"/><rect class="si-pad" x="116" y="26" width="10" height="10" rx="1.5"/><rect class="si-pad" x="116" y="280" width="10" height="10" rx="1.5"/><rect class="si-pad" x="134" y="26" width="10" height="10" rx="1.5"/><rect class="si-pad" x="134" y="280" width="10" height="10" rx="1.5"/><rect class="si-pad" x="152" y="26" width="10" height="10" rx="1.5"/><rect class="si-pad" x="152" y="280" width="10" height="10" rx="1.5"/><rect class="si-pad" x="170" y="26" width="10" height="10" rx="1.5"/><rect class="si-pad" x="170" y="280" width="10" height="10" rx="1.5"/><rect class="si-pad" x="188" y="26" width="10" height="10" rx="1.5"/><rect class="si-pad" x="188" y="280" width="10" height="10" rx="1.5"/><rect class="si-pad" x="206" y="26" width="10" height="10" rx="1.5"/><rect class="si-pad" x="206" y="280" width="10" height="10" rx="1.5"/><rect class="si-pad" x="224" y="26" width="10" height="10" rx="1.5"/><rect class="si-pad" x="224" y="280" width="10" height="10" rx="1.5"/><rect class="si-pad" x="242" y="26" width="10" height="10" rx="1.5"/><rect class="si-pad" x="242" y="280" width="10" height="10" rx="1.5"/><rect class="si-pad" x="260" y="26" width="10" height="10" rx="1.5"/><rect class="si-pad" x="260" y="280" width="10" height="10" rx="1.5"/><rect class="si-pad" x="278" y="26" width="10" height="10" rx="1.5"/><rect class="si-pad" x="278" y="280" width="10" height="10" rx="1.5"/><rect class="si-pad" x="296" y="26" width="10" height="10" rx="1.5"/><rect class="si-pad" x="296" y="280" width="10" height="10" rx="1.5"/><rect class="si-pad" x="30" y="52" width="10" height="10" rx="1.5"/><rect class="si-pad" x="304" y="52" width="10" height="10" rx="1.5"/><rect class="si-pad" x="30" y="69" width="10" height="10" rx="1.5"/><rect class="si-pad" x="304" y="69" width="10" height="10" rx="1.5"/><rect class="si-pad" x="30" y="86" width="10" height="10" rx="1.5"/><rect class="si-pad" x="304" y="86" width="10" height="10" rx="1.5"/><rect class="si-pad" x="30" y="103" width="10" height="10" rx="1.5"/><rect class="si-pad" x="304" y="103" width="10" height="10" rx="1.5"/><rect class="si-pad" x="30" y="120" width="10" height="10" rx="1.5"/><rect class="si-pad" x="304" y="120" width="10" height="10" rx="1.5"/><rect class="si-pad" x="30" y="137" width="10" height="10" rx="1.5"/><rect class="si-pad" x="304" y="137" width="10" height="10" rx="1.5"/><rect class="si-pad" x="30" y="154" width="10" height="10" rx="1.5"/><rect class="si-pad" x="304" y="154" width="10" height="10" rx="1.5"/><rect class="si-pad" x="30" y="171" width="10" height="10" rx="1.5"/><rect class="si-pad" x="304" y="171" width="10" height="10" rx="1.5"/><rect class="si-pad" x="30" y="188" width="10" height="10" rx="1.5"/><rect class="si-pad" x="304" y="188" width="10" height="10" rx="1.5"/><rect class="si-pad" x="30" y="205" width="10" height="10" rx="1.5"/><rect class="si-pad" x="304" y="205" width="10" height="10" rx="1.5"/><rect class="si-pad" x="30" y="222" width="10" height="10" rx="1.5"/><rect class="si-pad" x="304" y="222" width="10" height="10" rx="1.5"/><rect class="si-pad" x="30" y="239" width="10" height="10" rx="1.5"/><rect class="si-pad" x="304" y="239" width="10" height="10" rx="1.5"/><rect class="si-pad" x="30" y="256" width="10" height="10" rx="1.5"/><rect class="si-pad" x="304" y="256" width="10" height="10" rx="1.5"/>
+  <rect class="si-core" x="52" y="50" width="240" height="216" rx="4"/>
+  <rect class="si-o-l" x="62" y="62" width="28" height="49" rx="2"/><rect class="si-tile" x="94" y="62" width="28" height="22" rx="2"/><rect class="si-tile" x="126" y="62" width="28" height="22" rx="2"/><rect class="si-tile" x="158" y="62" width="28" height="22" rx="2"/><rect class="si-o-c" x="190" y="62" width="28" height="22" rx="2"/><rect class="si-tile" x="222" y="62" width="28" height="22" rx="2"/><rect class="si-tile" x="254" y="62" width="28" height="22" rx="2"/><rect class="si-tile" x="94" y="89" width="28" height="22" rx="2"/><rect class="si-tile" x="126" y="89" width="28" height="22" rx="2"/><rect class="si-tile" x="158" y="89" width="28" height="22" rx="2"/><rect class="si-tile" x="190" y="89" width="28" height="22" rx="2"/><rect class="si-tile" x="222" y="89" width="28" height="22" rx="2"/><rect class="si-tile" x="62" y="116" width="28" height="22" rx="2"/><rect class="si-tile" x="94" y="116" width="28" height="22" rx="2"/><rect class="si-tile" x="126" y="116" width="28" height="22" rx="2"/><rect class="si-o-k" x="158" y="116" width="28" height="22" rx="2"/><rect class="si-tile" x="190" y="116" width="28" height="22" rx="2"/><rect class="si-tile" x="222" y="116" width="28" height="22" rx="2"/><rect class="si-o-l" x="254" y="116" width="28" height="22" rx="2"/><rect class="si-tile" x="62" y="160" width="28" height="22" rx="2"/><rect class="si-o-c" x="94" y="160" width="60" height="22" rx="2"/><rect class="si-tile" x="158" y="160" width="28" height="22" rx="2"/><rect class="si-tile" x="190" y="160" width="28" height="22" rx="2"/><rect class="si-tile" x="222" y="160" width="28" height="22" rx="2"/><rect class="si-tile" x="254" y="160" width="28" height="22" rx="2"/><rect class="si-o-l" x="62" y="187" width="28" height="22" rx="2"/><rect class="si-tile" x="94" y="187" width="28" height="22" rx="2"/><rect class="si-tile" x="126" y="187" width="28" height="22" rx="2"/><rect class="si-tile" x="158" y="187" width="28" height="22" rx="2"/><rect class="si-o-k" x="190" y="187" width="28" height="22" rx="2"/><rect class="si-tile" x="222" y="187" width="28" height="22" rx="2"/><rect class="si-tile" x="254" y="187" width="28" height="22" rx="2"/><rect class="si-tile" x="62" y="214" width="28" height="22" rx="2"/><rect class="si-tile" x="94" y="214" width="28" height="22" rx="2"/><rect class="si-o-k" x="126" y="214" width="28" height="22" rx="2"/><rect class="si-tile" x="158" y="214" width="28" height="22" rx="2"/><rect class="si-tile" x="190" y="214" width="28" height="22" rx="2"/><rect class="si-o-c" x="222" y="214" width="28" height="22" rx="2"/><rect class="si-open" x="254" y="214" width="28" height="22" rx="2"/>
+  <rect class="si-spine" x="62" y="144" width="220" height="10" rx="2"/>
+  <rect class="si-ctrl" x="62" y="244" width="220" height="14" rx="2"/>
+  <text class="si-ctxt" x="172" y="254" text-anchor="middle">CTRL · CLK · RST_N</text>
+  <rect class="si-glow" x="250" y="85" width="36" height="30" rx="4"/>
+  <rect class="si-mine" x="254" y="89" width="28" height="22" rx="2"/>
+  <path class="si-cells" d="M258 95h20M258 100h20M258 105h13"/>
+  <path class="si-call" d="M282 100H334"/><circle class="si-dot" cx="334" cy="100" r="2.2"/>
+  <text class="si-lbl-b" x="340" y="97">YOUR TILE</text><text class="si-lbl" x="340" y="111">~160×100 µm</text><text class="si-lbl" x="340" y="124">24 IO · CLK</text>
+  <path class="si-call si-call-m" d="M282 149H334"/><circle class="si-dot" cx="334" cy="149" r="2.2"/>
+  <text class="si-lbl-b" x="340" y="153">MUX</text><text class="si-lbl" x="340" y="166">picks one</text>
+  <path class="si-call si-call-m" d="M314 244H334"/><circle class="si-dot" cx="334" cy="244" r="2.2"/>
+  <text class="si-lbl-b" x="340" y="248">PAD RING</text><text class="si-lbl" x="340" y="261">to the pins</text>
+  <text class="d-dimtxt" x="172" y="322" text-anchor="middle">SD-04 · ONE TILE ON A SHARED DIE</text>
+</svg></div>
+      <ol class="stations">
+        <li><a href="/open-silicon#paths"><span class="sk">First Tile</span><b>Logic gates in the browser.</b><span>An evening, via Tiny Tapeout.</span></a></li>
+        <li><a href="/open-silicon#paths"><span class="sk">Verilog Tile</span><b>RTL to layout on every push.</b><span>A weekend with GitHub Actions.</span></a></li>
+        <li><a href="/open-silicon#paths"><span class="sk">Own Die</span><b>1,000 copies of your chip.</b><span>A wafer.space slot on GF180MCU.</span></a></li>
+        <li><a href="/open-silicon#verify"><span class="sk">Verify</span><b>Or check one instead.</b><span>Read an open root of trust.</span></a></li>
+      </ol>
+      <p class="pnote">From €185 for a tile, a dev kit with your chip on it, and shipping, at Tiny Tapeout's individual price, which is limited per shuttle (€385 full price; checked 15 November 2026). Chips take six to nine months to make.</p>
+    </article>
+
     <div class="slot reveal">
       <div class="l">
         <span class="plus"><svg class="icon"><use href="#ic-plus"/></svg></span>
-        <div><span class="serial">PROJECT 04</span><h3 class="h3" style="margin-top:10px">The next bench space is open.</h3><p>Built something others could make? build grows one finished, documented project at a time. Activators help shape what comes next.</p></div>
+        <div><span class="serial">PROJECT 05</span><h3 class="h3" style="margin-top:10px">The next bench space is open.</h3><p>Built something others could make? build grows one finished, documented project at a time. Activators help shape what comes next.</p></div>
       </div>
       <a class="btn btn-ghost" href="https://selfdriven.you/activators">Become an Activator <svg class="icon"><use href="#ic-out"/></svg></a>
     </div>
@@ -607,6 +672,7 @@ p{margin:0}
           <li><a href="/cyberdeck-pocket-build-guide">Pocket Deck build guide</a></li>
           <li><a href="/build-your-world">Build Your World</a></li>
           <li><a href="/verify-the-network">Verify the Network</a></li>
+          <li><a href="/open-silicon">Open Silicon</a></li>
         </ul>
       </div>
       <div>

@@ -1,0 +1,790 @@
+---
+layout: null
+title: Open Silicon · build
+permalink: /open-silicon
+---
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Open Silicon · Make a chip. Verify a chip. · build</title>
+<meta name="description" content="Make a real chip with free tools and a shared wafer, starting in your browser tonight, and learn what it takes to verify one. The build companion to Open Silicon on selfdriven.computer.">
+<meta name="theme-color" content="#09090f"><meta name="color-scheme" content="dark">
+<link rel="canonical" href="https://selfdriven.build/open-silicon">
+<meta property="og:type" content="article"><meta property="og:site_name" content="selfdriven.build">
+<meta property="og:title" content="Open Silicon · Make a chip. Verify a chip."><meta property="og:description" content="Make a real chip with free tools and a shared wafer, starting in your browser tonight, and learn what it takes to verify one."><meta property="og:url" content="https://selfdriven.build/open-silicon">
+<meta name="twitter:card" content="summary">
+<link rel="icon" type="image/png" href="/assets/img/selfdriven-build-logo-round-mint.png">
+<link rel="apple-touch-icon" href="/assets/img/selfdriven-build-logo-round-mint.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* Project 04 · Open Silicon. The workbench system from the home page:
+   glass nav, cutting-mat hero with a ruler edge, 1120px column, dark 4Cs led by Constructive mint. */
+:root{
+  --bg:#09090f; --surface:#111118; --surface2:#18181f;
+  --border:rgba(255,255,255,.08); --border2:rgba(255,255,255,.14);
+  --text:#f0eeff; --muted:#7e7a9a; --muted2:#3d3a55;
+  --curious:#f5c842; --caring:#ff5f7e; --constructive:#00e5a0; --chill:#7b6cff; --chill-bright:#9b8fff;
+  --curious-dim:rgba(245,200,66,.13); --caring-dim:rgba(255,95,126,.13);
+  --constructive-dim:rgba(0,229,160,.13); --chill-dim:rgba(123,108,255,.13);
+  --mat:rgba(0,229,160,.055); --mat2:rgba(0,229,160,.13); --mat3:rgba(0,229,160,.45);
+  --screen:#04100c; --ink-on-mint:#03140e; --scrim:rgba(9,9,15,.55); --navbg:rgba(9,9,15,.72);
+  --pill:999px;
+  --f-display:'Bricolage Grotesque',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif;
+  --f-body:'DM Sans',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif;
+  --f-mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --wrap:1120px;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;scroll-padding-top:84px}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--f-body);font-size:17px;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+::selection{background:var(--constructive);color:var(--bg)}
+img{max-width:100%;display:block}
+a{color:inherit}
+p{margin:0}
+:focus-visible{outline:2px solid var(--constructive);outline-offset:3px;border-radius:8px}
+.wrap{max-width:var(--wrap);margin:0 auto;padding-inline:24px}
+@media (max-width:520px){.wrap{padding-inline:18px}}
+.icon{width:1em;height:1em;flex:none}
+code,.mono{font-family:var(--f-mono)}
+code{font-size:.88em;color:var(--constructive);background:var(--constructive-dim);padding:1px 6px;border-radius:6px}
+
+/* custom cursor (desktop only, added by script) */
+.cursor-dot,.cursor-ring{display:none}
+.cur body,.cur a,.cur button{cursor:none}
+.cur .cursor-dot{display:block;position:fixed;top:0;left:0;width:8px;height:8px;border-radius:50%;background:var(--constructive);pointer-events:none;z-index:9999;transform:translate(-50%,-50%)}
+.cur .cursor-ring{display:block;position:fixed;top:0;left:0;width:34px;height:34px;border-radius:50%;border:1.5px solid rgba(240,238,255,.3);pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .2s,height .2s,border-color .2s}
+
+/* nav */
+.nav{position:fixed;top:0;left:0;right:0;z-index:50;padding-top:env(safe-area-inset-top,0px);background:var(--navbg);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid var(--border)}
+.nav-in{display:flex;align-items:center;gap:16px;height:64px}
+.brand{display:inline-flex;align-items:center;gap:10px;font-family:var(--f-display);font-weight:800;font-size:21px;letter-spacing:-.04em;text-decoration:none;white-space:nowrap}
+.brand em{font-style:normal;color:var(--constructive)}
+.crumb{font-family:var(--f-mono);font-size:12px;color:var(--muted);letter-spacing:.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.crumb a{text-decoration:none}.crumb a:hover{color:var(--text)}
+.nav-links{display:flex;gap:2px;margin-left:auto;align-items:center}
+.nav-links a{font-size:14px;font-weight:500;color:var(--muted);text-decoration:none;padding:8px 12px;border-radius:var(--pill);transition:color .2s,background .2s;white-space:nowrap}
+.nav-links a:hover{color:var(--text);background:rgba(255,255,255,.05)}
+.nav-links a.nav-cta{color:var(--constructive);border:1.5px solid rgba(0,229,160,.32);background:var(--constructive-dim);font-weight:600;margin-left:8px;display:inline-flex;align-items:center;gap:6px}
+.nav-links a.nav-cta:hover{background:rgba(0,229,160,.2)}
+@media (max-width:980px){.nav-links a:not(.nav-cta){display:none}}
+@media (max-width:460px){.crumb{display:none}.nav-links a.nav-cta{padding:7px 12px;font-size:13px}}
+
+/* hero: blobs + cutting mat + ruler */
+.hero{position:relative;overflow:hidden;isolation:isolate;padding-top:calc(128px + env(safe-area-inset-top,0px))}
+.gblob{position:absolute;border-radius:50%;filter:blur(95px);z-index:-2;pointer-events:none}
+.gb1{width:420px;height:420px;background:var(--curious);top:-170px;left:-170px;animation:gb 15s ease-in-out infinite;opacity:.26}
+.gb2{width:380px;height:380px;background:var(--caring);top:40px;right:-170px;animation:gb 19s ease-in-out infinite reverse;opacity:.24}
+.gb3{width:620px;height:520px;background:var(--constructive);top:120px;left:18%;animation:gb 23s ease-in-out infinite 3s;opacity:.34}
+.gb4{width:320px;height:320px;background:var(--chill);bottom:-80px;right:12%;animation:gb 17s ease-in-out infinite 8s;opacity:.36}
+@keyframes gb{0%,100%{transform:translate(0,0) scale(1)}40%{transform:translate(34px,-26px) scale(1.08)}70%{transform:translate(-22px,30px) scale(.93)}}
+.mat{position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background-image:linear-gradient(var(--mat2) 1px,transparent 1px),linear-gradient(90deg,var(--mat2) 1px,transparent 1px),linear-gradient(var(--mat) 1px,transparent 1px),linear-gradient(90deg,var(--mat) 1px,transparent 1px);
+  background-size:100px 100px,100px 100px,20px 20px,20px 20px;background-position:-1px -1px;
+  -webkit-mask-image:radial-gradient(ellipse 85% 75% at 50% 45%,#000 35%,transparent 85%);mask-image:radial-gradient(ellipse 85% 75% at 50% 45%,#000 35%,transparent 85%)}
+.ruler{position:relative;height:38px;margin-top:72px;border-top:1px solid var(--border2);overflow:hidden;white-space:nowrap;
+  background:repeating-linear-gradient(90deg,var(--mat2) 0 1px,transparent 1px 10px) left top/100% 8px no-repeat,repeating-linear-gradient(90deg,transparent 0 50px,var(--mat2) 50px 51px,transparent 51px 100px) left top/100% 13px no-repeat,repeating-linear-gradient(90deg,var(--mat3) 0 1px,transparent 1px 100px) left top/100% 18px no-repeat}
+.ruler span{display:inline-block;width:100px;padding:19px 0 0 4px;font-family:var(--f-mono);font-size:10px;color:var(--muted);letter-spacing:.04em}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);gap:40px;align-items:center}
+.hero-pill{display:inline-flex;align-items:center;gap:8px;background:var(--scrim);border:1px solid rgba(255,255,255,.22);border-radius:var(--pill);padding:8px 18px;font-size:12px;font-weight:500;color:rgba(240,238,255,.75);letter-spacing:.08em;text-transform:uppercase;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.hero-pill .dot{width:7px;height:7px;border-radius:50%;background:var(--constructive);animation:pulse 2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(0,229,160,.55)}70%{box-shadow:0 0 0 9px rgba(0,229,160,0)}100%{box-shadow:0 0 0 0 rgba(0,229,160,0)}}
+.hero h1{font-family:var(--f-display);font-weight:800;letter-spacing:-.05em;line-height:.92;font-size:clamp(46px,6.4vw,90px);margin:24px 0 0;text-wrap:balance}
+.hero h1 .l2{display:block;color:var(--constructive)}
+.hero .lede{margin-top:28px;font-size:19px;color:rgba(240,238,255,.78);max-width:56ch}
+.hero .lede b{color:var(--text);font-weight:600}
+.hero-meta{display:flex;flex-wrap:wrap;gap:10px 24px;margin:26px 0 32px;font-family:var(--f-mono);font-size:12.5px;color:var(--muted);list-style:none;padding:0}
+.hero-meta li{display:inline-flex;align-items:center;gap:8px}
+.hero-meta .icon{font-size:15px;color:var(--constructive)}
+.hero-art{display:grid;place-items:center;position:relative}
+.hero-art::before{content:'';position:absolute;inset:6% 2%;background:radial-gradient(ellipse at center,var(--scrim),transparent 70%);z-index:-1}
+@media (max-width:520px){.pill-x{display:none}}
+@media (max-width:900px){.hero-grid{grid-template-columns:1fr}.hero-art{max-width:460px;margin-inline:auto;width:100%}}
+
+/* buttons + tags */
+.btn{display:inline-flex;align-items:center;gap:10px;padding:14px 24px;border-radius:var(--pill);font-family:var(--f-display);font-weight:700;font-size:16px;letter-spacing:-.01em;text-decoration:none;transition:transform .2s,box-shadow .2s,background .2s,border-color .2s,color .2s;border:1.5px solid transparent}
+.btn .icon{font-size:18px}
+.btn-primary{background:var(--constructive);color:var(--ink-on-mint)}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 14px 36px rgba(0,229,160,.28)}
+.btn-ghost{border-color:var(--border2);color:var(--text);background:var(--scrim)}
+.btn-ghost:hover{border-color:rgba(0,229,160,.5);color:var(--constructive);transform:translateY(-3px)}
+.btn-row{display:flex;flex-wrap:wrap;gap:12px}
+.tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:5px 10px;border-radius:var(--pill);border:1px solid var(--border2);color:var(--muted);white-space:nowrap}
+.t-b{color:var(--constructive);border-color:rgba(0,229,160,.3);background:var(--constructive-dim)}
+.serial{font-family:var(--f-mono);font-size:11px;color:var(--muted);border:1px solid var(--border2);border-radius:6px;padding:3px 7px;letter-spacing:.06em;white-space:nowrap}
+
+/* sections + type */
+.block{padding-block:112px;border-top:1px solid var(--border)}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--constructive);display:inline-flex;align-items:center;gap:10px}
+.eyebrow::before{content:'//';color:var(--muted2);letter-spacing:0}
+.h2{font-family:var(--f-display);font-weight:800;letter-spacing:-.04em;line-height:1.02;font-size:clamp(36px,5.6vw,64px);margin:14px 0 0;text-wrap:balance}
+.h2 em{font-style:normal;color:var(--constructive)}
+.h3{font-family:var(--f-display);font-weight:700;letter-spacing:-.03em;line-height:1.15;font-size:24px;margin:0;text-wrap:balance}
+.lede{font-size:19px;line-height:1.6;color:var(--muted);max-width:60ch;margin-top:18px}
+.lede strong{color:var(--text);font-weight:600}
+.lede a{color:var(--text);text-underline-offset:3px;text-decoration-color:var(--muted2)}
+.sec-head{margin-bottom:52px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:22px}
+
+/* marquee */
+.marquee{border-block:1px solid var(--border);overflow:hidden;padding-block:18px;background:var(--surface)}
+.marquee-track{display:flex;width:max-content;animation:mq 46s linear infinite;font-family:var(--f-display);font-weight:700;font-size:22px;letter-spacing:-.02em;white-space:nowrap}
+.marquee-track span{padding-right:30px;color:var(--muted)}
+.marquee-track span b{color:var(--constructive);font-weight:700}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* die drawing */
+.si-svg{width:100%;height:auto;max-width:460px}
+.si-die{fill:var(--surface);stroke:var(--constructive);stroke-width:1.6}
+.si-pad{fill:var(--surface2);stroke:rgba(0,229,160,.45);stroke-width:1}
+.si-core{fill:var(--screen);stroke:var(--mat3);stroke-width:1}
+.si-tile{fill:rgba(0,229,160,.05);stroke:rgba(0,229,160,.28);stroke-width:1}
+.si-o-c{fill:rgba(245,200,66,.16);stroke:rgba(245,200,66,.55);stroke-width:1}
+.si-o-k{fill:rgba(255,95,126,.16);stroke:rgba(255,95,126,.55);stroke-width:1}
+.si-o-l{fill:rgba(123,108,255,.2);stroke:rgba(155,143,255,.6);stroke-width:1}
+.si-open{fill:none;stroke:var(--muted);stroke-width:1;stroke-dasharray:3 3}
+.si-mine{fill:rgba(0,229,160,.34);stroke:var(--constructive);stroke-width:1.6}
+.si-glow{fill:none;stroke:var(--constructive);stroke-width:1.2;animation:sig 2.4s ease-in-out infinite}
+@keyframes sig{50%{opacity:.12}}
+.si-cells{fill:none;stroke:var(--text);stroke-width:1;opacity:.6}
+.si-spine{fill:rgba(0,229,160,.18);stroke:rgba(0,229,160,.5);stroke-width:1}
+.si-ctrl{fill:var(--surface2);stroke:rgba(0,229,160,.35);stroke-width:1}
+.si-ctxt{fill:rgba(0,229,160,.6);font-family:var(--f-mono);font-size:8.5px;letter-spacing:.08em}
+.si-call{fill:none;stroke:var(--constructive);stroke-width:1.2}
+.si-call-m{stroke:var(--muted)}
+.si-dot{fill:var(--constructive)}
+.si-lbl{fill:var(--muted);font-family:var(--f-mono);font-size:10.5px;letter-spacing:.03em}
+.si-lbl-b{fill:var(--constructive);font-family:var(--f-mono);font-size:10.5px;font-weight:600;letter-spacing:.06em}
+.d-dim{fill:none;stroke:var(--muted);stroke-width:1}
+.d-dimtxt{fill:var(--muted);font-family:var(--f-mono);font-size:10.5px;letter-spacing:.04em}
+
+/* idea: the stack with Layer 00 under it */
+.idea{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:64px;align-items:start}
+.stack{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.stack li{display:grid;grid-template-columns:40px minmax(0,1fr) auto;align-items:center;gap:12px;padding:11px 16px;border-radius:12px;border:1px solid var(--border);background:var(--surface)}
+.stack .n{font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.stack b{display:block;font-family:var(--f-display);font-weight:700;font-size:16px;letter-spacing:-.02em;line-height:1.25}
+.stack small{display:block;color:var(--muted);font-size:13.5px;line-height:1.35}
+.stack li:not(.floor){opacity:.78}
+.stack li.floor{position:relative;overflow:hidden;isolation:isolate;padding-block:18px;border:1.5px solid rgba(0,229,160,.55);background:var(--constructive-dim);box-shadow:0 0 0 5px rgba(0,229,160,.08)}
+.stack li.floor .mat{-webkit-mask-image:none;mask-image:none;opacity:.8}
+.stack li.floor .n{color:var(--constructive)}
+.stack li.floor b{font-size:20px}
+.stack-note{display:flex;gap:10px;align-items:center;margin-top:14px;font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.stack-note .icon{color:var(--constructive);font-size:15px}
+.stack-note a{color:var(--text);text-underline-offset:3px;text-decoration-color:var(--muted2)}
+.reasons{list-style:none;margin:40px 0 0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:20px;overflow:hidden}
+.reasons li{background:var(--surface);padding:22px 22px 24px;display:grid;gap:6px;align-content:start;min-width:0}
+.reasons .k{display:inline-flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--constructive)}
+.reasons .k .icon{font-size:14px}
+.reasons b{font-family:var(--f-display);font-weight:700;font-size:18px;letter-spacing:-.02em;line-height:1.25}
+.reasons span:last-child{color:var(--muted);font-size:15px}
+.balance{margin-top:22px;padding:22px 24px}
+.balance .row{display:grid;grid-template-columns:118px minmax(0,1fr);gap:16px;padding:10px 0;border-bottom:1px dashed var(--border)}
+.balance .row:last-of-type{border-bottom:0}
+.balance dt{font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding-top:3px}
+.balance dd{margin:0;font-weight:500}
+@media (max-width:900px){.idea{grid-template-columns:1fr;gap:40px}}
+@media (max-width:620px){.reasons{grid-template-columns:1fr}.balance .row{grid-template-columns:1fr;gap:2px}}
+
+/* build paths (spec plates) */
+.builds{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border:1px solid var(--border2);border-radius:28px;overflow:hidden;background:linear-gradient(180deg,var(--surface),var(--bg) 80%)}
+.plate{display:flex;flex-direction:column;gap:18px;text-decoration:none;padding:30px 28px;position:relative;transition:background .25s;min-width:0}
+.plate+.plate{border-left:1px solid var(--border)}
+.plate:hover{background:rgba(0,229,160,.035)}
+.plate-top{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap}
+.plate .board{font-family:var(--f-mono);font-size:12px;color:var(--constructive);letter-spacing:.05em;text-transform:uppercase;display:block;margin-bottom:6px}
+.plate h3{font-family:var(--f-display);font-weight:800;font-size:30px;letter-spacing:-.035em;line-height:1;margin:0}
+.plate p{color:var(--muted);font-size:16px}
+.specs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin:0}
+.specs div{background:var(--bg);padding:11px 14px;min-width:0}
+.specs dt{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.specs dd{margin:3px 0 0;font-weight:600;font-size:15px;font-variant-numeric:tabular-nums;line-height:1.35}
+.go{margin-top:auto;display:inline-flex;align-items:center;gap:8px;font-family:var(--f-display);font-weight:700;color:var(--constructive);font-size:16px}
+.go .icon{transition:transform .2s}
+.plate:hover .go .icon{transform:translate(2px,-2px)}
+.pnote{margin-top:16px;font-size:13.5px;color:var(--muted);max-width:92ch}
+.pnote a{color:var(--text);text-underline-offset:3px;text-decoration-color:var(--muted2)}
+@media (max-width:980px){.builds{grid-template-columns:1fr}.plate+.plate{border-left:0;border-top:1px solid var(--border)}.plate{padding:26px}}
+
+/* the flow: six steps, select one to see it */
+.flow{display:grid;grid-template-columns:minmax(0,.78fr) minmax(0,1.22fr);gap:20px;align-items:start}
+.flow-list{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.flow-step{all:unset;box-sizing:border-box;display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:14px;row-gap:1px;align-items:center;width:100%;padding:14px 18px;border-radius:16px;border:1px solid var(--border);background:var(--surface);cursor:pointer;transition:border-color .2s,background .2s}
+.flow-step:hover{border-color:rgba(0,229,160,.3)}
+.flow-step:focus-visible{outline:2px solid var(--constructive);outline-offset:3px}
+.flow-step .serial{grid-row:span 2}
+.flow-step b{font-family:var(--f-display);font-weight:700;font-size:18px;letter-spacing:-.02em;line-height:1.2}
+.flow-step small{color:var(--muted);font-size:13.5px}
+.flow-step[aria-pressed="true"]{border-color:rgba(0,229,160,.5);background:linear-gradient(90deg,rgba(0,229,160,.11),var(--surface))}
+.flow-step[aria-pressed="true"] .serial{color:var(--ink-on-mint);background:var(--constructive);border-color:var(--constructive)}
+.flow-detail{padding:30px 30px 28px;display:grid;gap:16px;min-width:0;position:sticky;top:96px}
+.fd-step{font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--constructive)}
+.flow-detail h3{font-size:30px}
+.flow-detail p{color:var(--muted)}
+.fd-tools{display:flex;flex-wrap:wrap;gap:8px}
+.code{margin:0;background:var(--screen);border:1px solid rgba(0,229,160,.22);border-radius:14px;padding:18px 20px;font-family:var(--f-mono);font-size:13px;line-height:1.7;color:var(--constructive);overflow-x:auto;white-space:pre}
+.code .c{color:var(--muted)}.code .p{color:rgba(0,229,160,.55)}.code .k{color:var(--chill-bright)}.code .v{color:var(--curious)}.code .ok{color:var(--constructive);font-weight:600}
+@media (max-width:900px){
+  .flow{grid-template-columns:1fr}
+  .flow-list{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .flow-step small{display:none}
+  .flow-detail{position:static;padding:24px 22px}
+}
+@media (max-width:420px){.flow-step{padding:12px 14px}.flow-step b{font-size:16px}}
+
+/* four modes */
+.cycle{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px;position:relative;list-style:none;margin:0;padding:0}
+.cycle::before{content:'';position:absolute;top:28px;left:28px;right:28px;height:2px;background:linear-gradient(90deg,var(--curious),var(--constructive),var(--caring),var(--chill-bright));opacity:.45}
+.step{position:relative;min-width:0}
+.step .node{width:58px;height:58px;border-radius:50%;display:grid;place-items:center;background:var(--bg);border:1.5px solid currentColor;font-size:24px;position:relative}
+.step .node::after{content:'';position:absolute;inset:4px;border-radius:50%;background:currentColor;opacity:.13}
+.step .k{font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;margin-top:22px;display:block}
+.step .h3{margin-top:6px;color:var(--text)}
+.step p{color:var(--muted);font-size:16px;margin-top:10px}
+.s-c{color:var(--curious)}.s-b{color:var(--constructive)}.s-k{color:var(--caring)}.s-l{color:var(--chill-bright)}
+@media (max-width:900px){
+  .cycle{grid-template-columns:1fr;gap:30px}
+  .cycle::before{top:28px;bottom:28px;left:28px;right:auto;width:2px;height:auto;background:linear-gradient(180deg,var(--curious),var(--constructive),var(--caring),var(--chill-bright))}
+  .step{display:grid;grid-template-columns:58px minmax(0,1fr);column-gap:20px}
+  .step .node{grid-row:span 3}
+  .step .k{margin-top:4px}
+}
+
+/* verify */
+.checks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.check{display:flex;flex-direction:column;gap:14px;padding:28px 26px;text-decoration:none;transition:border-color .2s,transform .2s;min-width:0}
+.check:hover{border-color:rgba(0,229,160,.35);transform:translateY(-3px)}
+.check .ico{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:var(--constructive-dim);border:1px solid rgba(0,229,160,.3);color:var(--constructive);font-size:22px}
+.check p{color:var(--muted);font-size:16px}
+.check .go{font-size:15px}
+.check:hover .go .icon{transform:translate(2px,-2px)}
+.kel-line{margin-top:28px;display:flex;gap:16px;align-items:flex-start;padding:22px 24px;border-radius:18px;border:1px dashed rgba(0,229,160,.35);background:rgba(0,229,160,.04)}
+.kel-line .icon{font-size:22px;color:var(--constructive);margin-top:2px}
+.kel-line p{color:var(--muted)}
+.kel-line p b{color:var(--text);font-weight:600}
+.kel-line a{color:var(--text);text-underline-offset:3px;text-decoration-color:var(--muted2)}
+@media (max-width:900px){.checks{grid-template-columns:1fr}}
+
+/* toolbox */
+.tools{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:22px;overflow:hidden}
+.tools section{background:var(--surface);padding:24px 24px 26px;min-width:0}
+.tools h3{font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--constructive);font-weight:500;margin:0 0 14px}
+.tools ul{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.tools a{text-decoration:none;display:grid;gap:1px}
+.tools a b{font-family:var(--f-display);font-weight:700;font-size:17px;letter-spacing:-.02em;display:inline-flex;align-items:center;gap:6px}
+.tools a b .icon{font-size:13px;color:var(--muted);transition:color .2s,transform .2s}
+.tools a span{color:var(--muted);font-size:14px;line-height:1.45}
+.tools a:hover b{color:var(--constructive)}
+.tools a:hover b .icon{color:var(--constructive);transform:translate(2px,-2px)}
+@media (max-width:980px){.tools{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.tools{grid-template-columns:1fr}}
+
+/* start */
+.tasks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.task{all:unset;box-sizing:border-box;display:flex;flex-direction:column;gap:18px;padding:26px;border-radius:22px;background:var(--surface);border:1px solid var(--border);transition:border-color .2s,background .2s,transform .2s;cursor:pointer;min-width:0}
+.task:hover{border-color:rgba(0,229,160,.35);transform:translateY(-3px)}
+.task:focus-visible{outline:2px solid var(--constructive);outline-offset:3px}
+.task .when{display:flex;justify-content:space-between;align-items:center;font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--constructive)}
+.task .box{width:26px;height:26px;border-radius:8px;border:1.5px solid var(--border2);display:grid;place-items:center;color:var(--ink-on-mint);font-size:16px;transition:background .2s,border-color .2s}
+.task .box .icon{opacity:0;transform:scale(.6);transition:opacity .2s,transform .2s}
+.task .what{font-family:var(--f-display);font-weight:600;font-size:21px;letter-spacing:-.02em;line-height:1.3;color:var(--text)}
+.task .how{color:var(--muted);font-size:15px;margin-top:-6px}
+.task[aria-pressed="true"]{background:linear-gradient(180deg,rgba(0,229,160,.09),var(--surface));border-color:rgba(0,229,160,.4)}
+.task[aria-pressed="true"] .box{background:var(--constructive);border-color:var(--constructive)}
+.task[aria-pressed="true"] .box .icon{opacity:1;transform:none}
+.task[aria-pressed="true"] .what{text-decoration:line-through;text-decoration-color:rgba(0,229,160,.6);text-decoration-thickness:2px}
+.tasks-note{margin-top:18px;font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+@media (max-width:860px){.tasks{grid-template-columns:1fr}}
+
+/* closing */
+.closing{position:relative;overflow:hidden;isolation:isolate}
+.closing .gb3{top:-120px;left:30%;opacity:.26}
+.closing-in{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;flex-wrap:wrap}
+.closing .big{font-family:var(--f-display);font-weight:800;letter-spacing:-.05em;line-height:.9;font-size:clamp(56px,10vw,132px);margin:0}
+.closing .big span{color:var(--constructive)}
+
+/* footer */
+.foot{border-top:1px solid var(--border);padding-block:64px 40px;background:var(--surface)}
+.foot-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:40px}
+.foot h4{font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:500;margin:0 0 14px}
+.foot ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.foot li a{text-decoration:none;color:var(--text);font-size:15px;opacity:.85}
+.foot li a:hover{color:var(--constructive);opacity:1}
+.foot li a[aria-current]{color:var(--constructive);opacity:1}
+.foot .sign{font-family:var(--f-display);font-weight:800;letter-spacing:-.03em;font-size:26px;line-height:1.1;margin-top:18px}
+.foot .sign span{display:block}
+.foot .sign .b{color:var(--constructive)}
+.foot-note{color:var(--muted);font-size:14px;margin-top:14px;max-width:44ch}
+.foot-bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;margin-top:52px;padding-top:22px;border-top:1px solid var(--border);font-size:13px;color:var(--muted)}
+.foot-bottom a{color:var(--muted)}.foot-bottom a:hover{color:var(--text)}
+@media (max-width:760px){.foot-grid{grid-template-columns:1fr 1fr}.foot-grid>:first-child{grid-column:1/-1}}
+
+/* reveal: content is visible at rest; only below-the-fold blocks get the entrance */
+.reveal{transition:opacity .6s,transform .6s cubic-bezier(.34,1.56,.64,1)}
+.reveal.pre{opacity:0;transform:translateY(28px)}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .gblob,.marquee-track,.hero-pill .dot,.si-glow{animation:none}
+  .reveal{transition:none}
+  .btn,.go .icon,.task,.check{transition:none}
+}
+</style>
+<style id="sdb-brand">.sdb-mark{width:30px;height:30px;border-radius:50%;display:block;flex:none;filter:drop-shadow(0 0 8px rgba(0,229,160,.35))}.brand em{color:#00e5a0!important}</style>
+</head>
+<body id="top">
+<div class="cursor-dot" id="cdot"></div><div class="cursor-ring" id="cring"></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="ic-telescope" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="17" cy="13" r="3"/><path d="M3 7l5.5 2.5"/><path d="M3 7l2-4 14.5 6.5-2 4"/><path d="M8.5 9.5L6 20h5l1.5-4"/><path d="M17 16v4"/></symbol>
+  <symbol id="ic-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></symbol>
+  <symbol id="ic-hammer" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 12-8.5 8.5c-.83.83-2.17.83-3 0a2.12 2.12 0 0 1 0-3L12 9"/><path d="M17.64 15 22 10.64"/><path d="m20.91 11.7-1.25-1.25c-.6-.6-.93-1.4-.93-2.25v-.86L16.01 4.6a5.56 5.56 0 0 0-3.94-1.64H9l.92.82A6.18 6.18 0 0 1 12 8.4v1.56l2 2h2.47l2.26 1.91"/></symbol>
+  <symbol id="ic-waves" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/></symbol>
+  <symbol id="ic-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+  <symbol id="ic-out" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></symbol>
+  <symbol id="ic-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></symbol>
+  <symbol id="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="ic-cpu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M15 2v2M9 2v2M15 20v2M9 20v2M20 15h2M20 9h2M2 15h2M2 9h2"/></symbol>
+  <symbol id="ic-browser" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><path d="M7 6.5h.01M10 6.5h.01"/></symbol>
+  <symbol id="ic-wafer" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 8h3v3H8zM13 8h3v3h-3zM8 13h3v3H8zM13 13h3v3h-3z"/></symbol>
+  <symbol id="ic-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+  <symbol id="ic-key" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="15.5" r="4.5"/><path d="m10.7 12.3 9.3-9.3"/><path d="m16 7 3 3"/><path d="m19 4 2 2"/></symbol>
+  <symbol id="ic-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></symbol>
+  <symbol id="ic-layers" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></symbol>
+  <symbol id="ic-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="ic-map" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/></symbol>
+  <symbol id="ic-link" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></symbol>
+</svg>
+
+<nav class="nav" aria-label="Main">
+  <div class="wrap nav-in">
+    <a href="/" class="brand sdb-brand" aria-label="selfdriven.build home"><img class="sdb-mark" src="/assets/img/selfdriven-build-logo-round-mint.png" alt="" width="30" height="30"><span><em>build</em></span></a>
+    <span class="crumb"><a href="/#projects">projects</a> / 04 · open silicon</span>
+    <div class="nav-links">
+      <a href="#idea">The idea</a>
+      <a href="#paths">Build paths</a>
+      <a href="#flow">The flow</a>
+      <a href="#verify">Verify</a>
+      <a href="#start">Start now</a>
+      <a class="nav-cta" href="https://www.selfdriven.computer/open-silicon">selfdriven.computer <svg class="icon"><use href="#ic-out"/></svg></a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="gblob gb1"></div><div class="gblob gb2"></div><div class="gblob gb3"></div><div class="gblob gb4"></div>
+  <div class="mat"></div>
+  <div class="wrap hero-grid">
+    <div>
+      <span class="hero-pill"><span class="dot"></span>Project 04 · Silicon<span class="pill-x"> · make · verify</span></span>
+      <h1>Make a chip.<span class="l2">Verify a chip.</span></h1>
+      <p class="lede">Every key, signature and event in a trust stack finally runs on a chip. <b>Open Silicon</b> means that chip can be designed with free tools, made on a shared wafer, and checked by anyone. This is the bench for making one: start in a browser tonight, and hold your own silicon in about a year.</p>
+      <ul class="hero-meta">
+        <li><svg class="icon"><use href="#ic-browser"/></svg>Starts in a browser</li>
+        <li><svg class="icon"><use href="#ic-cpu"/></svg>A tile and a board from €185</li>
+        <li><svg class="icon"><use href="#ic-clock"/></svg>6–9 months in the fab</li>
+      </ul>
+      <div class="btn-row">
+        <a class="btn btn-primary" href="#paths">Pick a build path <svg class="icon"><use href="#ic-arrow"/></svg></a>
+        <a class="btn btn-ghost" href="https://www.selfdriven.computer/open-silicon">Why it matters <svg class="icon"><use href="#ic-out"/></svg></a>
+      </div>
+    </div>
+    <div class="hero-art">
+<svg class="si-svg" viewBox="0 0 440 336" role="img" aria-label="Line drawing of a shared chip die: a ring of bond pads around a grid of small design tiles in several colours, a selector spine across the middle, and one highlighted tile labelled your tile.">
+  <path class="d-dim" d="M12 20v276M8 20h8M8 296h8"/>
+  <text class="d-dimtxt" transform="translate(9 158) rotate(-90)" text-anchor="middle">ONE SHARED DIE</text>
+  <rect class="si-die" x="24" y="20" width="296" height="276" rx="12"/>
+  <rect class="si-pad" x="44" y="26" width="10" height="10" rx="1.5"/><rect class="si-pad" x="44" y="280" width="10" height="10" rx="1.5"/><rect class="si-pad" x="62" y="26" width="10" height="10" rx="1.5"/><rect class="si-pad" x="62" y="280" width="10" height="10" rx="1.5"/><rect class="si-pad" x="80" y="26" width="10" height="10" rx="1.5"/><rect class="si-pad" x="80" y="280" width="10" height="10" rx="1.5"/><rect class="si-pad" x="98" y="26" width="10" height="10" rx="1.5"/><rect class="si-pad" x="98" y="280" width="10" height="10" rx="1.5"/><rect class="si-pad" x="116" y="26" width="10" height="10" rx="1.5"/><rect class="si-pad" x="116" y="280" width="10" height="10" rx="1.5"/><rect class="si-pad" x="134" y="26" width="10" height="10" rx="1.5"/><rect class="si-pad" x="134" y="280" width="10" height="10" rx="1.5"/><rect class="si-pad" x="152" y="26" width="10" height="10" rx="1.5"/><rect class="si-pad" x="152" y="280" width="10" height="10" rx="1.5"/><rect class="si-pad" x="170" y="26" width="10" height="10" rx="1.5"/><rect class="si-pad" x="170" y="280" width="10" height="10" rx="1.5"/><rect class="si-pad" x="188" y="26" width="10" height="10" rx="1.5"/><rect class="si-pad" x="188" y="280" width="10" height="10" rx="1.5"/><rect class="si-pad" x="206" y="26" width="10" height="10" rx="1.5"/><rect class="si-pad" x="206" y="280" width="10" height="10" rx="1.5"/><rect class="si-pad" x="224" y="26" width="10" height="10" rx="1.5"/><rect class="si-pad" x="224" y="280" width="10" height="10" rx="1.5"/><rect class="si-pad" x="242" y="26" width="10" height="10" rx="1.5"/><rect class="si-pad" x="242" y="280" width="10" height="10" rx="1.5"/><rect class="si-pad" x="260" y="26" width="10" height="10" rx="1.5"/><rect class="si-pad" x="260" y="280" width="10" height="10" rx="1.5"/><rect class="si-pad" x="278" y="26" width="10" height="10" rx="1.5"/><rect class="si-pad" x="278" y="280" width="10" height="10" rx="1.5"/><rect class="si-pad" x="296" y="26" width="10" height="10" rx="1.5"/><rect class="si-pad" x="296" y="280" width="10" height="10" rx="1.5"/><rect class="si-pad" x="30" y="52" width="10" height="10" rx="1.5"/><rect class="si-pad" x="304" y="52" width="10" height="10" rx="1.5"/><rect class="si-pad" x="30" y="69" width="10" height="10" rx="1.5"/><rect class="si-pad" x="304" y="69" width="10" height="10" rx="1.5"/><rect class="si-pad" x="30" y="86" width="10" height="10" rx="1.5"/><rect class="si-pad" x="304" y="86" width="10" height="10" rx="1.5"/><rect class="si-pad" x="30" y="103" width="10" height="10" rx="1.5"/><rect class="si-pad" x="304" y="103" width="10" height="10" rx="1.5"/><rect class="si-pad" x="30" y="120" width="10" height="10" rx="1.5"/><rect class="si-pad" x="304" y="120" width="10" height="10" rx="1.5"/><rect class="si-pad" x="30" y="137" width="10" height="10" rx="1.5"/><rect class="si-pad" x="304" y="137" width="10" height="10" rx="1.5"/><rect class="si-pad" x="30" y="154" width="10" height="10" rx="1.5"/><rect class="si-pad" x="304" y="154" width="10" height="10" rx="1.5"/><rect class="si-pad" x="30" y="171" width="10" height="10" rx="1.5"/><rect class="si-pad" x="304" y="171" width="10" height="10" rx="1.5"/><rect class="si-pad" x="30" y="188" width="10" height="10" rx="1.5"/><rect class="si-pad" x="304" y="188" width="10" height="10" rx="1.5"/><rect class="si-pad" x="30" y="205" width="10" height="10" rx="1.5"/><rect class="si-pad" x="304" y="205" width="10" height="10" rx="1.5"/><rect class="si-pad" x="30" y="222" width="10" height="10" rx="1.5"/><rect class="si-pad" x="304" y="222" width="10" height="10" rx="1.5"/><rect class="si-pad" x="30" y="239" width="10" height="10" rx="1.5"/><rect class="si-pad" x="304" y="239" width="10" height="10" rx="1.5"/><rect class="si-pad" x="30" y="256" width="10" height="10" rx="1.5"/><rect class="si-pad" x="304" y="256" width="10" height="10" rx="1.5"/>
+  <rect class="si-core" x="52" y="50" width="240" height="216" rx="4"/>
+  <rect class="si-o-l" x="62" y="62" width="28" height="49" rx="2"/><rect class="si-tile" x="94" y="62" width="28" height="22" rx="2"/><rect class="si-tile" x="126" y="62" width="28" height="22" rx="2"/><rect class="si-tile" x="158" y="62" width="28" height="22" rx="2"/><rect class="si-o-c" x="190" y="62" width="28" height="22" rx="2"/><rect class="si-tile" x="222" y="62" width="28" height="22" rx="2"/><rect class="si-tile" x="254" y="62" width="28" height="22" rx="2"/><rect class="si-tile" x="94" y="89" width="28" height="22" rx="2"/><rect class="si-tile" x="126" y="89" width="28" height="22" rx="2"/><rect class="si-tile" x="158" y="89" width="28" height="22" rx="2"/><rect class="si-tile" x="190" y="89" width="28" height="22" rx="2"/><rect class="si-tile" x="222" y="89" width="28" height="22" rx="2"/><rect class="si-tile" x="62" y="116" width="28" height="22" rx="2"/><rect class="si-tile" x="94" y="116" width="28" height="22" rx="2"/><rect class="si-tile" x="126" y="116" width="28" height="22" rx="2"/><rect class="si-o-k" x="158" y="116" width="28" height="22" rx="2"/><rect class="si-tile" x="190" y="116" width="28" height="22" rx="2"/><rect class="si-tile" x="222" y="116" width="28" height="22" rx="2"/><rect class="si-o-l" x="254" y="116" width="28" height="22" rx="2"/><rect class="si-tile" x="62" y="160" width="28" height="22" rx="2"/><rect class="si-o-c" x="94" y="160" width="60" height="22" rx="2"/><rect class="si-tile" x="158" y="160" width="28" height="22" rx="2"/><rect class="si-tile" x="190" y="160" width="28" height="22" rx="2"/><rect class="si-tile" x="222" y="160" width="28" height="22" rx="2"/><rect class="si-tile" x="254" y="160" width="28" height="22" rx="2"/><rect class="si-o-l" x="62" y="187" width="28" height="22" rx="2"/><rect class="si-tile" x="94" y="187" width="28" height="22" rx="2"/><rect class="si-tile" x="126" y="187" width="28" height="22" rx="2"/><rect class="si-tile" x="158" y="187" width="28" height="22" rx="2"/><rect class="si-o-k" x="190" y="187" width="28" height="22" rx="2"/><rect class="si-tile" x="222" y="187" width="28" height="22" rx="2"/><rect class="si-tile" x="254" y="187" width="28" height="22" rx="2"/><rect class="si-tile" x="62" y="214" width="28" height="22" rx="2"/><rect class="si-tile" x="94" y="214" width="28" height="22" rx="2"/><rect class="si-o-k" x="126" y="214" width="28" height="22" rx="2"/><rect class="si-tile" x="158" y="214" width="28" height="22" rx="2"/><rect class="si-tile" x="190" y="214" width="28" height="22" rx="2"/><rect class="si-o-c" x="222" y="214" width="28" height="22" rx="2"/><rect class="si-open" x="254" y="214" width="28" height="22" rx="2"/>
+  <rect class="si-spine" x="62" y="144" width="220" height="10" rx="2"/>
+  <rect class="si-ctrl" x="62" y="244" width="220" height="14" rx="2"/>
+  <text class="si-ctxt" x="172" y="254" text-anchor="middle">CTRL · CLK · RST_N</text>
+  <rect class="si-glow" x="250" y="85" width="36" height="30" rx="4"/>
+  <rect class="si-mine" x="254" y="89" width="28" height="22" rx="2"/>
+  <path class="si-cells" d="M258 95h20M258 100h20M258 105h13"/>
+  <path class="si-call" d="M282 100H334"/><circle class="si-dot" cx="334" cy="100" r="2.2"/>
+  <text class="si-lbl-b" x="340" y="97">YOUR TILE</text><text class="si-lbl" x="340" y="111">~160×100 µm</text><text class="si-lbl" x="340" y="124">24 IO · CLK</text>
+  <path class="si-call si-call-m" d="M282 149H334"/><circle class="si-dot" cx="334" cy="149" r="2.2"/>
+  <text class="si-lbl-b" x="340" y="153">MUX</text><text class="si-lbl" x="340" y="166">picks one</text>
+  <path class="si-call si-call-m" d="M314 244H334"/><circle class="si-dot" cx="334" cy="244" r="2.2"/>
+  <text class="si-lbl-b" x="340" y="248">PAD RING</text><text class="si-lbl" x="340" y="261">to the pins</text>
+  <text class="d-dimtxt" x="172" y="322" text-anchor="middle">SD-04 · ONE TILE ON A SHARED DIE</text>
+</svg>
+    </div>
+  </div>
+  <div class="ruler" aria-hidden="true"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span><span>13</span><span>14</span><span>15</span><span>16</span><span>17</span><span>18</span><span>19</span><span>20</span><span>21</span><span>22</span><span>23</span><span>24</span><span>25</span><span>26</span><span>27</span><span>28</span><span>29</span><span>30</span><span>31</span></div>
+</header>
+
+<div class="marquee" aria-hidden="true"><div class="marquee-track"><span>Design in the open</span><span><b>·</b></span><span>Share the wafer</span><span><b>·</b></span><span>Read the RTL</span><span><b>·</b></span><span>Verify, don't trust</span><span><b>·</b></span><span>Ship it rough</span><span><b>·</b></span><span>Tape it out</span><span><b>·</b></span><span>Let's build</span><span><b>·</b></span><span>Design in the open</span><span><b>·</b></span><span>Share the wafer</span><span><b>·</b></span><span>Read the RTL</span><span><b>·</b></span><span>Verify, don't trust</span><span><b>·</b></span><span>Ship it rough</span><span><b>·</b></span><span>Tape it out</span><span><b>·</b></span><span>Let's build</span><span><b>·</b></span></div></div>
+
+<section class="block" id="idea" style="border-top:0">
+  <div class="wrap idea">
+    <div class="reveal">
+      <span class="eyebrow">the idea</span>
+      <h2 class="h2">Trust needs a <em>verifiable floor.</em></h2>
+      <p class="lede">The <a href="https://www.selfdriven.computer/">selfdriven.computer</a> model makes every agent action sequenced, signed and witnessed, six layers deep. Each of those guarantees ends up executing on a chip, and a closed chip is the one part that still asks for blind trust. Open Silicon is Layer 00: the floor you can check instead of assume.</p>
+      <ul class="reasons">
+        <li><span class="k"><svg class="icon"><use href="#ic-key"/></svg>01 · Keys</span><b>Hardware holds the root</b><span>Signing and pre-rotation keys are only as safe as the silicon that stores and uses them.</span></li>
+        <li><span class="k"><svg class="icon"><use href="#ic-clock"/></svg>02 · Sequence</span><b>The clock runs on a chip</b><span>Layer 01's sequence is computed by a processor. Open designs show what it is meant to do.</span></li>
+        <li><span class="k"><svg class="icon"><use href="#ic-layers"/></svg>03 · Runtime</span><b>Execution you can audit</b><span>Stateless runtimes are disposable by design. On open silicon, the hardware under them can be audited too.</span></li>
+        <li><span class="k"><svg class="icon"><use href="#ic-shield"/></svg>04 · Attestation</span><b>Identity from the device up</b><span>Open roots of trust give device identity and measured boot, the same verify-don't-trust move as a key event log.</span></li>
+      </ul>
+    </div>
+    <div class="reveal">
+      <ul class="stack" aria-label="The selfdriven.computer layers, with silicon underneath">
+        <li><span class="n">06</span><span><b>Ecosystem applications</b><small>Domain services and A2A</small></span></li>
+        <li><span class="n">05</span><span><b>Shared trust layer</b><small>Witness network and KEL sync</small></span></li>
+        <li><span class="n">04</span><span><b>Agent runtime</b><small>Delegated AID execution</small></span></li>
+        <li><span class="n">03</span><span><b>Policy and verification</b><small>ACDC credential enforcement</small></span></li>
+        <li><span class="n">02</span><span><b>Instruction primitives</b><small>Five atomic operations</small></span></li>
+        <li><span class="n">01</span><span><b>Clock cycle</b><small>Sequenced, verifiable time</small></span></li>
+        <li class="floor"><span class="mat" aria-hidden="true"></span><span class="n">00</span><span><b>Silicon</b><small>The chip it all runs on</small></span><span class="tag t-b">this build</span></li>
+      </ul>
+      <p class="stack-note"><svg class="icon"><use href="#ic-up"/></svg><span>Verification travels upward. Layers 01–06 are on <a href="https://www.selfdriven.computer/#layers">selfdriven.computer</a>.</span></p>
+      <div class="balance card">
+        <dl style="margin:0">
+          <div class="row"><dt>Open buys you</dt><dd>Readable source, a public process kit, a layout anyone can load and check.</dd></div>
+          <div class="row"><dt>Still trusted</dt><dd>The foundry run, the masks, the package and the road to your hands.</dd></div>
+          <div class="row"><dt>Making one</dt><dd>Shows you exactly which is which, and why verification has to reach the silicon.</dd></div>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="paths">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">build paths</span>
+      <h2 class="h2">Three sizes of <em>real silicon.</em></h2>
+      <p class="lede">All three end with a chip made by a real foundry from a design you wrote. Start with the smallest. A tile that passes precheck beats a perfect design that misses the shuttle.</p>
+    </div>
+    <div class="builds reveal">
+      <a class="plate" href="https://tinytapeout.com/digital_design/">
+        <div class="plate-top"><div><span class="board">Tiny Tapeout · Wokwi</span><h3>First Tile</h3></div><span class="serial">SD-04·T</span></div>
+        <p>Wire logic gates together in the browser, simulate them, and put the result on a shared chip. The lessons start with switches and an LED.</p>
+        <dl class="specs">
+          <div><dt>Time</dt><dd>An evening</dd></div>
+          <div><dt>Cost</dt><dd>From €185*</dd></div>
+          <div><dt>Level</dt><dd>Curious</dd></div>
+          <div><dt>Tools</dt><dd>A browser</dd></div>
+        </dl>
+        <span class="go">Open the lessons <svg class="icon"><use href="#ic-out"/></svg></span>
+      </a>
+      <a class="plate" href="https://github.com/TinyTapeout/ttsky-verilog-template">
+        <div class="plate-top"><div><span class="board">Tiny Tapeout · Verilog</span><h3>Verilog Tile</h3></div><span class="serial">SD-04·V</span></div>
+        <p>Write RTL, test it with cocotb, and let GitHub Actions run LibreLane to turn it into layout on every push. More tiles buy more area.</p>
+        <dl class="specs">
+          <div><dt>Time</dt><dd>A weekend</dd></div>
+          <div><dt>Cost</dt><dd>From €185*</dd></div>
+          <div><dt>Level</dt><dd>Curious + patient</dd></div>
+          <div><dt>Tools</dt><dd>Git, Verilog</dd></div>
+        </dl>
+        <span class="go">Use the template <svg class="icon"><use href="#ic-out"/></svg></span>
+      </a>
+      <a class="plate" href="https://github.com/wafer-space/gf180mcu-project-template">
+        <div class="plate-top"><div><span class="board">wafer.space · GF180MCU</span><h3>Own Die</h3></div><span class="serial">SD-04·W</span></div>
+        <p>A whole slot on a shared wafer: your die, your pad ring, 1,000 copies. Same open flow, run on your own machine.</p>
+        <dl class="specs">
+          <div><dt>Time</dt><dd>Months</dd></div>
+          <div><dt>Cost</dt><dd>From US$2,000†</dd></div>
+          <div><dt>Level</dt><dd>Committed</dd></div>
+          <div><dt>Tools</dt><dd>Nix, LibreLane</dd></div>
+        </dl>
+        <span class="go">Clone the template <svg class="icon"><use href="#ic-out"/></svg></span>
+      </a>
+    </div>
+    <p class="pnote reveal">* Tiny Tapeout's individual price for one digital tile, a dev kit with your chip on it, and shipping, from their <a href="https://app.tinytapeout.com/calculator?tiles=1&amp;pcbs=1">calculator</a> on 15 November 2026. It is limited per shuttle; the full price is €385. † A quarter slot (1.94 × 2.53 mm die, 1,000 dies) at the early-bird price on wafer.space Run 3, which is announced but not open yet; US$3,000 standard. Check both before you commit.</p>
+  </div>
+</section>
+
+<section class="block" id="flow">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">the flow</span>
+      <h2 class="h2">From an idea to <em>a die in your hand.</em></h2>
+      <p class="lede">Six steps, the same on every path. Tiny Tapeout automates the middle ones for you; on your own die you run them yourself. Select a step.</p>
+    </div>
+    <div class="flow reveal">
+      <ol class="flow-list" aria-label="Chip build steps">
+        <li><button class="flow-step" type="button" aria-pressed="true" aria-controls="flow-detail"><span class="serial">01</span><b>Design</b><small>Wokwi or Verilog</small></button></li>
+        <li><button class="flow-step" type="button" aria-pressed="false" aria-controls="flow-detail"><span class="serial">02</span><b>Test</b><small>Simulate with cocotb</small></button></li>
+        <li><button class="flow-step" type="button" aria-pressed="false" aria-controls="flow-detail"><span class="serial">03</span><b>Harden</b><small>RTL to layout with LibreLane</small></button></li>
+        <li><button class="flow-step" type="button" aria-pressed="false" aria-controls="flow-detail"><span class="serial">04</span><b>Check</b><small>Precheck and gate-level tests</small></button></li>
+        <li><button class="flow-step" type="button" aria-pressed="false" aria-controls="flow-detail"><span class="serial">05</span><b>Submit</b><small>A place on a shared wafer</small></button></li>
+        <li><button class="flow-step" type="button" aria-pressed="false" aria-controls="flow-detail"><span class="serial">06</span><b>Bring up</b><small>Wake your chip</small></button></li>
+      </ol>
+      <div class="flow-detail card" id="flow-detail" aria-live="polite">
+        <span class="fd-step" id="fd-step">Step 01 · Design</span>
+        <h3 class="h3" id="fd-title">Write the logic</h3>
+        <p id="fd-desc">Start from a template. In Wokwi you wire gates in the browser; in Verilog you write one top module whose name starts with <code>tt_um_</code>. Every design gets the same frame: 8 inputs, 8 outputs, 8 bidirectional pins, a clock and a reset.</p>
+        <div class="fd-tools" id="fd-tools"><span class="tag">Wokwi</span><span class="tag">Verilog</span><span class="tag">info.yaml</span></div>
+        <pre class="code" id="fd-code"><span class="k">module</span> tt_um_yourname_padlock (
+  <span class="k">input</span>  <span class="k">wire</span> [7:0] ui_in,    <span class="c">// 8 inputs</span>
+  <span class="k">output</span> <span class="k">wire</span> [7:0] uo_out,   <span class="c">// 8 outputs</span>
+  <span class="k">input</span>  <span class="k">wire</span> [7:0] uio_in,   <span class="c">// 8 bidirectional</span>
+  <span class="k">output</span> <span class="k">wire</span> [7:0] uio_out,
+  <span class="k">output</span> <span class="k">wire</span> [7:0] uio_oe,   <span class="c">// 1 = output</span>
+  <span class="k">input</span>  <span class="k">wire</span>       ena, clk, rst_n
+);</pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="modes">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">how this build runs</span>
+      <h2 class="h2">One chip. <em>All four modes.</em></h2>
+      <p class="lede">Constructive leads, but this is the slowest build on the bench, and it needs the other three to get through.</p>
+    </div>
+    <ol class="cycle reveal">
+      <li class="step s-c"><span class="node"><svg class="icon"><use href="#ic-telescope"/></svg></span><span class="k">01 · Curious</span><h3 class="h3">Plan it</h3><p>Learn what a gate, a flip-flop and a clock actually do. Open a past shuttle's chip map and pick a design to understand.</p></li>
+      <li class="step s-b"><span class="node"><svg class="icon"><use href="#ic-hammer"/></svg></span><span class="k">02 · Constructive</span><h3 class="h3">Build it</h3><p>Design, test, harden, submit. Shuttles close on a date, so a rough design that passes is the one that gets made.</p></li>
+      <li class="step s-k"><span class="node"><svg class="icon"><use href="#ic-heart"/></svg></span><span class="k">03 · Caring</span><h3 class="h3">Tend it</h3><p>Write down the pinout and how to test it. Keep the repo open so the next builder can fork your work instead of starting over.</p></li>
+      <li class="step s-l"><span class="node"><svg class="icon"><use href="#ic-waves"/></svg></span><span class="k">04 · Chill</span><h3 class="h3">Live with it</h3><p>Then wait months for the fab. The wait is part of it. Start the next idea, and when the board arrives, wake the chip up.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section class="block" id="verify">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">verify a chip</span>
+      <h2 class="h2">Not making one? <em>Check one.</em></h2>
+      <p class="lede">The other half of Open Silicon needs no shuttle. Open designs are there to be read, so pick one and follow the evidence.</p>
+    </div>
+    <div class="checks reveal">
+      <a class="check card" href="https://opentitan.org">
+        <span class="ico"><svg class="icon"><use href="#ic-shield"/></svg></span>
+        <h3 class="h3">Read a root of trust</h3>
+        <p>OpenTitan is the first open-source silicon root of trust in production, shipping in Chromebooks since 2026. Its RTL and docs are public. Start with the Earl Grey chip and the Ibex RISC-V core inside it.</p>
+        <span class="go">opentitan.org <svg class="icon"><use href="#ic-out"/></svg></span>
+      </a>
+      <a class="check card" href="https://tinytapeout.com/chips/">
+        <span class="ico"><svg class="icon"><use href="#ic-eye"/></svg></span>
+        <h3 class="h3">Look inside a shared die</h3>
+        <p>Every Tiny Tapeout shuttle publishes a chip map of the designs on it. Pick one, open its repo, and trace it from Verilog to the layout on the die.</p>
+        <span class="go">The chips <svg class="icon"><use href="#ic-out"/></svg></span>
+      </a>
+      <a class="check card" href="https://github.com/chipsalliance/Caliptra">
+        <span class="ico"><svg class="icon"><use href="#ic-link"/></svg></span>
+        <h3 class="h3">Follow the chain up</h3>
+        <p>Caliptra takes the same open root-of-trust idea into datacentre chips, developed by Google, AMD, Microsoft, Marvell and NVIDIA under the CHIPS Alliance.</p>
+        <span class="go">Caliptra <svg class="icon"><use href="#ic-out"/></svg></span>
+      </a>
+    </div>
+    <div class="kel-line reveal">
+      <svg class="icon"><use href="#ic-layers"/></svg>
+      <p><b>It is the same move as reading a key event log:</b> don't take the claim, replay the evidence. A KEL lets you check an identity from inception. An open chip lets you check the hardware from its source. <a href="https://www.selfdriven.computer/open-silicon">Read the full case on selfdriven.computer</a>.</p>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="toolbox">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">the toolbox</span>
+      <h2 class="h2">Everything here is <em>open.</em></h2>
+      <p class="lede">The tools, process kits and services these builds use. The full map of who is building open silicon is on <a href="https://www.selfdriven.computer/open-silicon">selfdriven.computer</a>.</p>
+    </div>
+    <div class="tools reveal">
+      <section aria-labelledby="tb-learn">
+        <h3 id="tb-learn">Learn and start</h3>
+        <ul>
+          <li><a href="https://tinytapeout.com"><b>Tiny Tapeout <svg class="icon"><use href="#ic-out"/></svg></b><span>A first design onto a shared chip, from a browser.</span></a></li>
+          <li><a href="https://tinytapeout.com/digital_design/"><b>Digital design lessons <svg class="icon"><use href="#ic-out"/></svg></b><span>Thirteen Wokwi lessons, from an LED to a UART.</span></a></li>
+          <li><a href="https://www.youtube.com/@Dr.Semiconductor"><b>Dr. Semiconductor <svg class="icon"><use href="#ic-out"/></svg></b><span>How chips are made, explained on video.</span></a></li>
+        </ul>
+      </section>
+      <section aria-labelledby="tb-design">
+        <h3 id="tb-design">Design</h3>
+        <ul>
+          <li><a href="https://fossi-foundation.org/librelane"><b>LibreLane <svg class="icon"><use href="#ic-out"/></svg></b><span>One config file, RTL to GDS, on all three open PDKs.</span></a></li>
+          <li><a href="https://openroad.org"><b>OpenROAD <svg class="icon"><use href="#ic-out"/></svg></b><span>Open placement and routing.</span></a></li>
+          <li><a href="https://www.selfdriven.computer/open-silicon#ecosystem"><b>Three open PDKs <svg class="icon"><use href="#ic-out"/></svg></b><span>SkyWater 130nm, GlobalFoundries 180nm and IHP 130nm.</span></a></li>
+        </ul>
+      </section>
+      <section aria-labelledby="tb-fab">
+        <h3 id="tb-fab">Fabricate</h3>
+        <ul>
+          <li><a href="https://wafer.space"><b>wafer.space <svg class="icon"><use href="#ic-out"/></svg></b><span>GF180MCU shuttles, 1,000 dies per slot.</span></a></li>
+          <li><a href="https://chipfoundry.io"><b>ChipFoundry <svg class="icon"><use href="#ic-out"/></svg></b><span>SkyWater 130nm multi-project wafers.</span></a></li>
+          <li><a href="https://app.tinytapeout.com/calculator?tiles=1&amp;pcbs=1"><b>Tile calculator <svg class="icon"><use href="#ic-out"/></svg></b><span>Current Tiny Tapeout prices per shuttle.</span></a></li>
+        </ul>
+      </section>
+      <section aria-labelledby="tb-verify">
+        <h3 id="tb-verify">Verify and join</h3>
+        <ul>
+          <li><a href="https://lowrisc.org"><b>lowRISC <svg class="icon"><use href="#ic-out"/></svg></b><span>Stewards OpenTitan and the Ibex core.</span></a></li>
+          <li><a href="https://vensa.si"><b>Vensa <svg class="icon"><use href="#ic-out"/></svg></b><span>Nonprofit backing open IP, tape-outs and the people who make chips.</span></a></li>
+          <li><a href="https://fossi-foundation.org"><b>FOSSi Foundation <svg class="icon"><use href="#ic-out"/></svg></b><span>ORConf, Latch-Up, and a home for LibreLane.</span></a></li>
+        </ul>
+      </section>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="start">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">start now</span>
+      <h2 class="h2">No cleanroom? <em>Start anyway.</em></h2>
+      <p class="lede">Three first steps, sized from two minutes to a week. Pick one.</p>
+    </div>
+    <div class="tasks reveal">
+      <button class="task" id="os-2min" type="button" aria-pressed="false"><span class="when">2 minutes<span class="box"><svg class="icon"><use href="#ic-check"/></svg></span></span><span class="what">Open a chip map and find one design you'd like to understand.</span><span class="how">tinytapeout.com/chips</span></button>
+      <button class="task" id="os-today" type="button" aria-pressed="false"><span class="when">Today<span class="box"><svg class="icon"><use href="#ic-check"/></svg></span></span><span class="what">Do the first Wokwi lesson: switches in, an LED out.</span><span class="how">tinytapeout.com/digital_design</span></button>
+      <button class="task" id="os-week" type="button" aria-pressed="false"><span class="when">This week<span class="box"><svg class="icon"><use href="#ic-check"/></svg></span></span><span class="what">Make a repo from the Verilog template and get the gds action green.</span><span class="how">github.com/TinyTapeout</span></button>
+    </div>
+    <p class="tasks-note">Tap to tick. Ticks stay on this device only.</p>
+  </div>
+</section>
+
+<section class="block closing">
+  <div class="gblob gb3"></div>
+  <div class="wrap closing-in">
+    <p class="big reveal">Let's<br><span>tape out.</span></p>
+    <div class="reveal" style="max-width:420px">
+      <p class="lede" style="margin:0 0 22px">Shrink the first step to one gate. Start before you feel ready.</p>
+      <div class="btn-row"><a class="btn btn-primary" href="https://tinytapeout.com/digital_design/">Start the first lesson <svg class="icon"><use href="#ic-out"/></svg></a><a class="btn btn-ghost" href="/#projects">All projects</a></div>
+    </div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a href="/" class="brand sdb-brand" aria-label="selfdriven.build home"><img class="sdb-mark" src="/assets/img/selfdriven-build-logo-round-mint.png" alt="" width="30" height="30"><span><em>build</em></span></a>
+        <p class="sign"><span class="b">Make a chip.</span><span>Verify a chip.</span></p>
+        <p class="foot-note">Project 04 on selfdriven.build, the workshop companion to selfdriven.you. The case for Open Silicon lives on selfdriven.computer.</p>
+      </div>
+      <div>
+        <h4>Projects</h4>
+        <ul>
+          <li><a href="/cyberdeck-the-idea">Cyberdeck · the idea</a></li>
+          <li><a href="/cyberdeck-build-guide">Field Deck build guide</a></li>
+          <li><a href="/cyberdeck-pocket-build-guide">Pocket Deck build guide</a></li>
+          <li><a href="/build-your-world">Build Your World</a></li>
+          <li><a href="/verify-the-network">Verify the Network</a></li>
+          <li><a href="/open-silicon" aria-current="page">Open Silicon</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Companions</h4>
+        <ul>
+          <li><a href="https://www.selfdriven.computer/open-silicon">selfdriven.computer · Open Silicon</a></li>
+          <li><a href="https://selfdriven.you">selfdriven.you</a></li>
+          <li><a href="https://selfdriven.you/activators">Become an Activator</a></li>
+          <li><a href="https://vensa.si">Vensa</a></li>
+          <li><a href="https://tinytapeout.com">Tiny Tapeout</a></li>
+          <li><a href="https://selfdriven.foundation">selfdriven Foundation</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span><a href="/">selfdriven.build · all projects</a>. An initiative of the <a href="https://selfdriven.foundation">selfdriven Foundation</a>. Curious · Caring · Constructive · Chill.</span>
+      <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0. Share freely with attribution.</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  // Custom cursor: desktop pointers only, so touch and keyboard users keep the native one.
+  var fine = window.matchMedia && matchMedia('(hover:hover) and (pointer:fine)').matches;
+  var calm = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (fine) {
+    document.documentElement.classList.add('cur');
+    var dot = document.getElementById('cdot'), ring = document.getElementById('cring');
+    var rx = 0, ry = 0, dx = 0, dy = 0;
+    document.addEventListener('mousemove', function(e){ dx = e.clientX; dy = e.clientY; dot.style.left = dx + 'px'; dot.style.top = dy + 'px'; });
+    (function loop(){ rx += (dx - rx) * .18; ry += (dy - ry) * .18; ring.style.left = rx + 'px'; ring.style.top = ry + 'px'; requestAnimationFrame(loop); })();
+    document.querySelectorAll('a,button').forEach(function(el){
+      el.addEventListener('mouseenter', function(){ ring.style.width = '52px'; ring.style.height = '52px'; ring.style.borderColor = 'rgba(0,229,160,.6)'; });
+      el.addEventListener('mouseleave', function(){ ring.style.width = '34px'; ring.style.height = '34px'; ring.style.borderColor = 'rgba(240,238,255,.3)'; });
+    });
+  }
+  // Scroll reveal: anything already on screen stays put; only blocks below the fold animate in.
+  if (!calm && 'IntersectionObserver' in window) {
+    var vh = window.innerHeight || 800;
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(x){ if (x.isIntersecting) { x.target.classList.remove('pre'); io.unobserve(x.target); } });
+    }, { threshold: .14 });
+    document.querySelectorAll('.reveal').forEach(function(el){
+      if (el.getBoundingClientRect().top > vh * .92) { el.classList.add('pre'); io.observe(el); }
+    });
+  }
+})();
+
+(function(){
+  // The flow: six steps, one detail panel.
+  function t(s){ return '<span class="tag">' + s + '</span>'; }
+  var steps = [
+    { k: 'Step 01 · Design', title: 'Write the logic',
+      desc: 'Start from a template. In Wokwi you wire gates in the browser; in Verilog you write one top module whose name starts with <code>tt_um_</code>. Every design gets the same frame: 8 inputs, 8 outputs, 8 bidirectional pins, a clock and a reset.',
+      tools: ['Wokwi', 'Verilog', 'info.yaml'] },
+    { k: 'Step 02 · Test', title: 'Prove it in simulation',
+      desc: 'Write a Python testbench with cocotb and run it against your RTL. The template runs it again on every push, and again after layout, so a change that breaks the design shows up straight away.',
+      tools: ['cocotb', 'Icarus Verilog', 'GTKWave'],
+      code: '<span class="p">$</span> cd test\n<span class="p">$</span> make -B                 <span class="c"># RTL simulation</span>\n<span class="p">$</span> gtkwave tb.fst tb.gtkw   <span class="c"># read the waveform</span>\n\n<span class="c"># after hardening, on the real netlist</span>\n<span class="p">$</span> make -B GATES=yes' },
+    { k: 'Step 03 · Harden', title: 'Turn RTL into layout',
+      desc: 'Hardening is the step that used to need a licence and an NDA. LibreLane drives Yosys for synthesis and OpenROAD for placement and routing, then writes GDS: the file a foundry makes masks from. On Tiny Tapeout a GitHub Action does it for you; for your own die you run it locally.',
+      tools: ['LibreLane', 'Yosys', 'OpenROAD', 'KLayout'],
+      code: '<span class="c"># your own die, wafer.space template</span>\n<span class="p">$</span> nix-shell\n<span class="p">$</span> make clone-pdk                <span class="c"># gf180mcuD via Ciel</span>\n<span class="p">$</span> SLOT=0p5x0p5 make librelane   <span class="c"># quarter slot</span>\n<span class="p">$</span> make librelane-klayout        <span class="c"># open the layout</span>' },
+    { k: 'Step 04 · Check', title: 'Pass the precheck',
+      desc: 'Before anything is made, the layout has to meet the foundry\'s rules and still pass your tests as gates and wires. On Tiny Tapeout every push runs the same checks the shuttle will, and publishes a viewer of your layout so anyone can look at it.',
+      tools: ['Precheck', 'Gate-level test', 'GitHub Pages'],
+      code: '<span class="p">$</span> git push\n\n<span class="v">gds</span>       <span class="ok">✓</span>  synthesis → place → route → GDS\n<span class="v">precheck</span>  <span class="ok">✓</span>  the shuttle\'s manufacturing rules\n<span class="v">gl_test</span>   <span class="ok">✓</span>  your tests, on the gate-level netlist\n<span class="v">viewer</span>    <span class="ok">✓</span>  your layout, published to Pages' },
+    { k: 'Step 05 · Submit', title: 'Book a place on the wafer',
+      desc: 'Pick an open shuttle on SkyWater 130nm, GlobalFoundries 180nm or IHP 130nm, point it at your repo and pay for your tiles. Hundreds of designs share one die, which is what makes the price possible, and the chip map lists every one of them.',
+      tools: ['SKY130', 'GF180MCU', 'IHP SG13G2'],
+      code: '<span class="c"># what a submission needs · app.tinytapeout.com</span>\n<span class="k">shuttle</span>  whichever SKY, GF or IHP run is open\n<span class="k">repo</span>     github.com/&lt;you&gt;/&lt;your-project&gt;\n<span class="k">tiles</span>    1x1\n<span class="k">devkit</span>   1   <span class="c"># one chip per dev kit</span>' },
+    { k: 'Step 06 · Bring up', title: 'Wake your chip',
+      desc: 'Manufacturing takes six to nine months, and Tiny Tapeout says to allow up to a year before the board reaches you. The dev kit puts your chip on a breakout board, with a demo board carrying a microcontroller, LEDs, a 7-segment display and DIP switches. Select your design, give it a clock, and see if it does what the simulation said.',
+      tools: ['Dev kit', 'Breakout board', 'Demo board'],
+      code: '<span class="c"># bring-up, the first evening</span>\n1  plug in the dev kit\n2  select your design by its number\n3  set the clock, release reset\n4  drive the inputs, read the outputs\n5  compare with your testbench    <span class="ok">✓</span>' }
+  ];
+  steps[0].code = document.getElementById('fd-code').innerHTML;
+  var btns = document.querySelectorAll('.flow-step');
+  var elK = document.getElementById('fd-step'), elT = document.getElementById('fd-title'),
+      elD = document.getElementById('fd-desc'), elTools = document.getElementById('fd-tools'),
+      elC = document.getElementById('fd-code'), panel = document.getElementById('flow-detail');
+  var narrow = window.matchMedia && matchMedia('(max-width: 900px)');
+  var calm = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function set(i, scroll){
+    var s = steps[i];
+    btns.forEach(function(b, j){ b.setAttribute('aria-pressed', String(j === i)); });
+    elK.textContent = s.k; elT.textContent = s.title;
+    elD.innerHTML = s.desc; elTools.innerHTML = s.tools.map(t).join(''); elC.innerHTML = s.code;
+    if (scroll && narrow && narrow.matches) {
+      var r = panel.getBoundingClientRect();
+      if (r.top > window.innerHeight * .6 || r.bottom < 84) panel.scrollIntoView({ behavior: calm ? 'auto' : 'smooth', block: 'start' });
+    }
+  }
+  btns.forEach(function(b, i){ b.addEventListener('click', function(){ set(i, true); }); });
+})();
+
+(function(){
+  // Start-now ticks, kept on this device only.
+  var KEY = 'sdb-open-silicon-v1', saved = {};
+  try { saved = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) {}
+  document.querySelectorAll('.task').forEach(function(b){
+    if (saved[b.id]) b.setAttribute('aria-pressed', 'true');
+    b.addEventListener('click', function(){
+      var on = b.getAttribute('aria-pressed') !== 'true';
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      saved[b.id] = on;
+      try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch (e) {}
+    });
+  });
+})();
+</script>
+</body>
+</html>
