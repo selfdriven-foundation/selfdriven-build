@@ -15,6 +15,28 @@ permalink: /open-silicon
 <meta property="og:type" content="article"><meta property="og:site_name" content="selfdriven.build">
 <meta property="og:title" content="Open Silicon · Make a chip. Verify a chip."><meta property="og:description" content="Make a real chip with free tools and a shared wafer, starting in your browser tonight, and learn what it takes to verify one."><meta property="og:url" content="https://selfdriven.build/open-silicon">
 <meta name="twitter:card" content="summary">
+<meta property="og:audio" content="https://selfdriven.build/assets/audio/Build_Your_Own_Microchip_in_a_Browser.m4a"><meta property="og:audio:secure_url" content="https://selfdriven.build/assets/audio/Build_Your_Own_Microchip_in_a_Browser.m4a"><meta property="og:audio:type" content="audio/mp4">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "PodcastEpisode",
+  "name": "Build Your Own Microchip in a Browser",
+  "description": "An audio companion to Open Silicon on selfdriven.build: designing a real chip in a browser with open tools, and getting it made on a shared wafer.",
+  "url": "https://selfdriven.build/open-silicon#listen",
+  "datePublished": "2026-11-15",
+  "inLanguage": "en",
+  "isAccessibleForFree": true,
+  "license": "https://creativecommons.org/licenses/by/4.0/",
+  "partOfSeries": { "@type": "PodcastSeries", "name": "selfdriven.you podcast", "url": "https://selfdriven.you" },
+  "publisher": { "@type": "Organization", "name": "selfdriven Foundation", "url": "https://selfdriven.foundation" },
+  "associatedMedia": {
+    "@type": "AudioObject",
+    "name": "Build Your Own Microchip in a Browser",
+    "contentUrl": "https://selfdriven.build/assets/audio/Build_Your_Own_Microchip_in_a_Browser.m4a",
+    "encodingFormat": "audio/mp4"
+  }
+}
+</script>
 <link rel="icon" type="image/png" href="/assets/img/selfdriven-build-logo-round-mint.png">
 <link rel="apple-touch-icon" href="/assets/img/selfdriven-build-logo-round-mint.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -160,6 +182,28 @@ code{font-size:.88em;color:var(--constructive);background:var(--constructive-dim
 .si-lbl-b{fill:var(--constructive);font-family:var(--f-mono);font-size:10.5px;font-weight:600;letter-spacing:.06em}
 .d-dim{fill:none;stroke:var(--muted);stroke-width:1}
 .d-dimtxt{fill:var(--muted);font-family:var(--f-mono);font-size:10.5px;letter-spacing:.04em}
+
+/* listen: podcast player */
+.listen{padding-top:72px}
+.audio-card{display:flex;gap:24px;align-items:center;background:linear-gradient(160deg,var(--surface2),var(--surface));border:1px solid var(--border2);border-radius:22px;padding:26px 30px;position:relative;overflow:hidden}
+.audio-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--constructive),var(--chill-bright))}
+.pp{all:unset;box-sizing:border-box;width:64px;height:64px;border-radius:50%;flex:none;background:var(--constructive);color:var(--ink-on-mint);display:grid;place-items:center;cursor:pointer;transition:transform .2s,box-shadow .2s}
+.pp:hover{transform:scale(1.06);box-shadow:0 12px 30px rgba(0,229,160,.35)}
+.pp:focus-visible{outline:2px solid var(--constructive);outline-offset:4px}
+.pp svg{width:26px;height:26px}
+.pp .i-pause{display:none}
+.pp.playing .i-play{display:none}.pp.playing .i-pause{display:block}
+.audio-body{flex:1;min-width:0}
+.audio-h{font-family:var(--f-display);font-weight:800;font-size:clamp(20px,2.6vw,26px);letter-spacing:-.025em;line-height:1.2;margin:8px 0 14px}
+.player{display:flex;align-items:center;gap:14px}
+.abar{flex:1;height:7px;border-radius:99px;background:rgba(255,255,255,.1);position:relative;overflow:hidden;cursor:pointer}
+.abar:focus-visible{outline:2px solid var(--constructive);outline-offset:4px}
+.afill{position:absolute;left:0;top:0;bottom:0;width:0;background:linear-gradient(90deg,var(--constructive),var(--chill-bright));border-radius:99px}
+.atime{font-family:var(--f-mono);font-size:12px;color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums}
+.audio-sub{color:var(--muted);font-size:14px;margin-top:13px}
+.audio-sub a{color:var(--constructive);text-decoration:none;display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
+.audio-sub a:hover{text-decoration:underline}
+@media (max-width:560px){.audio-card{flex-direction:column;align-items:flex-start;gap:18px;padding:24px}}
 
 /* idea: the stack with Layer 00 under it */
 .idea{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:64px;align-items:start}
@@ -331,7 +375,7 @@ code{font-size:.88em;color:var(--constructive);background:var(--constructive-dim
   html{scroll-behavior:auto}
   .gblob,.marquee-track,.hero-pill .dot,.si-glow{animation:none}
   .reveal{transition:none}
-  .btn,.go .icon,.task,.check{transition:none}
+  .btn,.go .icon,.task,.check,.pp{transition:none}
 }
 </style>
 <style id="sdb-brand">.sdb-mark{width:30px;height:30px;border-radius:50%;display:block;flex:none;filter:drop-shadow(0 0 8px rgba(0,229,160,.35))}.brand em{color:#00e5a0!important}</style>
@@ -357,6 +401,10 @@ code{font-size:.88em;color:var(--constructive);background:var(--constructive-dim
   <symbol id="ic-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
   <symbol id="ic-map" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/></symbol>
   <symbol id="ic-link" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></symbol>
+  <symbol id="ic-play" viewBox="0 0 24 24"><path d="M7 4.5v15a1 1 0 0 0 1.52.86l12-7.5a1 1 0 0 0 0-1.72l-12-7.5A1 1 0 0 0 7 4.5z" fill="currentColor"/></symbol>
+  <symbol id="ic-pause" viewBox="0 0 24 24"><rect x="6" y="4" width="4.4" height="16" rx="1.2" fill="currentColor"/><rect x="13.6" y="4" width="4.4" height="16" rx="1.2" fill="currentColor"/></symbol>
+  <symbol id="ic-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></symbol>
+  <symbol id="ic-headphones" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"/></symbol>
 </svg>
 
 <nav class="nav" aria-label="Main">
@@ -364,6 +412,7 @@ code{font-size:.88em;color:var(--constructive);background:var(--constructive-dim
     <a href="/" class="brand sdb-brand" aria-label="selfdriven.build home"><img class="sdb-mark" src="/assets/img/selfdriven-build-logo-round-mint.png" alt="" width="30" height="30"><span><em>build</em></span></a>
     <span class="crumb"><a href="/#projects">projects</a> / 04 · open silicon</span>
     <div class="nav-links">
+      <a href="#listen">Listen</a>
       <a href="#idea">The idea</a>
       <a href="#paths">Build paths</a>
       <a href="#flow">The flow</a>
@@ -389,6 +438,7 @@ code{font-size:.88em;color:var(--constructive);background:var(--constructive-dim
       </ul>
       <div class="btn-row">
         <a class="btn btn-primary" href="#paths">Pick a build path <svg class="icon"><use href="#ic-arrow"/></svg></a>
+        <a class="btn btn-ghost" href="#listen"><svg class="icon"><use href="#ic-headphones"/></svg>Listen</a>
         <a class="btn btn-ghost" href="https://www.selfdriven.computer/open-silicon">Why it matters <svg class="icon"><use href="#ic-out"/></svg></a>
       </div>
     </div>
@@ -420,6 +470,30 @@ code{font-size:.88em;color:var(--constructive);background:var(--constructive-dim
 </header>
 
 <div class="marquee" aria-hidden="true"><div class="marquee-track"><span>Design in the open</span><span><b>·</b></span><span>Share the wafer</span><span><b>·</b></span><span>Read the RTL</span><span><b>·</b></span><span>Verify, don't trust</span><span><b>·</b></span><span>Ship it rough</span><span><b>·</b></span><span>Tape it out</span><span><b>·</b></span><span>Let's build</span><span><b>·</b></span><span>Design in the open</span><span><b>·</b></span><span>Share the wafer</span><span><b>·</b></span><span>Read the RTL</span><span><b>·</b></span><span>Verify, don't trust</span><span><b>·</b></span><span>Ship it rough</span><span><b>·</b></span><span>Tape it out</span><span><b>·</b></span><span>Let's build</span><span><b>·</b></span></div></div>
+
+<section class="listen" id="listen" aria-labelledby="listen-h">
+  <div class="wrap">
+    <div class="audio-card reveal">
+      <button class="pp" id="pp" type="button" aria-label="Play episode" aria-controls="aud">
+        <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-play"/></svg>
+        <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><use href="#ic-pause"/></svg>
+      </button>
+      <div class="audio-body">
+        <span class="eyebrow">listen · selfdriven.you podcast</span>
+        <h2 class="audio-h" id="listen-h">Build your own microchip in a browser</h2>
+        <div class="player">
+          <div class="abar" id="abar" role="slider" tabindex="0" aria-label="Seek" aria-valuemin="0" aria-valuemax="0" aria-valuenow="0" aria-valuetext="0:00"><div class="afill" id="afill"></div></div>
+          <span class="atime" id="atime">0:00 / —:—</span>
+        </div>
+        <p class="audio-sub">The audio companion to this project: designing a real chip in a browser with open tools, and getting it made on a shared wafer. <a href="/assets/audio/Build_Your_Own_Microchip_in_a_Browser.m4a" download type="audio/mp4">Download the episode <svg class="icon"><use href="#ic-down"/></svg></a></p>
+        <audio id="aud" preload="metadata">
+          <source src="/assets/audio/Build_Your_Own_Microchip_in_a_Browser.m4a" type="audio/mp4">
+          Your browser can't play this episode here. <a href="/assets/audio/Build_Your_Own_Microchip_in_a_Browser.m4a" download type="audio/mp4">Download it</a> instead.
+        </audio>
+      </div>
+    </div>
+  </div>
+</section>
 
 <section class="block" id="idea" style="border-top:0">
   <div class="wrap idea">
@@ -679,6 +753,7 @@ code{font-size:.88em;color:var(--constructive);background:var(--constructive-dim
       <div>
         <h4>Companions</h4>
         <ul>
+          <li><a href="#listen">Listen · podcast</a></li>
           <li><a href="https://www.selfdriven.computer/open-silicon">selfdriven.computer · Open Silicon</a></li>
           <li><a href="https://selfdriven.you">selfdriven.you</a></li>
           <li><a href="https://selfdriven.you/activators">Become an Activator</a></li>
@@ -769,6 +844,48 @@ code{font-size:.88em;color:var(--constructive);background:var(--constructive-dim
     }
   }
   btns.forEach(function(b, i){ b.addEventListener('click', function(){ set(i, true); }); });
+})();
+
+(function(){
+  // Podcast player: play/pause, seek by click or arrow keys, lock-screen metadata.
+  var a = document.getElementById('aud'), pp = document.getElementById('pp'), bar = document.getElementById('abar'),
+      fill = document.getElementById('afill'), t = document.getElementById('atime');
+  if (!a || !pp) return;
+  function fmt(s){ if (!isFinite(s) || s < 0) return '—:—'; s = Math.floor(s); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); }
+  function draw(){
+    var d = isFinite(a.duration) ? a.duration : 0;
+    fill.style.width = (d ? a.currentTime / d * 100 : 0) + '%';
+    t.textContent = fmt(a.currentTime) + ' / ' + fmt(d);
+    bar.setAttribute('aria-valuemax', String(Math.floor(d)));
+    bar.setAttribute('aria-valuenow', String(Math.floor(a.currentTime)));
+    bar.setAttribute('aria-valuetext', fmt(a.currentTime) + ' of ' + fmt(d));
+  }
+  function seek(to){ if (isFinite(a.duration)) { a.currentTime = Math.max(0, Math.min(a.duration, to)); draw(); } }
+  pp.addEventListener('click', function(){ if (a.paused) { var p = a.play(); if (p && p.catch) p.catch(function(){}); } else { a.pause(); } });
+  a.addEventListener('play', function(){
+    pp.classList.add('playing'); pp.setAttribute('aria-label', 'Pause episode');
+    if ('mediaSession' in navigator && window.MediaMetadata) {
+      navigator.mediaSession.metadata = new MediaMetadata({
+        title: 'Build Your Own Microchip in a Browser', artist: 'selfdriven.you podcast', album: 'selfdriven.build · Open Silicon',
+        artwork: [{ src: '/assets/img/selfdriven-build-logo-round-mint.png', type: 'image/png' }]
+      });
+    }
+  });
+  a.addEventListener('pause', function(){ pp.classList.remove('playing'); pp.setAttribute('aria-label', 'Play episode'); });
+  a.addEventListener('loadedmetadata', draw);
+  a.addEventListener('timeupdate', draw);
+  a.addEventListener('ended', function(){ a.currentTime = 0; draw(); });
+  bar.addEventListener('click', function(e){ var r = bar.getBoundingClientRect(); if (isFinite(a.duration)) seek((e.clientX - r.left) / r.width * a.duration); });
+  bar.addEventListener('keydown', function(e){
+    var k = e.key;
+    if (k === 'ArrowRight' || k === 'ArrowUp') seek(a.currentTime + 10);
+    else if (k === 'ArrowLeft' || k === 'ArrowDown') seek(a.currentTime - 10);
+    else if (k === 'Home') seek(0);
+    else if (k === 'End') seek(a.duration);
+    else if (k === ' ' || k === 'Enter') pp.click();
+    else return;
+    e.preventDefault();
+  });
 })();
 
 (function(){

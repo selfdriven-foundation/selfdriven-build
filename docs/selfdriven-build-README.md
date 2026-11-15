@@ -17,7 +17,18 @@ The site is the Jekyll source in `docs/`, deployed to GitHub Pages by `docs/_wor
 
 Project pages are self-contained HTML with `layout: null` and a `permalink` in their front matter.
 
-Open Silicon is the build companion to [selfdriven.computer/open-silicon](https://www.selfdriven.computer/open-silicon): Layer 00 under the six-layer model. Three build paths (First Tile and Verilog Tile on Tiny Tapeout, Own Die on a wafer.space GF180MCU slot), a six-step flow, a verify track (OpenTitan, Tiny Tapeout chip maps, Caliptra) and start-now ticks stored under `sdb-open-silicon-v1`. Prices on the page and the home card were checked on 15 November 2026 (Tiny Tapeout individual €185 / full €385; wafer.space Run 3 quarter slot US$2,000 early bird / US$3,000 standard, announced but not open); re-check them when shuttles change.
+Open Silicon is the build companion to [selfdriven.computer/open-silicon](https://www.selfdriven.computer/open-silicon): Layer 00 under the six-layer model. Three build paths (First Tile and Verilog Tile on Tiny Tapeout, Own Die on a wafer.space GF180MCU slot), a six-step flow, a verify track (OpenTitan, Tiny Tapeout chip maps, Caliptra) and start-now ticks stored under `sdb-open-silicon-v1`. Its podcast episode plays from `#listen`. Prices on the page and the home card were checked on 15 November 2026 (Tiny Tapeout individual €185 / full €385; wafer.space Run 3 quarter slot US$2,000 early bird / US$3,000 standard, announced but not open); re-check them when shuttles change.
+
+## Podcast episodes
+
+Pages with an episode carry a `#listen` audio card (play/pause, seek bar, time, download link) and its metadata:
+
+- `<audio preload="metadata">` with `<source type="audio/mp4">` for `.m4a` files
+- `og:audio`, `og:audio:secure_url` and `og:audio:type` in the head
+- JSON-LD `PodcastEpisode` in the `selfdriven.you podcast` series, with an `AudioObject` (`encodingFormat: audio/mp4`)
+- Media Session title, artist and artwork, set when playback starts
+
+The home card for a project with an episode gets a `Podcast` tag and a `Listen` button to `#listen`.
 
 ## Layout
 
@@ -27,7 +38,7 @@ docs/
   404.html            Not-found page
   pages/              Project pages (front matter sets the permalink)
   assets/img/         selfdriven-build-logo-round-mint.png (header + favicon) and the selfdriven.you logos
-  assets/audio/       Cyberdeck podcast episode, ESP32 episode
+  assets/audio/       Cyberdeck podcast episode, ESP32 episode, Build_Your_Own_Microchip_in_a_Browser.m4a (Open Silicon)
   assets/pdf/         Cyberdeck Field Manual, Blueprint Manual
   assets/skills/      cyberdeck-field-deck.skill, cyberdeck-pocket-deck.skill
   sitemap.xml  robots.txt  CNAME  _config.yml  _layouts/  _well-known/  _workflows/
