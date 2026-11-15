@@ -2,539 +2,843 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>TrialThread</title>
-<meta name="description" content="The TrialThread story in one animated scene: the problem a CRA lives with, and the observed, signed answer a board can buy.">
+<meta name="description" content="TrialThread: one verified thread from source to submission. AI observers check 100% of clinical trial monitoring work; a named human judges and signs.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-/* Layout: one cinematic isometric stage up top that plays the 8-frame storyboard; the storyboard itself below as a contact sheet. */
-:root{
-  --bg:#F6F4EE; --surface:#FFFFFF; --surface-2:#EFEDE6; --ink:#2A2522; --muted:#6E6963; --line:#E2DFD7;
-  --accent:#DE5A31; --accent-soft:#F8E1D7; --human:#2E6F9E; --human-soft:#DCE8F3;
-  --ok:#2F7D55; --ok-soft:#DCEFE4; --warn:#B7791F; --bad:#B23A2E; --bad-soft:#F5DCD8;
-  --stage:#EEEBE3; --blk:#FBFAF6; --blk-2:#D9D4C9; --wall:#E6E0D4; --wood:#C9B8A0; --cool:#5B7A99; --leaf:#7FA27F;
-  --f-display:"Poppins",system-ui,sans-serif; --f-mono:"JetBrains Mono",ui-monospace,monospace;
-  --shadow:0 1px 2px rgba(42,37,34,.06),0 10px 30px rgba(42,37,34,.08); --radius:16px;
-}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --bg:#15110E; --surface:#1F1A16; --surface-2:#29231E; --ink:#EFEAE0; --muted:#A79F94; --line:#3A322B;
-    --accent:#F07A4F; --accent-soft:#3E241A; --human:#6FA9D6; --human-soft:#1B2C3A;
-    --ok:#5DBB88; --ok-soft:#1C3328; --warn:#E0A84A; --bad:#E57366; --bad-soft:#3D1F1B;
-    --stage:#1C1814; --blk:#3A332C; --blk-2:#2C2620; --wall:#332C25; --wood:#5C4C3A; --cool:#3F5B78; --leaf:#4F7A57;
-    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.3); color-scheme:dark;
-  }
-}
-:root[data-theme="dark"]{
-  --bg:#15110E; --surface:#1F1A16; --surface-2:#29231E; --ink:#EFEAE0; --muted:#A79F94; --line:#3A322B;
-  --accent:#F07A4F; --accent-soft:#3E241A; --human:#6FA9D6; --human-soft:#1B2C3A;
-  --ok:#5DBB88; --ok-soft:#1C3328; --warn:#E0A84A; --bad:#E57366; --bad-soft:#3D1F1B;
-  --stage:#1C1814; --blk:#3A332C; --blk-2:#2C2620; --wall:#332C25; --wood:#5C4C3A; --cool:#3F5B78; --leaf:#4F7A57;
-  --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.3); color-scheme:dark;
-}
-*{box-sizing:border-box}
-body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--bg)}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-display);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-a{color:var(--accent)}
-h1,h2,h3{line-height:1.15;margin:0 0 .4em;font-weight:600;letter-spacing:-.015em;text-wrap:balance}
-h2{font-size:clamp(1.5rem,3vw,2.1rem)}
-p{margin:0 0 1em}
-.wrap{max-width:1200px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-.eyebrow{font-size:.76rem;text-transform:uppercase;letter-spacing:.14em;color:var(--accent);font-weight:600;margin-bottom:.5em}
-.lede{font-size:1.05rem;color:var(--muted);max-width:66ch}
-.btn{cursor:pointer;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:8px 15px;border-radius:999px;font:500 .86rem var(--f-display);transition:border-color .2s,color .2s,background .2s;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
-.btn:hover{border-color:var(--accent);color:var(--accent)}
-.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
-.btn.primary:hover{color:#fff;filter:brightness(1.05)}
+:root{--bg:#f5f2ed;--surface:#edeae3;--surface2:#e5e1d8;--border:#ddd8ce;--text:#1a1410;--muted:#6b5f52;--accent:#c8442f;--accent-dim:rgba(200,68,47,.10);--accent-strong:rgba(200,68,47,.18);--glow:rgba(200,68,47,.28);--card-radius:20px;--shadow:0 2px 16px rgba(0,0,0,.07);--shadow-lg:0 22px 60px rgba(26,20,16,.16);--ok:#2f9e6a;--warn:#c98a1e;--human:#3d6fd8;--plum:#4a1c40;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0a0a0a;--surface:#161616;--surface2:#1e1e1e;--border:#2a2a2a;--text:#f0ede8;--muted:#b0a89e;--accent:#e85d4a;--accent-dim:rgba(232,93,74,.12);--accent-strong:rgba(232,93,74,.20);--glow:rgba(232,93,74,.42);--shadow:0 2px 16px rgba(0,0,0,.4);--shadow-lg:0 22px 60px rgba(0,0,0,.6);--ok:#3fb97a;--warn:#e8a33d;--human:#6f9bff;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0a0a0a;--surface:#161616;--surface2:#1e1e1e;--border:#2a2a2a;--text:#f0ede8;--muted:#b0a89e;--accent:#e85d4a;--accent-dim:rgba(232,93,74,.12);--accent-strong:rgba(232,93,74,.20);--glow:rgba(232,93,74,.42);--shadow:0 2px 16px rgba(0,0,0,.4);--shadow-lg:0 22px 60px rgba(0,0,0,.6);--ok:#3fb97a;--warn:#e8a33d;--human:#6f9bff;color-scheme:dark}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+button{font-family:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:8px}
+.mono{font-family:'JetBrains Mono',monospace}
+.wrap{max-width:1180px;margin:0 auto;padding:0 16px}
+@media(min-width:700px){.wrap{padding:0 28px}}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+h2{font-size:clamp(32px,5vw,58px);font-weight:800;letter-spacing:-.04em;line-height:1.04;margin:10px 0 14px}
+h2 em,h3 em{font-style:normal;color:var(--accent)}
+.sec{padding:110px 0}
+.sec-head{max-width:760px;margin-bottom:48px}
+.sec-head p{color:var(--muted);font-size:17px}
+.band{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+.chip{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;padding:4px 10px;border-radius:999px;background:var(--accent-dim);color:var(--accent);white-space:nowrap}
+.chip.ok{background:color-mix(in srgb,var(--ok) 14%,transparent);color:var(--ok)}
+.chip.hu{background:color-mix(in srgb,var(--human) 14%,transparent);color:var(--human)}
+.chip.warn{background:color-mix(in srgb,var(--warn) 16%,transparent);color:var(--warn)}
+.card{position:relative;background:var(--bg);border:1px solid var(--border);border-radius:var(--card-radius);padding:22px;overflow:hidden;transition:opacity .8s,transform .35s,box-shadow .35s,border-color .35s}
+.card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .45s}
+.card:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg)}
+.card:hover::before,.card.bar::before{transform:scaleX(1)}
+.card h4{font-size:19px;font-weight:800;letter-spacing:-.02em;line-height:1.25;margin:8px 0 6px}
+.card p{font-size:14px;color:var(--muted)}
+.k{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media(max-width:1020px){.grid4{grid-template-columns:repeat(2,1fr)}.grid3{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:620px){.grid4,.grid3{grid-template-columns:1fr}}
+.btn{display:inline-flex;align-items:center;gap:10px;border-radius:999px;padding:14px 24px;font-weight:700;font-size:15px;border:0;cursor:pointer;transition:transform .2s,box-shadow .2s,background .2s;text-decoration:none}
+.btn:hover{transform:translateY(-2px)}
+.btn-primary{background:#e85d4a;color:#fff;box-shadow:0 10px 34px rgba(232,93,74,.5)}
+.btn-ghost{background:transparent;color:inherit;border:1px solid currentColor}
+.btn.sm{padding:9px 16px;font-size:13px}
 
-nav.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-nav.top .wrap{display:flex;align-items:center;gap:12px;min-height:58px;flex-wrap:wrap}
-.brand{display:flex;align-items:center;gap:10px;font-weight:600;margin-right:auto}
-#themeBtn{width:36px;height:36px;padding:0;justify-content:center}
+/* nav */
+nav.top{position:fixed;top:0;left:0;right:0;z-index:50;transition:background .3s,border-color .3s,color .3s;border-bottom:1px solid transparent;color:#f0ede8}
+nav.top.scrolled{background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom-color:var(--border);color:var(--text)}
+nav.top.dark{color:#f0ede8;background:rgba(10,8,7,.55);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom-color:rgba(255,255,255,.08)}
+.nav-in{display:flex;align-items:center;gap:18px;height:64px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:800;letter-spacing:-.02em;font-size:18px}
+.brand svg{width:26px;height:26px}
+.brand .beat{stroke-dasharray:60;stroke-dashoffset:60;animation:beat 2.6s ease-in-out infinite}
+@keyframes beat{40%,70%{stroke-dashoffset:0}100%{stroke-dashoffset:-60}}
+.nav-links{display:flex;gap:22px;margin-left:auto}
+.nav-links a{text-decoration:none;font-size:14px;font-weight:600;opacity:.8}
+.nav-links a:hover{opacity:1;color:var(--accent)}
+.pill{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;padding:7px 12px;border-radius:999px;background:#e85d4a;color:#fff;white-space:nowrap;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+.live{width:7px;height:7px;border-radius:50%;background:#fff;position:relative;display:inline-block}
+.live::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:2px solid #fff;opacity:0;animation:ring 1.8s ease-out infinite}
+@keyframes ring{0%{transform:scale(.4);opacity:.9}100%{transform:scale(1.8);opacity:0}}
+.theme-btn{width:38px;height:38px;border-radius:999px;border:1px solid currentColor;background:transparent;color:inherit;cursor:pointer;font-size:16px;opacity:.85;flex:none}
+@media(max-width:960px){.nav-links{display:none}.nav-in .pill{margin-left:auto}}
+@media(max-width:420px){.nav-in .pill .t2{display:none}}
 
 /* hero */
-.intro{padding-block:44px 18px;display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap}
-.intro h1{font-size:clamp(2rem,5vw,3.4rem);letter-spacing:-.03em;margin:0}
-.intro h1 em{font-style:normal;color:var(--accent)}
-.intro p{margin:.4em 0 0;color:var(--muted);max-width:56ch}
-.stagebox{position:relative;border-radius:22px;overflow:hidden;background:var(--stage);border:1px solid var(--line);box-shadow:var(--shadow)}
-#stage{display:block;width:100%;max-width:100%;aspect-ratio:1200/620;height:auto}
-.cap{position:absolute;left:0;right:0;bottom:0;padding:18px 22px 16px;background:linear-gradient(to top,color-mix(in srgb,var(--stage) 96%,transparent) 55%,transparent);display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;align-items:end;pointer-events:none}
-.cap .fn{font:500 .74rem var(--f-mono);color:var(--accent);letter-spacing:.06em}
-.cap .ct{font-size:clamp(1.05rem,2.6vw,1.9rem);font-weight:600;letter-spacing:-.02em;line-height:1.15;text-wrap:balance}
-.cap .bq{font-size:.82rem;color:var(--muted);margin-top:4px}
-.cap .side{pointer-events:auto;display:flex;gap:6px}
-.cap .side .btn{background:var(--surface)}
-.chips{display:flex;gap:6px;padding:12px 0 0}
-.chips button{flex:1;min-width:0;border:none;background:none;padding:6px 0 0;cursor:pointer;text-align:left;color:var(--muted);font:500 .7rem var(--f-display);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.chips button i{display:block;height:4px;border-radius:99px;background:var(--line);margin-bottom:6px;overflow:hidden;position:relative}
-.chips button i b{position:absolute;inset:0;background:var(--accent);transform-origin:left;transform:scaleX(0)}
-.chips button.done i b{transform:scaleX(1)}
-.chips button.cur{color:var(--ink)}
-.chips button:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
-@media (max-width:640px){.chips button{font-size:0}.cap{position:static;background:var(--surface);border-top:1px solid var(--line)}}
+.hero{position:relative;min-height:100svh;background:#0c0908;color:#f0ede8;overflow:hidden;display:flex;align-items:center;padding:110px 0 90px}
+:root[data-theme="dark"] .hero{background:#050505}
+#helix{position:absolute;inset:0;width:100%;height:100%}
+.floor{position:absolute;left:-50%;right:-50%;bottom:-8%;height:50%;background-image:linear-gradient(rgba(232,93,74,.32) 1px,transparent 1px),linear-gradient(90deg,rgba(232,93,74,.32) 1px,transparent 1px);background-size:64px 64px;transform:perspective(520px) rotateX(64deg);transform-origin:center top;-webkit-mask-image:linear-gradient(to bottom,transparent,#000 25%,#000 70%,transparent);mask-image:linear-gradient(to bottom,transparent,#000 25%,#000 70%,transparent);animation:floor 3s linear infinite;pointer-events:none}
+@keyframes floor{to{background-position:0 64px}}
+.sun{position:absolute;width:760px;height:760px;border-radius:50%;background:radial-gradient(circle,rgba(232,93,74,.42),rgba(232,93,74,0) 62%);top:-6%;right:-200px;pointer-events:none}
+.hero .wrap{position:relative;z-index:2;width:100%}
+.hero-copy{max-width:640px}
+.hero .eyebrow{color:#ff8a78}
+.hero h1{font-size:clamp(44px,7vw,96px);font-weight:900;letter-spacing:-.055em;line-height:.92;margin:18px 0 24px}
+.hero h1 em{font-style:normal;color:#ff7a66;text-shadow:0 0 42px rgba(232,93,74,.6)}
+.lead{color:#d6cdc2;font-size:clamp(16px,1.6vw,19px);max-width:560px;line-height:1.7}
+.lead b{color:#fff}
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:32px}
+.hero-facts{display:grid;grid-template-columns:repeat(4,auto);gap:10px;margin-top:44px;max-width:640px}
+.hero-facts div{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:12px 14px;backdrop-filter:blur(6px)}
+.hero-facts b{display:block;font-family:'JetBrains Mono',monospace;font-size:clamp(20px,2.6vw,28px);font-weight:700;color:#fff;line-height:1.2}
+.hero-facts span{font-size:11px;color:#b0a89e;line-height:1.35;display:block}
+@media(max-width:700px){.hero-facts{grid-template-columns:repeat(2,1fr)}#helix{opacity:.45}}
+.cue{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);z-index:2;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.3em;color:#b0a89e;text-align:center}
+.cue i{display:block;width:1px;height:34px;margin:8px auto 0;background:linear-gradient(#ff8a78,transparent);animation:cue 2s ease-in-out infinite}
+@keyframes cue{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
 
-/* svg text */
-#stage text,.thumb text{font-family:var(--f-display)}
-.lbl{font-size:13px;font-weight:600;fill:var(--ink)}
-.lbl-s{font-size:11px;font-weight:500;fill:var(--muted)}
-.mono{font-family:var(--f-mono)!important}
+/* scrolly 3D story */
+.story{position:relative;background:#0c0908;color:#f0ede8}
+:root[data-theme="dark"] .story{background:#050505}
+.story-grid{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr)}
+.stage{position:sticky;top:0;height:100vh;height:100svh;grid-column:2;grid-row:1;align-self:start}
+#field{position:absolute;inset:0;width:100%;height:100%}
+.stage-hud{position:absolute;left:24px;right:24px;top:110px;display:flex;gap:6px;align-items:center;pointer-events:none}
+.stage-hud .seg{flex:1;height:3px;border-radius:3px;background:rgba(255,255,255,.12);overflow:hidden;position:relative}
+.stage-hud .seg i{position:absolute;inset:0;background:#e85d4a;transform:scaleX(0);transform-origin:left;transition:transform .6s}
+.stage-hud .seg.on i,.stage-hud .seg.done i{transform:scaleX(1)}
+.stage-hud .seg.turn{background:rgba(255,138,120,.3)}
+.stage-tag{position:absolute;left:24px;top:84px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#ff8a78;pointer-events:none}
+.steps{grid-column:1;grid-row:1;position:relative;z-index:2}
+.step{min-height:100vh;display:flex;align-items:center;padding:0 16px}
+@media(min-width:700px){.step{padding:0 28px 0 max(28px,calc((100vw - 1180px)/2 + 28px))}}
+.step .inner{max-width:470px;opacity:.18;transition:opacity .6s,transform .6s;transform:translateY(18px)}
+.step.on .inner{opacity:1;transform:none}
+.step .num{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;color:#ff8a78;letter-spacing:.1em}
+.step h3{font-size:clamp(30px,4vw,50px);font-weight:900;letter-spacing:-.045em;line-height:1.02;margin:10px 0 16px}
+.step h3 em{color:#ff7a66}
+.step p{color:#d6cdc2;font-size:17px;line-height:1.7}
+.step .q{margin-top:18px;display:flex;gap:10px;align-items:flex-start;font-size:14px;color:#b0a89e;border-left:2px solid #e85d4a;padding-left:12px}
+.step .q b{color:#fff}
+@media(max-width:860px){
+ .story-grid{display:block}
+ .stage{height:100svh}
+ .steps{margin-top:-100svh}
+ .step .inner{background:rgba(12,9,8,.74);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:22px}
+ .step{align-items:flex-end;padding-bottom:70px}
+ .step p{font-size:15px}
+}
 
-/* storyboard */
-section{padding-block:72px;border-top:1px solid var(--line)}
-.sheet{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:26px}
-@media (max-width:1000px){.sheet{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:560px){.sheet{grid-template-columns:1fr}}
-.frame{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;min-width:0}
-.frame .thumb{display:block;width:100%;aspect-ratio:1200/620;background:var(--stage);cursor:pointer;border-bottom:1px solid var(--line)}
-.frame .fb{padding:14px 16px 16px;display:flex;flex-direction:column;gap:8px;flex:1}
-.frame .fno{font:500 .72rem var(--f-mono);color:var(--accent)}
-.frame h3{font-size:1rem;margin:0}
-.frame .vo{font-size:.82rem;color:var(--muted);margin:0}
-.frame .q{font-size:.76rem;background:var(--surface-2);border-radius:8px;padding:6px 9px;margin-top:auto}
-.frame .q b{color:var(--ink)}
-.arc{display:grid;grid-template-columns:repeat(8,1fr);gap:4px;margin-top:22px;font-size:.72rem;color:var(--muted);text-align:center}
-.arc span{padding:6px 2px;border-radius:6px;background:var(--surface-2)}
-.arc span.turn{background:var(--accent);color:#fff;font-weight:600}
-@media (max-width:640px){.arc{grid-template-columns:repeat(4,1fr)}}
+/* risks */
+.risk .ix{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;color:var(--accent)}
 
-.prompts{display:grid;gap:10px;margin-top:20px}
-.prompt{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:12px;align-items:start;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
-.prompt .n{font:500 .8rem var(--f-mono);color:var(--accent);padding-top:2px}
-.prompt p{margin:0;font-size:.85rem}
-.prompt .btn{padding:5px 11px;font-size:.76rem}
-.styleline{font:400 .8rem var(--f-mono);background:var(--surface-2);border:1px dashed var(--line);border-radius:12px;padding:12px 14px;margin-top:14px}
-.roadmap{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:22px}
-@media (max-width:760px){.roadmap{grid-template-columns:1fr}}
-.step{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px}
-.step .tag{font:500 .72rem var(--f-mono);color:var(--muted)}
-.step.now{border-color:var(--accent)}
-.step.now .tag{color:var(--accent)}
-.step h3{font-size:1rem;margin:.3em 0}
-.step p{font-size:.84rem;color:var(--muted);margin:0}
-.go{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:22px}
-@media (max-width:640px){.go{grid-template-columns:1fr}}
-.go a{display:block;text-decoration:none;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px;transition:border-color .2s,transform .2s}
-.go a:hover{border-color:var(--accent);transform:translateY(-2px)}
-.go a h3{font-size:1.1rem}
-.go a p{font-size:.86rem;color:var(--muted);margin:0}
-footer{padding-block:40px 56px;color:var(--muted);font-size:.8rem;border-top:1px solid var(--line)}
+/* why now */
+.why{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:start}
+@media(max-width:900px){.why{grid-template-columns:1fr}}
+.tl{position:relative;padding-left:26px}
+.tl::before{content:"";position:absolute;left:7px;top:8px;bottom:8px;width:2px;background:var(--border)}
+.tl .fill{position:absolute;left:7px;top:8px;width:2px;height:0;background:var(--accent);transition:height 1.8s ease;box-shadow:0 0 12px var(--glow)}
+.tl.in .fill{height:calc(100% - 16px)}
+.ev{position:relative;padding:10px 0 14px}
+.ev::before{content:"";position:absolute;left:-24px;top:16px;width:12px;height:12px;border-radius:50%;background:var(--surface);border:2px solid var(--accent)}
+.ev.hot::before{background:var(--accent);animation:ping 2s infinite}
+@keyframes ping{0%{box-shadow:0 0 0 0 var(--glow)}80%,100%{box-shadow:0 0 0 12px rgba(0,0,0,0)}}
+.ev .t{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent);font-weight:700}
+.ev b{display:block;font-size:16px;letter-spacing:-.01em}
+.ev small{color:var(--muted);font-size:14px}
+.gap{position:relative;border-radius:24px;border:1px solid var(--border);background:var(--bg);padding:24px;overflow:hidden}
+.gap-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;align-items:stretch;margin-top:14px}
+.gap-col{border-radius:16px;padding:14px;background:var(--surface);border:1px solid var(--border);font-size:13px}
+.gap-col b{display:block;font-size:14px;margin-bottom:4px}
+.gap-col span{color:var(--muted);font-size:12px}
+.gap-col.mid{border:2px solid var(--accent);background:var(--accent-dim);box-shadow:0 0 30px var(--glow)}
+.gap-col.mid b{color:var(--accent)}
+.gap-col.mid strong{color:var(--text)}
+.gap-note{font-size:13px;color:var(--muted);margin-top:14px}
+@media(max-width:520px){.gap-row{grid-template-columns:1fr}}
+
+/* pillars */
+.pillar .n{font-family:'JetBrains Mono',monospace;font-size:34px;font-weight:700;color:var(--accent);line-height:1;opacity:.9}
+.pillar.hi{background:linear-gradient(160deg,var(--accent-dim),var(--bg) 60%);border-color:color-mix(in srgb,var(--accent) 50%,var(--border))}
+
+/* pipeline */
+.pipe{margin-top:34px;border-radius:26px;background:#0c0908;color:#e9e2d8;padding:28px;border:1px solid #2a2a2a;position:relative;overflow:hidden}
+@media(max-width:600px){.pipe{padding:20px 14px}}
+.pipe-track{position:relative;display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:18px 0 22px}
+.pipe-rail{position:absolute;left:10%;right:10%;top:28px;height:3px;border-radius:3px;background:rgba(255,255,255,.1)}
+.pipe-rail i{position:absolute;left:0;top:0;bottom:0;width:0;background:linear-gradient(90deg,#e85d4a,#ff9a88);box-shadow:0 0 14px #e85d4a;transition:width .8s cubic-bezier(.5,0,.2,1)}
+.gate{position:relative;text-align:center;z-index:1}
+.gate .dot{width:58px;height:58px;margin:0 auto;border-radius:18px;background:#1a1512;border:2px solid #3a302a;display:grid;place-items:center;font-size:22px;color:#fff;transition:all .5s}
+.gate.on .dot{border-color:#e85d4a;background:#2a1612;box-shadow:0 0 0 8px rgba(232,93,74,.12),0 0 30px rgba(232,93,74,.6);transform:translateY(-4px)}
+.gate.done .dot{border-color:#3fb97a}
+.gate b{display:block;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.12em;margin-top:10px;color:#fff}
+.gate small{display:block;font-size:12px;color:#9c9389;line-height:1.4;margin-top:4px}
+@media(max-width:700px){.gate small{display:none}.gate b{font-size:9.5px;letter-spacing:.04em}.gate .dot{width:44px;height:44px;font-size:18px;border-radius:14px}.pipe-rail{top:21px}}
+.term{background:#070605;border:1px solid #2a2a2a;border-radius:16px;padding:14px 16px;font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.8;min-height:150px;color:#d8d0c6;overflow:hidden}
+.term .p{color:#ff8a78;display:inline-block;min-width:76px}.term .g{color:#3fb97a}.term .h{color:#6f9bff}.term .y{color:#e8a33d}
+
+/* rules */
+.rules{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:22px}
+@media(max-width:860px){.rules{grid-template-columns:1fr}}
+.tier{position:relative;border-radius:22px;padding:22px;background:var(--bg);border:1px solid var(--border);overflow:hidden}
+.tier .lvl{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.tier h4{font-size:26px;font-weight:900;letter-spacing:-.04em;margin:4px 0}
+.tier .src{font-size:13px;color:var(--muted)}
+.tier ul{list-style:none;margin-top:14px;display:grid;gap:8px}
+.tier li{font-size:13.5px;padding:10px 12px;border-radius:12px;background:var(--surface);display:flex;gap:10px;align-items:flex-start;transition:outline-color .4s}
+.tier li i{font-style:normal;flex:none;width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font-size:11px;background:var(--surface2);color:var(--muted);transition:all .4s}
+.tier li.ok i{background:var(--ok);color:#fff}
+.tier li.bad i{background:var(--accent);color:#fff}
+.tier li.bad{outline:1px solid var(--accent);box-shadow:0 0 22px var(--glow)}
+.rules-note{margin-top:16px;font-size:14px;color:var(--muted);opacity:0;transition:opacity .6s}
+.rules-note.in{opacity:1}
+.rules-note b{color:var(--accent)}
+
+/* architecture stack */
+.arch{display:grid;grid-template-columns:1.05fr .95fr;gap:34px;align-items:center}
+@media(max-width:900px){.arch{grid-template-columns:1fr}}
+.stack-wrap{height:600px;perspective:1600px;display:grid;place-items:center;position:relative}
+.stack-wrap .stack{margin-top:150px}
+@media(max-width:520px){.stack-wrap{height:470px}.stack-wrap .stack{margin-top:120px}}
+.stack{position:relative;width:300px;height:300px;transform-style:preserve-3d;transform:rotateX(58deg) rotateZ(-40deg);transition:transform .9s}
+@media(max-width:520px){.stack{width:210px;height:210px}}
+.plate{position:absolute;inset:0;border-radius:22px;border:1.5px solid color-mix(in srgb,var(--accent) 55%,transparent);background:color-mix(in srgb,var(--surface) 78%,transparent);box-shadow:0 0 0 1px var(--border) inset;transform:translateZ(calc(var(--i) * var(--gap,6px)));transition:transform .9s cubic-bezier(.2,.8,.2,1),background .35s,border-color .35s,box-shadow .35s;cursor:pointer;display:flex;align-items:flex-end;padding:14px 16px}
+.stack-wrap.in .plate{--gap:48px}
+@media(max-width:520px){.stack-wrap.in .plate{--gap:32px}}
+.plate span{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;letter-spacing:.1em;color:var(--muted)}
+.plate span b{color:var(--accent);margin-right:8px}
+.plate.on{background:color-mix(in srgb,var(--accent) 22%,var(--surface));border-color:var(--accent);box-shadow:0 0 40px var(--glow);transform:translateZ(calc(var(--i) * var(--gap,6px) + 26px))}
+.plate.on span{color:var(--text)}
+.plate::after{content:"";position:absolute;inset:16%;border-radius:12px;border:1px dashed color-mix(in srgb,var(--accent) 35%,transparent)}
+.conn{position:absolute;left:50%;bottom:6px;transform:translateX(-50%);font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);text-align:center;width:100%}
+.layers{display:grid;gap:8px}
+.layer{display:grid;grid-template-columns:44px 1fr;gap:12px;align-items:start;padding:12px 14px;border-radius:16px;border:1px solid var(--border);background:var(--bg);cursor:pointer;transition:border-color .3s,box-shadow .3s,transform .3s}
+.layer .ln{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--accent);font-size:13px;padding-top:2px}
+.layer b{font-size:15px;letter-spacing:-.01em}
+.layer p{font-size:13.5px;color:var(--muted);max-height:0;overflow:hidden;transition:max-height .5s,margin .5s}
+.layer.on{border-color:var(--accent);box-shadow:0 10px 30px var(--glow);transform:translateX(4px)}
+.layer.on p{max-height:160px;margin-top:4px}
+
+/* why trace */
+.why-trace{display:grid;grid-template-columns:.8fr 1.2fr;gap:30px;align-items:center}
+@media(max-width:900px){.why-trace{grid-template-columns:1fr}}
+.trace{background:#0c0908;color:#d8d0c6;border-radius:22px;border:1px solid #2a2a2a;padding:20px;font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.85;min-height:330px;overflow-x:auto;box-shadow:var(--shadow-lg)}
+.trace .bar{display:flex;gap:6px;margin-bottom:12px;align-items:center}
+.trace .bar i{width:10px;height:10px;border-radius:50%;background:#3a302a}.trace .bar i:first-child{background:#e85d4a}
+.trace .bar span{margin-left:8px;color:#8a8076;font-size:11px}
+.trace .ln{white-space:pre;opacity:0;transform:translateX(-6px);transition:opacity .35s,transform .35s}
+.trace .ln.in{opacity:1;transform:none}
+.trace .d{color:#fff;font-weight:700}.trace .r{color:#ff8a78}.trace .g{color:#3fb97a}.trace .h{color:#6f9bff}.trace .m{color:#8a8076}
+
+/* observers */
+.obs{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+@media(max-width:900px){.obs{grid-template-columns:1fr}}
+.orbit-wrap{position:relative;width:min(470px,80vw);aspect-ratio:1;margin:0 auto}
+.ring{position:absolute;border-radius:50%;border:1px dashed color-mix(in srgb,var(--accent) 45%,transparent)}
+.ring.r1{inset:13%;animation:spin 50s linear infinite}
+.ring.r2{inset:-1%;border-style:solid;border-color:var(--border);animation:spin 80s linear infinite reverse}
+@keyframes spin{to{transform:rotate(360deg)}}
+.core{position:absolute;inset:31%;border-radius:50%;background:radial-gradient(circle at 35% 30%,#8fb0ff,#3d6fd8 55%,#1d2f66);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#fff;box-shadow:0 0 70px rgba(61,111,216,.55),inset 0 0 30px rgba(0,0,0,.35);animation:pulse 3.4s ease-in-out infinite}
+.core span{font-size:10px;letter-spacing:.2em;font-weight:700;opacity:.85}
+.core b{font-size:clamp(18px,2.6vw,26px);font-weight:900;letter-spacing:-.03em;line-height:1.05}
+.core i{font-style:normal;font-family:'JetBrains Mono',monospace;font-size:10px;opacity:.85;margin-top:4px}
+@keyframes pulse{50%{box-shadow:0 0 100px rgba(61,111,216,.85),inset 0 0 30px rgba(0,0,0,.35)}}
+.orbit{position:absolute;inset:0;animation:spin 40s linear infinite}
+.orbit-wrap:hover .orbit,.orbit-wrap:hover .upright,.orbit-wrap:focus-within .orbit,.orbit-wrap:focus-within .upright{animation-play-state:paused}
+.sat{position:absolute;width:21%;aspect-ratio:1;transform:translate(-50%,-50%)}
+.upright{width:100%;height:100%;animation:spin 40s linear infinite reverse}
+.sat button{width:100%;height:100%;border-radius:50%;border:2px solid var(--accent);background:var(--bg);color:var(--text);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:800;font-size:clamp(7px,.92vw,10.5px);letter-spacing:-.02em;line-height:1.1;padding:0 4px;box-shadow:0 0 22px var(--glow);transition:background .3s,transform .3s;overflow:hidden}
+.sat button small{font-family:'JetBrains Mono',monospace;color:var(--accent);font-size:clamp(9px,1.1vw,11px)}
+.sat button.on{background:var(--accent);color:#fff;transform:scale(1.12)}
+.sat button.on small{color:#fff}
+.obs-detail{border-radius:22px;border:1px solid var(--border);background:var(--surface);padding:24px;min-height:260px}
+.obs-detail h4{font-size:24px;font-weight:900;letter-spacing:-.03em;margin:6px 0 8px}
+.obs-detail .crit{margin-top:14px;padding:14px;border-radius:14px;background:var(--bg);border-left:3px solid var(--accent);font-size:14px}
+.obs-detail .crit span{display:block;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px}
+.obs-detail .chips{margin-top:14px;display:flex;gap:6px;flex-wrap:wrap}
+.mandate{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:34px}
+@media(max-width:760px){.mandate{grid-template-columns:1fr}}
+.mandate .card ul{list-style:none;margin-top:10px;display:grid;gap:6px}
+.mandate .card li{font-size:14px;color:var(--muted);padding-left:20px;position:relative}
+.mandate .card li::before{content:"";position:absolute;left:0;top:8px;width:9px;height:9px;border-radius:50%;background:var(--c)}
+.mandate .card::before{background:var(--c)}
+
+/* case funnel */
+.case{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:start}
+@media(max-width:900px){.case{grid-template-columns:1fr}}
+.funnel{display:grid;gap:10px}
+.frow{display:grid;grid-template-columns:76px 1fr;gap:14px;align-items:center}
+.frow .fv{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:22px;text-align:right}
+.fbar{height:40px;border-radius:12px;background:var(--surface2);overflow:hidden;position:relative}
+.fbar i{position:absolute;left:0;top:0;bottom:0;width:0;border-radius:12px;background:var(--c,var(--accent));transition:width 1.4s cubic-bezier(.2,.8,.2,1)}
+.fbar span{position:absolute;left:14px;right:8px;top:50%;transform:translateY(-50%);font-size:13px;font-weight:700;color:var(--text);z-index:1;line-height:1.2}
+.fbar.lite span{color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.35)}
+.quote{position:relative;background:#0c0908;color:#e9e2d8;border-radius:26px;padding:30px;border:1px solid #2a2a2a;overflow:hidden}
+.quote::before{content:"";position:absolute;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(232,93,74,.28),transparent 65%);right:-160px;top:-180px}
+.quote>*{position:relative}
+.quote .big{font-size:clamp(24px,3vw,34px);font-weight:900;letter-spacing:-.035em;line-height:1.1;color:#fff}
+.quote .big em{font-style:normal;color:#ff7a66}
+.quote p{font-size:15px;color:#cfc6bb;margin-top:14px;line-height:1.75}
+.quote .ask{margin-top:18px;padding:14px 16px;border-radius:14px;background:rgba(232,93,74,.12);border:1px solid rgba(232,93,74,.4);font-size:14px;color:#fff}
+.takeaways{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+.quote .chip{background:rgba(232,93,74,.16);color:#ff9a88}
+.quote .chip.ok{background:rgba(63,185,122,.16);color:#3fb97a}
+.quote .chip.hu{background:rgba(111,155,255,.16);color:#9ab8ff}
+
+/* compliance */
+.ctrl{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:1020px){.ctrl{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:620px){.ctrl{grid-template-columns:1fr}}
+.ctrl .card{padding:16px 18px}
+.ctrl .card h4{font-size:15.5px;margin:8px 0 4px}
+.ctrl .card p{font-size:13px}
+.regs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:26px}
+.regs .chip{font-size:12px;padding:6px 12px;background:var(--surface);color:var(--text);border:1px solid var(--border)}
+.regs .chip b{color:var(--accent)}
+
+/* model */
+.tiers .card .who{font-size:12px;color:var(--muted);font-weight:600}
+.measures{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.measures span{font-size:13px;padding:8px 12px;border-radius:12px;border:1px dashed var(--border);color:var(--muted);background:var(--bg)}
+
+/* roadmap */
+.road{position:relative;display:grid;grid-template-columns:repeat(5,1fr);gap:14px;padding-top:36px}
+.road::before{content:"";position:absolute;left:0;right:0;top:12px;height:2px;background:var(--border)}
+.road .rf{position:absolute;left:0;top:12px;height:2px;width:0;background:var(--accent);box-shadow:0 0 12px var(--glow);transition:width 2s ease}
+.road.in .rf{width:100%}
+.ph{position:relative}
+.ph::before{content:"";position:absolute;left:0;top:-31px;width:14px;height:14px;border-radius:50%;background:var(--bg);border:2px solid var(--accent)}
+.ph.now::before{background:var(--accent);animation:ping 2s infinite}
+.ph .t{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;color:var(--accent)}
+.ph b{display:block;font-size:17px;font-weight:800;letter-spacing:-.02em;margin:2px 0 6px;line-height:1.2}
+.ph p{font-size:13px;color:var(--muted)}
+.ph .pd{margin-top:10px}
+@media(max-width:900px){.road{grid-template-columns:1fr;padding-top:0;padding-left:28px}.road::before{left:6px;right:auto;top:6px;bottom:6px;width:2px;height:auto}.road .rf{left:6px;top:6px;width:2px;height:0;transition:height 2s ease}.road.in .rf{width:2px;height:calc(100% - 12px)}.ph::before{left:-28px;top:4px}}
+
+/* ask */
+.ask-sec{position:relative;background:#0c0908;color:#f0ede8;overflow:hidden}
+:root[data-theme="dark"] .ask-sec{background:#050505}
+.ask-sec .sun{top:auto;bottom:-380px;left:50%;right:auto;transform:translateX(-50%)}
+.ask-sec .floor{opacity:.7}
+.ask-sec .wrap{position:relative;z-index:1;text-align:center}
+.ask-sec h2{font-size:clamp(40px,7vw,90px);font-weight:900;letter-spacing:-.055em;line-height:.95}
+.ask-sec h2 em{color:#ff7a66;text-shadow:0 0 42px rgba(232,93,74,.6)}
+.ask-sec .lead{margin:20px auto 0;text-align:center}
+.pilot{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;max-width:920px;margin:40px auto 0}
+@media(max-width:760px){.pilot{grid-template-columns:repeat(2,1fr)}}
+.pilot div{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:16px;text-align:left;backdrop-filter:blur(6px)}
+.pilot b{display:block;font-family:'JetBrains Mono',monospace;font-size:26px;color:#fff}
+.pilot span{font-size:13px;color:#b0a89e}
+.measure-line{margin:22px auto 0;max-width:760px;font-size:14px;color:#b0a89e}
+.ask-sec .hero-ctas{justify-content:center}
+footer{padding:46px 0 80px;border-top:1px solid var(--border);font-size:13px;color:var(--muted)}
+footer .foot{display:flex;gap:24px;justify-content:space-between;flex-wrap:wrap}
+footer .foot>div{max-width:540px}
+footer b{color:var(--text)}
+
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}.step .inner{opacity:1;transform:none}}
 </style>
 </head>
 <body>
-<nav class="top"><div class="wrap">
-  <div class="brand"><svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><circle cx="13" cy="13" r="12" fill="none" stroke="var(--accent)" stroke-width="2"/><path d="M4 16 C9 6, 17 20, 22 9" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round"/></svg>TrialThread</div>
-  <a class="btn" href="#storyboard">Storyboard</a>
-  <a class="btn" href="trialthread-plan.html" target="_blank" rel="noopener">The plan ↗</a>
-  <a class="btn" href="areas-of-focus/02-enablement/workings/trialthread-observer-app.html" target="_blank" rel="noopener">The Observer app ↗</a>
-  <button class="btn" id="themeBtn" aria-label="Toggle colour theme">◐</button>
+
+<nav class="top" id="nav"><div class="wrap nav-in">
+  <a class="brand" href="#top" aria-label="TrialThread, back to top">
+    <svg viewBox="0 0 26 26" aria-hidden="true"><circle cx="13" cy="13" r="12" fill="none" stroke="#e85d4a" stroke-width="1.6" opacity=".55"/><path class="beat" d="M3 14h5l2-5 3 10 3-8 2 3h5" fill="none" stroke="#e85d4a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    TrialThread
+  </a>
+  <div class="nav-links">
+    <a href="#story">The problem</a><a href="#product">Product</a><a href="#observer">Observer</a><a href="#trust">Compliance</a><a href="#road">Roadmap</a>
+  </div>
+  <a class="pill" href="#ask"><span class="live"></span><span>Pilot</span><span class="t2">· 8 weeks</span></a>
+  <button class="theme-btn" id="themeBtn" aria-label="Toggle light or dark mode">☾</button>
 </div></nav>
 
-<header class="wrap">
-  <div class="intro">
-    <div>
-      <div class="eyebrow">For presidents, CEOs and heads of clinical operations</div>
-      <h1>Every trial runs on trust. <em>Now you can prove it.</em></h1>
-      <p>48 seconds, eight frames: the problem your CRAs live with, and the observed, signed answer you can put in front of a regulator.</p>
+<header class="hero" id="top">
+  <canvas id="helix" aria-hidden="true"></canvas>
+  <div class="sun" aria-hidden="true"></div>
+  <div class="floor" aria-hidden="true"></div>
+  <div class="wrap"><div class="hero-copy">
+    <span class="eyebrow">For CEOs, presidents and heads of clinical operations</span>
+    <h1>Every trial runs on trust. <em>Now you can prove it.</em></h1>
+    <p class="lead">TrialThread is <b>one verified thread from source to submission.</b> It sits across the systems you already run, checks every record as it arrives, and puts a signed, verifiable picture of trial quality in front of your board and your regulator.</p>
+    <div class="hero-ctas">
+      <a class="btn btn-primary" href="#story">▶ See the problem</a>
+      <a class="btn btn-ghost" href="trialthread-plan.html">Read the full plan ↗</a>
     </div>
-  </div>
-  <div class="stagebox">
-    <svg id="stage" viewBox="0 0 1200 620" role="img" aria-label="Animated storyboard of the TrialThread story"></svg>
-    <div class="cap" aria-live="polite">
-      <div><div class="fn" id="capN"></div><div class="ct" id="capT"></div><div class="bq" id="capQ"></div></div>
-      <div class="side"><button class="btn" id="bPrev" aria-label="Previous frame">◀</button><button class="btn" id="bPlay" aria-label="Pause">❚❚</button><button class="btn" id="bNext" aria-label="Next frame">▶</button></div>
+    <div class="hero-facts">
+      <div><b data-count="100" data-suf="%">0%</b><span>of monitoring work observed, not sampled</span></div>
+      <div><b data-count="0">0</b><span>systems replaced. It overlays them.</span></div>
+      <div><b data-count="1">0</b><span>named human signs every judgement</span></div>
+      <div><b data-count="8">0</b><span>weeks to prove it on one study</span></div>
     </div>
-  </div>
-  <div class="chips" id="chips"></div>
+  </div></div>
+  <div class="cue" aria-hidden="true">SCROLL<i></i></div>
 </header>
 
-<section id="storyboard"><div class="wrap">
-  <div class="eyebrow">Storyboard</div>
-  <h2>Four frames of problem, four of answer.</h2>
-  <p class="lede">Each frame answers one question a buyer asks. The turn lands at the midpoint: the tangle becomes a thread. Click a frame to play it above.</p>
-  <div class="arc" aria-label="Story arc"><span>trust</span><span>overload</span><span>hidden risk</span><span>consequence</span><span class="turn">the turn</span><span>coverage</span><span>judgement</span><span>proof &amp; ask</span></div>
-  <div class="sheet" id="sheet"></div>
-</div></section>
-
-<section id="imagery"><div class="wrap">
-  <div class="eyebrow">Imagery roadmap</div>
-  <h2>Vector now. Generated later, on the same storyboard.</h2>
-  <p class="lede">The scenes above are drawn in code: simple isometric blocks, no image costs. When the story has been tested with a buyer, the same eight frames move to generated images, then to video. The prompts are ready below.</p>
-  <div class="roadmap">
-    <div class="step now"><div class="tag">NOW · free</div><h3>Isometric vector scenes</h3><p>Drawn in code on this page. Easy to change while the story is still moving.</p></div>
-    <div class="step"><div class="tag">NEXT · free or cheap tiers</div><h3>Generated stills</h3><p>ChatGPT images or Higgsfield, one frame first to lock the style, then the batch. Swap into the page frame by frame.</p></div>
-    <div class="step"><div class="tag">LATER · paid, with a go-ahead</div><h3>Higgsfield video</h3><p>The eight stills become keyframes, 6 seconds each, with the motion notes from the storyboard.</p></div>
+<main>
+<section class="story" id="story" aria-label="The story in eight scenes">
+  <div class="story-grid">
+    <div class="stage" aria-hidden="true">
+      <canvas id="field"></canvas>
+      <div class="stage-tag" id="stageTag">01 · trust</div>
+      <div class="stage-hud" id="hud"></div>
+    </div>
+    <div class="steps">
+      <div class="step" data-s="0"><div class="inner"><span class="num">01 · TRUST</span><h3>Every trial runs on <em>trust.</em></h3><p>Participants protected. Data that is real. The person who checks it, site by site, is the Clinical Research Associate: the CRA.</p><div class="q"><span>Q</span><span><b>Why should I care?</b> Because your licence to operate rests on it.</span></div></div></div>
+      <div class="step" data-s="1"><div class="inner"><span class="num">02 · OVERLOAD</span><h3>Eight systems. One person. <em>Every week.</em></h3><p>CTMS, EDC, eTMF, the site file, safety, IxRS, spreadsheets and email. The same fact is entered three to five times and reconciled by hand. Every hop is a chance for an error.</p><div class="q"><span>Q</span><span><b>Is this real?</b> Yes, and it is structural: built into how the systems are (not) connected.</span></div></div></div>
+      <div class="step" data-s="2"><div class="inner"><span class="num">03 · HIDDEN RISK</span><h3>Errors hide in <em>the gaps.</em></h3><p>Checks are sampled: five of 38 consent forms. A consent signed on a superseded version, an expired GCP certificate or a visit out of window is found at the next monitoring visit, weeks later.</p><div class="q"><span>Q</span><span><b>Why hasn't this been fixed?</b> Each system is fine on its own. The risk lives between them.</span></div></div></div>
+      <div class="step" data-s="3"><div class="inner"><span class="num">04 · CONSEQUENCE</span><h3>And the risk lands <em>on your desk.</em></h3><p>An inspection finding. A delayed submission. A question from the regulator that you must answer. Inspection readiness becomes a project instead of a state.</p><div class="q"><span>Q</span><span><b>What does it cost?</b> Findings, delay and credibility.</span></div></div></div>
+      <div class="step" data-s="4"><div class="inner"><span class="num">05 · THE TURN</span><h3>Capture once. <em>Check on arrival.</em></h3><p>TrialThread runs one thread through the systems you already have. Each record is captured once, checked against protocol, regulation and SOP the moment it arrives, and routed to everyone who needs it. Nothing is ripped out.</p><div class="q"><span>Q</span><span><b>Do I replace my systems?</b> No. They stay exactly where they are.</span></div></div></div>
+      <div class="step" data-s="5"><div class="inner"><span class="num">06 · COVERAGE</span><h3>Eight AI observers check 100%. <em>Not a sample.</em></h3><p>Every consent form, report statement, visit window, training record and query, checked as it happens. The observers read; they never change anything. The signal a sample would miss is found the same day.</p><div class="q"><span>Q</span><span><b>Can AI be trusted?</b> It checks. It never decides.</span></div></div></div>
+      <div class="step" data-s="6"><div class="inner"><span class="num">07 · JUDGEMENT</span><h3>A named human <em>judges, and signs.</em></h3><p>The conductor reviews only what the observers raise. She confirms, regrades or dismisses each one, giving a reason, and signs with a passkey. She didn't do the work, so she can judge it.</p><div class="q"><span>Q</span><span><b>Who is accountable?</b> A named person, with a verifiable signature.</span></div></div></div>
+      <div class="step" data-s="7"><div class="inner"><span class="num">08 · PROOF</span><h3>Proof, on <em>one page.</em></h3><p>Every record, decision and signature is hashed and chained. Each month the board gets three answers on one page, and every number links to a signed record an inspector can verify without trusting us.</p><div class="q"><span>Q</span><span><b>What do you need from me?</b> One study. Eight weeks.</span></div></div></div>
+    </div>
   </div>
-  <h3 style="margin-top:34px;font-size:1.05rem">Style line: append to every prompt</h3>
-  <div class="styleline" id="styleLine">isometric 3D illustration, soft clay render, warm off-white background, muted warm greys, single ember-orange accent, small blue accent for people's decisions, gentle studio lighting, no text, no logos, faceless stylised figures, clean and calm, 16:9</div>
-  <div class="prompts" id="prompts"></div>
-</div></section>
+</section>
 
-<section id="go"><div class="wrap">
-  <div class="eyebrow">Go deeper</div>
-  <h2>The plan and the product.</h2>
-  <div class="go">
-    <a href="trialthread-plan.html" target="_blank" rel="noopener"><h3>The plan ↗</h3><p>Problem, regulations, architecture, the context graph, roles, the business model and the roadmap, with all eight Areas of Focus readable inline.</p></a>
-    <a href="areas-of-focus/02-enablement/workings/trialthread-observer-app.html" target="_blank" rel="noopener"><h3>The Observer app ↗</h3><p>AI observers check 100% of CRA work; the conductor reviews, signs and presents. Synthetic case, seven screens, try the sign-off.</p></a>
+<section class="sec" id="risk"><div class="wrap">
+  <div class="sec-head reveal"><span class="eyebrow">01 · The systemic risk</span><h2>It isn't the people. <em>It's the gaps.</em></h2><p>Big platforms serve the sponsor and site tools serve the site. The CRA works across all of them with no tool of their own, and six risks are built into the seams.</p></div>
+  <div class="grid3">
+    <div class="card risk reveal"><span class="ix">R1</span><h4>Duplicate entry</h4><p>Source → worksheet → EDC → the CRA's spreadsheet → monitoring report. Source data verification exists largely to catch errors the process itself introduced.</p></div>
+    <div class="card risk reveal"><span class="ix">R2</span><h4>No shared truth</h4><p>CTMS, EDC, eTMF, the site file, safety and IxRS each hold part of the picture. Reconciliation is human.</p></div>
+    <div class="card risk reveal"><span class="ix">R3</span><h4>Shadow spreadsheets</h4><p>Trackers for documents, deviations, actions, payments and training sit outside validated systems: no audit trail and no access control.</p></div>
+    <div class="card risk reveal"><span class="ix">R4</span><h4>Email as the record</h4><p>Decisions, query answers and approvals live in inboxes, invisible to an inspector until asked.</p></div>
+    <div class="card risk reveal"><span class="ix">R5</span><h4>Late detection</h4><p>An out-of-window visit, a superseded consent or an unqualified delegate is found weeks after it happens.</p></div>
+    <div class="card risk reveal"><span class="ix">R6</span><h4>Evidence after the fact</h4><p>Inspection readiness is a project. Every inspection means reconstructing what happened from fragments.</p></div>
   </div>
 </div></section>
 
-<footer><div class="wrap">TrialThread (working name): a concept by Peter and Giau, 22 Oct 2026. All people, studies and numbers are synthetic. Not legal, regulatory or medical advice.</div></footer>
+<section class="sec band" id="now"><div class="wrap">
+  <div class="sec-head reveal"><span class="eyebrow">02 · Why now</span><h2>The regulators just <em>moved the bar.</em></h2><p>ICH E6(R3) re-centres Good Clinical Practice on quality by design, risk-proportionate oversight, data governance and fit-for-purpose computerised systems, including the ones the site uses. The spreadsheet layer can't evidence any of it.</p></div>
+  <div class="why">
+    <div class="tl reveal" id="tl"><div class="fill"></div>
+      <div class="ev"><span class="t">OCT 2024</span><b>FDA: electronic systems, records and signatures in clinical investigations</b><small>Final Q&amp;A on how Part 11 applies, including to systems used by sites.</small></div>
+      <div class="ev"><span class="t">JAN 2025</span><b>ICH E6(R3) finalised</b><small>Principles and Annex 1. Data governance and computerised-system controls now explicit.</small></div>
+      <div class="ev"><span class="t">JAN 2025</span><b>FDA draft guidance on AI in regulatory decision-making</b><small>A context-of-use and credibility framework that TrialThread's AI governance follows.</small></div>
+      <div class="ev"><span class="t">JUL 2025</span><b>EMA applies ICH E6(R3)</b><small>The FDA has published it as guidance.</small></div>
+      <div class="ev hot"><span class="t">NOW</span><b>TGA adopting E6(R3) in Australia</b><small>And the National Clinical Trials Governance Framework rewards sites that can show good operational governance. (Effective date to confirm.)</small></div>
+    </div>
+    <div class="gap reveal">
+      <span class="k">The gap in the market</span>
+      <div class="gap-row">
+        <div class="gap-col"><b>Sponsor platforms</b><span>Veeva · Medidata · Oracle. Sponsor-mandated CTMS, EDC, eTMF.</span></div>
+        <div class="gap-col mid"><b>The CRA</b><span>Works across sponsors, CROs and sites. No tool of their own. <strong>TrialThread lives here.</strong></span></div>
+        <div class="gap-col"><b>Site tools</b><span>Florence · CRIO · Advarra. Site binders and operations.</span></div>
+      </div>
+      <p class="gap-note">Nothing in the market makes the link between a decision and its justification provable. We don't compete with the platforms; we connect across them.</p>
+    </div>
+  </div>
+</div></section>
+
+<section class="sec" id="product"><div class="wrap">
+  <div class="sec-head reveal"><span class="eyebrow">03 · The product</span><h2>One thread. <em>Six moves.</em></h2><p>A records-ingestion and workflow layer for clinical trial operations. It overlays the systems sponsors already mandate. It doesn't replace them.</p></div>
+  <div class="grid3">
+    <div class="card pillar reveal"><span class="n">01</span><h4>Ingest once</h4><p>Scanned source, eSource exports, delegation logs, CVs, certificates and findings all enter through one intake. Each is classified, extracted and hashed on arrival.</p></div>
+    <div class="card pillar reveal"><span class="n">02</span><h4>Check in bounds</h4><p>A Rule → Standard → Policy engine checks every record against protocol, regulation and SOP: visit windows, consent versions, eligibility, expiry, delegation and training.</p></div>
+    <div class="card pillar reveal"><span class="n">03</span><h4>Flow to every role</h4><p>The same verified record reaches the coordinator, investigator, CRA, PM, data manager, auditor and finance, each seeing only what their role permits.</p></div>
+    <div class="card pillar reveal"><span class="n">04</span><h4>Prove it</h4><p>Every output is hashed into a ledger and every signature is a verifiable credential. Every decision is linked to the clause, section and source that justify it.</p></div>
+    <div class="card pillar reveal"><span class="n">05</span><h4>AI assists. Humans sign.</h4><p>AI drafts the report, proposes the classification and pre-fills the query. A named human accepts, edits or rejects, and that choice is recorded.</p></div>
+    <div class="card pillar hi bar reveal"><span class="n">06</span><h4>Observe, don't do</h4><p>Eight AI observers check 100% of the CRA work. A human conductor reviews what they raise, signs, and presents a verifiable picture to the board.</p></div>
+  </div>
+
+  <div class="pipe reveal" id="pipe" aria-label="The ingestion pipeline, with one record going through it">
+    <span class="eyebrow" style="color:#ff8a78">The pipeline · watch one record go through</span>
+    <div class="pipe-track"><div class="pipe-rail"><i id="pipeFill"></i></div>
+      <div class="gate"><div class="dot">▤</div><b>SOURCE</b><small>paper scan · eSource · PDF · system API · email</small></div>
+      <div class="gate"><div class="dot">⇣</div><b>INGEST</b><small>capture · classify · extract · human confirm</small></div>
+      <div class="gate"><div class="dot">✓</div><b>CHECK</b><small>check in bounds · reconcile vs EDC, CTMS, eTMF</small></div>
+      <div class="gate"><div class="dot">⇄</div><b>FLOW</b><small>route by role · raise query, deviation, action</small></div>
+      <div class="gate"><div class="dot">◈</div><b>PROVE</b><small>sign · hash to the ledger · file to ISF/eTMF</small></div>
+    </div>
+    <div class="term" id="pipeLog"></div>
+  </div>
+</div></section>
+
+<section class="sec band" id="rules"><div class="wrap">
+  <div class="sec-head reveal"><span class="eyebrow">04 · Check in bounds</span><h2>Rules that run <em>at the door.</em></h2><p>Three tiers, authored as data and linked to the clause each one implements. A breach produces a typed finding, never a silent failure. Watch a record arrive.</p></div>
+  <div class="rules" id="rulesBox">
+    <div class="tier reveal"><span class="lvl">Tier 1</span><h4>Rule</h4><div class="src">from the protocol</div><ul><li><i>·</i>Visit 4 occurs Day 28 ± 3</li><li><i>·</i>Exclusion 7: eGFR &lt; 45</li><li><i>·</i>ICF v3.0 required from 12 Mar</li></ul></div>
+    <div class="tier reveal"><span class="lvl">Tier 2</span><h4>Standard</h4><div class="src">ICH GCP · 21 CFR · TGA · NHMRC</div><ul><li><i>·</i>Consent before any study procedure</li><li><i>·</i>E-signature shows name, date/time and meaning</li><li><i>·</i>No delegated task without current training</li></ul></div>
+    <div class="tier reveal"><span class="lvl">Tier 3</span><h4>Policy</h4><div class="src">sponsor · CRO · site SOPs</div><ul><li><i>·</i>Trip report final within 10 working days</li><li><i>·</i>GCP training renewed every 3 years</li><li><i>·</i>Major deviations escalated to PM in 24 h</li></ul></div>
+  </div>
+  <p class="rules-note" id="rulesNote"><b>One breach, caught at the door:</b> a consent signed on a superseded version becomes a typed finding the same day, linked to the rule it breaks. Without that, it waits for the next monitoring visit.</p>
+</div></section>
+
+<section class="sec" id="arch"><div class="wrap">
+  <div class="sec-head reveal"><span class="eyebrow">05 · Architecture</span><h2>Seven layers. <em>Trust at the base.</em></h2><p>Tap a layer. Content stays in the regulated store; the ledger proves it hasn't changed. Useful with zero integrations, and more useful with each one.</p></div>
+  <div class="arch">
+    <div class="stack-wrap reveal" id="stackWrap"><div class="stack" id="stack"></div><div class="conn">↕ connectors: CTMS · EDC · eTMF · eISF · safety DB · IxRS · email</div></div>
+    <div class="layers" id="layers"></div>
+  </div>
+</div></section>
+
+<section class="sec band" id="why"><div class="wrap">
+  <div class="why-trace">
+    <div class="sec-head reveal" style="margin:0"><span class="eyebrow">06 · The "Why?" button</span><h2>Every decision <em>carries its reason.</em></h2><p>Each decision is a node in a verified context graph, linked back to the regulation clause, protocol section, SOP step and source record that justify it. Every edge is checkable. The trace <b style="color:var(--text)">is</b> the audit evidence.</p><p style="margin-top:18px"><button class="btn btn-primary sm" id="whyBtn">Ask "why?" again</button></p></div>
+    <div class="trace reveal" id="trace" aria-label="Example decision trace"><div class="bar"><i></i><i></i><i></i><span>why? · decision trace · synthetic</span></div><div id="traceBody"></div></div>
+  </div>
+</div></section>
+
+<section class="sec" id="observer"><div class="wrap">
+  <div class="sec-head reveal"><span class="eyebrow">07 · TrialThread Observer</span><h2>We stopped <em>marking our own homework.</em></h2><p>Today a CRA does the monitoring and also writes the report that says it was done well, and QA audits a small sample months later. Eight AI observers, one per area, now check everything, while a human conductor holds the judgement and the signature. <b style="color:var(--text)">Machines watch at volume; people decide.</b></p></div>
+  <div class="obs">
+    <div class="orbit-wrap reveal" id="orbit" aria-label="The eight observers around the conductor">
+      <div class="ring r2"></div><div class="ring r1"></div>
+      <div class="core"><span>CONDUCTOR</span><b>Giau</b><i>reviews · signs</i></div>
+      <div class="orbit" id="sats"></div>
+    </div>
+    <div class="obs-detail reveal" id="obsDetail" aria-live="polite"></div>
+  </div>
+  <div class="mandate">
+    <div class="card bar reveal" style="--c:var(--ok)"><span class="k" style="color:var(--ok)">May</span><h4>Read and raise</h4><ul><li>Read connected records</li><li>Evaluate criteria on 100% of the population</li><li>Sign observations; raise findings with evidence</li></ul></div>
+    <div class="card bar reveal" style="--c:var(--warn)"><span class="k" style="color:var(--warn)">Must ask</span><h4>A human first</h4><ul><li>Anything touching unblinded data</li><li>Any new criterion (conductor sign-off)</li></ul></div>
+    <div class="card bar reveal" style="--c:var(--accent)"><span class="k">Never</span><h4>Decide or act</h4><ul><li>Change a record or source data</li><li>Contact a site or participant</li><li>Grade a finding as final, sign, approve, unblind</li><li>Rank individuals</li></ul></div>
+  </div>
+</div></section>
+
+<section class="sec band" id="case"><div class="wrap">
+  <div class="sec-head reveal"><span class="eyebrow">08 · What the board hears · synthetic case HALCYON-3</span><h2>One month. 1,284 items. <em>One that mattered.</em></h2><p>A fictional Phase 3 asthma study: 10 sites in Australia and the US, 6 CRAs. This is the president's one-minute version.</p></div>
+  <div class="case">
+    <div class="funnel reveal" id="funnel">
+      <div class="frow"><div class="fv" data-count="1284">0</div><div class="fbar lite" style="--c:#4a1c40"><i data-w="100"></i><span>pieces of monitoring work, all checked</span></div></div>
+      <div class="frow"><div class="fv" data-count="1243">0</div><div class="fbar lite" style="--c:var(--ok)"><i data-w="96.8"></i><span>conformed, on a signed record</span></div></div>
+      <div class="frow"><div class="fv" data-count="41">0</div><div class="fbar" style="--c:var(--warn)"><i data-w="22"></i><span>raised a signal</span></div></div>
+      <div class="frow"><div class="fv" data-count="37">0</div><div class="fbar" style="--c:color-mix(in srgb,var(--ok) 60%,transparent)"><i data-w="19"></i><span>cleared with evidence</span></div></div>
+      <div class="frow"><div class="fv" data-count="4">0</div><div class="fbar" style="--c:color-mix(in srgb,var(--human) 70%,transparent)"><i data-w="9"></i><span>came to the conductor; each reviewed and signed</span></div></div>
+      <div class="frow"><div class="fv" data-count="1">0</div><div class="fbar" style="--c:var(--accent)"><i data-w="5"></i><span>mattered: consent on an out-of-date form</span></div></div>
+      <p class="gap-note">Found in a day. Corrected in a week. Sampling would not have caught it until next quarter. The fix was a change to how we monitor, not blame for a person.</p>
+    </div>
+    <div class="quote reveal">
+      <div class="big">“We stopped <em>marking our own homework.</em>”</div>
+      <p>Eight AI observers checked all of it, not a sample. I reviewed each of the four that came to me, spoke to the people involved, and signed. Every number here links to a signed record an auditor or inspector can verify without trusting us.</p>
+      <div class="ask"><b>The decision requested:</b> approve monitoring plan v2. It moves 100% of consent checks to the observers and gives our CRAs about six days a month back for participant-safety review.</div>
+      <div class="takeaways"><span class="chip">coverage · 100%, not a sample</span><span class="chip hu">independence · she didn't do the work</span><span class="chip ok">proof · signed and verifiable</span></div>
+    </div>
+  </div>
+</div></section>
+
+<section class="sec" id="trust"><div class="wrap">
+  <div class="sec-head reveal"><span class="eyebrow">09 · Built for inspection</span><h2>Designed to the regulation, <em>clause by clause.</em></h2><p>21 CFR Part 11 and ICH E6(R3) data governance are design constraints, not a validation afterthought. Each requirement maps to a feature.</p></div>
+  <div class="regs reveal"><span class="chip"><b>ICH</b> E6(R3)</span><span class="chip"><b>ICH</b> E8(R1)</span><span class="chip"><b>FDA</b> 21 CFR Part 11</span><span class="chip"><b>FDA</b> Parts 50 · 56 · 312</span><span class="chip"><b>TGA</b> CTN / CTA</span><span class="chip"><b>NHMRC</b> National Statement</span><span class="chip"><b>ALCOA++</b></span><span class="chip"><b>GAMP 5</b> risk-based CSV</span><span class="chip"><b>ISO</b> 27001 · 42001</span><span class="chip"><b>HIPAA</b> · Privacy Act</span></div>
+  <div class="ctrl">
+    <div class="card reveal"><span class="chip">11.10(a)</span><h4>System validation</h4><p>A risk-based validation package each release, with a summary for customers.</p></div>
+    <div class="card reveal"><span class="chip">11.10(b)</span><h4>Copies for inspection</h4><p>Export any record with its full trail. A time-boxed inspector view.</p></div>
+    <div class="card reveal"><span class="chip">11.10(c)</span><h4>Protection &amp; retention</h4><p>Immutable versioning, anchored by hash, with retention set per jurisdiction.</p></div>
+    <div class="card reveal"><span class="chip">11.10(d)</span><h4>Limited access</h4><p>Role-based access, study and site scoping, and blinding segregation.</p></div>
+    <div class="card reveal"><span class="chip">11.10(e)</span><h4>Audit trail</h4><p>An append-only, hash-chained log of who, when, what and why.</p></div>
+    <div class="card reveal"><span class="chip">11.10(f)(g)</span><h4>Operational &amp; authority checks</h4><p>Sequence enforced (consent before procedures) and permission checked on every action.</p></div>
+    <div class="card reveal"><span class="chip">11.10(i)</span><h4>Training</h4><p>Training records are credentials. Untrained users are blocked from delegated tasks.</p></div>
+    <div class="card reveal"><span class="chip">11.50 · 11.70</span><h4>Signature manifestation &amp; linking</h4><p>Name, time and meaning on every signature, which is bound to the record hash.</p></div>
+    <div class="card reveal"><span class="chip">11.100 · 11.200</span><h4>Unique signatures</h4><p>One identity per person. Passkey plus PIN or biometric at the moment of signing.</p></div>
+  </div>
+  <div class="grid3" style="margin-top:26px">
+    <div class="card bar reveal"><span class="k">Never</span><h4>No participant data on a ledger</h4><p>The ledger holds hashes and credentials, never content. The first release touches no participant data at all.</p></div>
+    <div class="card bar reveal"><span class="k">Never</span><h4>No AI signs, approves or unblinds</h4><p>Every AI output is stored as a proposal. The human decision on it is a separate signed event.</p></div>
+    <div class="card bar reveal"><span class="k">Never</span><h4>No rip-and-replace</h4><p>We don't build an EDC, a safety database or an IxRS. We connect to yours.</p></div>
+  </div>
+</div></section>
+
+<section class="sec band" id="model"><div class="wrap">
+  <div class="sec-head reveal"><span class="eyebrow">10 · Business model · hypotheses to test</span><h2>Land with the CRA. <em>Expand to the study.</em></h2><p>Australia is the beachhead: a large early-phase sector, fast CTN start-up and an ecosystem small enough to reach. Bottom-up through CRAs and sites, then CROs and sponsors.</p></div>
+  <div class="grid4 tiers">
+    <div class="card reveal"><span class="k">Tier 1</span><h4>CRA Personal</h4><div class="who">Monthly, per CRA</div><p style="margin-top:8px">One workspace across every sponsor: trackers, report drafting, the document chaser. No participant data.</p></div>
+    <div class="card reveal"><span class="k">Tier 2</span><h4>Site</h4><div class="who">Per site, per active study</div><p style="margin-top:8px">Site-file health, intake, rules, coordinator workflows, and the inspector view.</p></div>
+    <div class="card bar reveal"><span class="k">Tier 3</span><h4>CRO / Sponsor</h4><div class="who">Per study, banded by sites and phase</div><p style="margin-top:8px">Everything, plus connectors, the decision graph, oversight dashboards and the validation pack.</p></div>
+    <div class="card reveal"><span class="k">Add-on</span><h4>Invoice from the trail</h4><div class="who">Usage</div><p style="margin-top:8px">Site payments calculated from what the ledger proves was done. This removes a major source of site-sponsor friction.</p></div>
+  </div>
+  <div class="reveal" style="margin-top:34px"><p class="eyebrow">The measures that will prove value</p>
+  <div class="measures"><span>hours saved per monitoring visit</span><span>monitoring-report cycle time</span><span>query ageing</span><span>documents expired at site → zero</span><span>deviations detected same-day vs next visit</span><span>audit findings per site</span><span>transcription errors per 1,000 data points</span><span>site payment cycle time</span></div></div>
+</div></section>
+
+<section class="sec" id="road"><div class="wrap">
+  <div class="sec-head reveal"><span class="eyebrow">11 · Roadmap</span><h2>No participant data <em>until it's earned.</em></h2><p>Start where the spreadsheets live and the privacy risk doesn't: essential documents, site-file health, trackers and report drafting.</p></div>
+  <div class="road reveal" id="roadEl"><div class="rf"></div>
+    <div class="ph now"><span class="t">NOV 26 – JAN 27</span><b>0 · Discovery</b><p>12 interviews, process map, systems inventory, breaches map, clickable prototype.</p><div class="pd"><span class="chip ok">no participant data</span></div></div>
+    <div class="ph"><span class="t">FEB – MAY 27</span><b>1 · CRA Personal (alpha)</b><p>Today cockpit, document radar, logs, report drafter, KERI identity and signatures. 10 beta CRAs.</p><div class="pd"><span class="chip ok">no participant data</span></div></div>
+    <div class="ph"><span class="t">JUN – DEC 27</span><b>2 · Site pilot</b><p>Intake for essential documents, ISF health, delegation × training, ICF guard. Validation package v1.</p><div class="pd"><span class="chip warn">consent metadata · AU-hosted</span></div></div>
+    <div class="ph"><span class="t">2028</span><b>3 · Source → EDC</b><p>Capture to EDC through connectors with human confirmation. Part 11 assessment. First CRO or sponsor.</p><div class="pd"><span class="chip">fully controlled</span></div></div>
+    <div class="ph"><span class="t">2028+</span><b>4 · Graph &amp; oversight</b><p>Decision graph across studies, breaches map, a feed into risk-based monitoring, US entry.</p><div class="pd"><span class="chip">fully controlled</span></div></div>
+  </div>
+</div></section>
+
+<section class="sec ask-sec" id="ask">
+  <div class="sun" aria-hidden="true"></div>
+  <div class="wrap">
+    <span class="eyebrow" style="color:#ff8a78">12 · The ask</span>
+    <h2 class="reveal">One study. <em>Eight weeks.</em><br>Proof, not promises.</h2>
+    <p class="lead reveal">A pilot on one study at two sites, starting with two observers (consent &amp; protocol, and monitoring conduct), measured head to head against your existing sampled QC.</p>
+    <div class="pilot reveal"><div><b>1</b><span>study</span></div><div><b>2</b><span>sites</span></div><div><b>2</b><span>observers to start</span></div><div><b>8</b><span>weeks</span></div></div>
+    <p class="measure-line reveal">Measured on: findings caught · days to detection · conductor review time · CRA hours returned.</p>
+    <div class="hero-ctas reveal" style="margin-top:30px">
+      <a class="btn btn-primary" href="areas-of-focus/02-enablement/workings/trialthread-observer-app.html">Try the Observer app ↗</a>
+      <a class="btn btn-ghost" href="trialthread-plan.html">Read the full plan ↗</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer><div class="wrap foot">
+  <div><b>TrialThread</b> (working name): a concept by Peter and Giau, October 2026. Pre-discovery; nothing here has been validated with buyers yet.</div>
+  <div>All people, studies and numbers in the case are synthetic. Regulatory references are to be checked against the current text. Not legal, regulatory or medical advice.</div>
+</div></footer>
 
 <script>
 (function(){
-const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-const NS='http://www.w3.org/2000/svg';
-const el=(t,a={},p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e};
-const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const TAU=Math.PI*2;
 
+/* theme */
 try{const t=localStorage.getItem('tt-theme');if(t)document.documentElement.dataset.theme=t}catch(e){}
-$('#themeBtn').onclick=()=>{const cur=document.documentElement.dataset.theme||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');const nx=cur==='dark'?'light':'dark';document.documentElement.dataset.theme=nx;try{localStorage.setItem('tt-theme',nx)}catch(e){}};
+const isDark=()=>document.documentElement.dataset.theme?document.documentElement.dataset.theme==='dark':matchMedia('(prefers-color-scheme: dark)').matches;
+const syncThemeBtn=()=>{$('#themeBtn').textContent=isDark()?'☀':'☾'};
+syncThemeBtn();
+$('#themeBtn').onclick=()=>{const nx=isDark()?'light':'dark';document.documentElement.dataset.theme=nx;try{localStorage.setItem('tt-theme',nx)}catch(e){}syncThemeBtn()};
 
-/* ---------- isometric kit ---------- */
-const C30=Math.cos(Math.PI/6);
-const OX=600, OY=112, U=26;
-const P=(x,y,z=0)=>[OX+(x-y)*C30*U, OY+(x+y)*.5*U - z*U];
-const pts=a=>a.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ');
-const shade=(c,k)=>`color-mix(in srgb, ${c} ${k}%, #000)`;
-function box(g,x,y,z,w,d,h,col,o={}){
-  const b=el('g',{},g);
-  const st='stroke:'+(o.stroke||'color-mix(in srgb, var(--ink) 14%, transparent)')+';stroke-width:.8;stroke-linejoin:round';
-  el('polygon',{points:pts([P(x,y+d,z+h),P(x+w,y+d,z+h),P(x+w,y+d,z),P(x,y+d,z)]),style:`fill:${shade(col,o.k1||86)};${st}`},b);
-  el('polygon',{points:pts([P(x+w,y,z+h),P(x+w,y+d,z+h),P(x+w,y+d,z),P(x+w,y,z)]),style:`fill:${shade(col,o.k2||72)};${st}`},b);
-  el('polygon',{points:pts([P(x,y,z+h),P(x+w,y,z+h),P(x+w,y+d,z+h),P(x,y+d,z+h)]),style:`fill:${col};${st}`},b);
-  return b;
+/* nav: clear over the hero, dark glass over the dark bands, frosted elsewhere */
+const nav=$('#nav'),darkBands=[$('#story'),$('#ask')];
+function onScroll(){const past=scrollY>innerHeight*.75,inDark=darkBands.some(s=>{const r=s.getBoundingClientRect();return r.top<64&&r.bottom>64});
+ nav.classList.toggle('scrolled',past&&!inDark);nav.classList.toggle('dark',past&&inDark)}
+addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+/* reveal + count-up + bars */
+function countUp(el){const to=+el.dataset.count,suf=el.dataset.suf||'',t0=performance.now(),d=reduce?0:1400;
+ (function f(n){const q=d?Math.min(1,(n-t0)/d):1,e=1-Math.pow(1-q,3);el.textContent=Math.round(to*e).toLocaleString('en-AU')+suf;if(q<1)requestAnimationFrame(f)})(t0)}
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;const t=e.target;t.classList.add('in');io.unobserve(t);
+ t.querySelectorAll('[data-count]').forEach(countUp);t.querySelectorAll('[data-w]').forEach(b=>b.style.width=b.dataset.w+'%');
+ setTimeout(()=>{t.style.transitionDelay=''},1400)}),{threshold:.14});
+$$('.reveal').forEach((n,i)=>{n.style.transitionDelay=(i%4)*90+'ms';io.observe(n)});
+new IntersectionObserver((es,o)=>{if(es[0].isIntersecting){$$('.hero-facts [data-count]').forEach(countUp);o.disconnect()}}).observe($('.hero-facts'));
+
+/* ================= mini 3D particle engine (canvas 2D, no libraries) ================= */
+const COL={w:[240,237,232],a:[232,93,74],a2:[255,150,130],g:[63,185,122],y:[232,163,61],r:[255,60,50],h:[111,155,255],d:[92,84,78]};
+const rnd=(a=1)=>(Math.random()*2-1)*a;
+function inBall(r){let x,y,z;do{x=rnd();y=rnd();z=rnd()}while(x*x+y*y+z*z>1);return[x*r,y*r,z*r]}
+function fib(i,n){const y=1-2*(i+.5)/n,r=Math.sqrt(1-y*y),th=i*2.399963;return[Math.cos(th)*r,y,Math.sin(th)*r]}
+const hash=i=>{const s=Math.sin(i*12.9898)*43758.5453;return s-Math.floor(s)};
+const clamp=(v,a=0,b=1)=>v<a?a:v>b?b:v;
+const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+function build(N,fn){const p=new Float32Array(N*3),c=new Float32Array(N*3),s=new Float32Array(N).fill(1),m={};for(let i=0;i<N;i++){const o=fn(i,m);p[i*3]=o.p[0];p[i*3+1]=o.p[1];p[i*3+2]=o.p[2];c[i*3]=o.c[0];c[i*3+1]=o.c[1];c[i*3+2]=o.c[2];if(o.s)s[i]=o.s}return{p,c,s,m}}
+
+function Field(cv,opt){
+ const ctx=cv.getContext('2d'),N=opt.N;
+ const F={scene:null,data:null,yaw:0,pitch:opt.pitch??-.2,dist:opt.dist??5.4,px:0,py:0,tx:0,ty:0,W:0,H:0,on:true,raf:0,last:0,t0:0};
+ const cur=new Float32Array(N*3),from=new Float32Array(N*3),cc=new Float32Array(N*3),cf=new Float32Array(N*3),dl=new Float32Array(N);
+ for(let i=0;i<N;i++){const v=inBall(3);cur.set(v,i*3);cc.set(COL.d,i*3);dl[i]=hash(i+7)*.45}
+ function size(){const r=cv.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2);F.W=r.width;F.H=r.height;cv.width=Math.max(1,F.W*d);cv.height=Math.max(1,F.H*d);ctx.setTransform(d,0,0,d,0,0);if(reduce)frame(performance.now())}
+ const v=[0,0,0],c=[0,0,0],o4=[0,0,0,0];
+ function frame(now){
+  const sc=F.scene,D=F.data;if(!sc||!F.W)return;
+  const dt=Math.min(.05,(now-F.last)/1000||0);F.last=now;
+  const te=reduce?6:(now-F.t0)/1000,DUR=1.7;
+  if(!reduce)F.yaw+=(sc.spin||0)*dt;
+  if(sc.face!==undefined){const fy=typeof sc.face==='number'?sc.face:0,tg=Math.round((F.yaw-fy)/TAU)*TAU+fy+(reduce?0:Math.sin(te*.35)*(sc.sway||0));F.yaw+=(tg-F.yaw)*Math.min(1,dt*2.2)}
+  F.px+=(F.tx-F.px)*.05;F.py+=(F.ty-F.py)*.05;
+  const yw=F.yaw+F.px*.45,cy=Math.cos(yw),sy=Math.sin(yw),pt=F.pitch+F.py*.22,cp=Math.cos(pt),sp=Math.sin(pt);
+  const W=F.W,H=F.H,small=W<720,f=Math.min(W,H)*.5*(sc.zoom||1)*(opt.zoom||1)*(small?1.08:1),ox=W*(small?.5:(opt.ox??.5)),oy=H*(small?(opt.oyS??.42):(opt.oy??.5));
+  const P=(X,Y,Z,o=o4)=>{const x1=X*cy-Z*sy,z1=X*sy+Z*cy,y1=Y*cp-z1*sp,z2=Y*sp+z1*cp,s=f/(z2+F.dist);o[0]=ox+x1*s;o[1]=oy-y1*s;o[2]=s;o[3]=z2;return o};
+  ctx.globalCompositeOperation='source-over';ctx.clearRect(0,0,W,H);
+  ctx.globalCompositeOperation='lighter';
+  for(let i=0;i<N;i++){const j=i*3;
+   v[0]=D.p[j];v[1]=D.p[j+1];v[2]=D.p[j+2];c[0]=D.c[j];c[1]=D.c[j+1];c[2]=D.c[j+2];
+   if(sc.anim)sc.anim(i,v,c,te,D);
+   const k=reduce?1:ease(clamp((te-dl[i]*DUR*.5)/(DUR*.75)));
+   const X=from[j]+(v[0]-from[j])*k,Y=from[j+1]+(v[1]-from[j+1])*k,Z=from[j+2]+(v[2]-from[j+2])*k;
+   const R=cf[j]+(c[0]-cf[j])*k,G=cf[j+1]+(c[1]-cf[j+1])*k,B=cf[j+2]+(c[2]-cf[j+2])*k;
+   cur[j]=X;cur[j+1]=Y;cur[j+2]=Z;cc[j]=R;cc[j+1]=G;cc[j+2]=B;
+   P(X,Y,Z);const s=o4[2];if(s<=0)continue;
+   const r=Math.max(.55,s*.0105*D.s[i]*(opt.pt||1)),a=clamp(.95-o4[3]*.18,.25,1);
+   ctx.fillStyle=`rgba(${R|0},${G|0},${B|0},${a})`;
+   if(r<1.3)ctx.fillRect(o4[0]-r,o4[1]-r,r*2,r*2);else{ctx.beginPath();ctx.arc(o4[0],o4[1],r,0,TAU);ctx.fill()}
+  }
+  ctx.globalCompositeOperation='source-over';
+  if(sc.over)sc.over(ctx,P,te,D,F);
+ }
+ function loop(now){frame(now);if(F.on&&!reduce)F.raf=requestAnimationFrame(loop);else F.raf=0}
+ F.set=sc=>{if(F.scene===sc)return;from.set(cur);cf.set(cc);F.scene=sc;F.data=sc.data||(sc.data=sc.build(N));F.t0=performance.now();if(reduce)frame(F.t0)};
+ size();addEventListener('resize',size);
+ const host=opt.host||cv.parentElement;
+ host.addEventListener('pointermove',e=>{if(e.pointerType!=='mouse')return;const r=cv.getBoundingClientRect();F.tx=((e.clientX-r.left)/r.width-.5)*2;F.ty=((e.clientY-r.top)/r.height-.5)*2});
+ host.addEventListener('pointerleave',()=>{F.tx=F.ty=0});
+ new IntersectionObserver(es=>{F.on=es[0].isIntersecting;if(F.on&&!F.raf&&!reduce)F.raf=requestAnimationFrame(loop)}).observe(cv);
+ return F;
 }
-function faceY(g,x,y,z,w,h,col){ return el('polygon',{points:pts([P(x,y,z+h),P(x+w,y,z+h),P(x+w,y,z),P(x,y,z)]),style:`fill:${col}`},g) } // on a +y face
-function faceX(g,x,y,z,d,h,col){ return el('polygon',{points:pts([P(x,y,z+h),P(x,y+d,z+h),P(x,y+d,z),P(x,y,z)]),style:`fill:${col}`},g) } // on a +x face
-function shadow(g,x,y,r=.7){const [sx,sy]=P(x,y,0);return el('ellipse',{cx:sx,cy:sy,rx:r*U*.9,ry:r*U*.45,style:'fill:color-mix(in srgb, var(--ink) 14%, transparent)'},g)}
-function person(g,col,o={}){ // drawn at origin, feet at (0,0)
-  const p=el('g',{},g);
-  el('ellipse',{cx:0,cy:0,rx:11,ry:5,style:'fill:color-mix(in srgb, var(--ink) 16%, transparent)'},p);
-  el('rect',{x:-8,y:-30,width:16,height:28,rx:7,style:`fill:${col}`},p);
-  el('circle',{cx:0,cy:-38,r:8,style:`fill:${o.head||'color-mix(in srgb, var(--wood) 70%, var(--blk))'}`},p);
-  if(o.bag) el('rect',{x:6,y:-18,width:10,height:9,rx:2,style:'fill:var(--ink);opacity:.75'},p);
-  return p;
-}
-function place(node,x,y,z=0){const [sx,sy]=P(x,y,z);node.setAttribute('transform',`translate(${sx.toFixed(1)},${sy.toFixed(1)})`)}
-function doc(g,col='var(--surface)',o={}){
-  const d=el('g',{},g);
-  el('rect',{x:-9,y:-12,width:18,height:23,rx:2,style:`fill:${col};stroke:color-mix(in srgb, var(--ink) 30%, transparent);stroke-width:1`},d);
-  for(let i=0;i<3;i++) el('line',{x1:-5,x2:5-(i===2?4:0),y1:-6+i*5,y2:-6+i*5,style:`stroke:${o.lines||'color-mix(in srgb, var(--ink) 35%, transparent)'};stroke-width:1.4;stroke-linecap:round`},d);
-  return d;
-}
-function text(g,x,y,s,cls='lbl',anchor='middle'){const t=el('text',{x,y,'text-anchor':anchor,class:cls},g);t.textContent=s;return t}
-function floor(g,x,y,w,d,col='var(--blk-2)'){return box(g,x,y,-.35,w,d,.35,col,{k1:80,k2:68})}
-function sysBlock(g,x,y,z,label,col='var(--blk)'){
-  const b=el('g',{},g); shadow(b,x+.9,y+.9,.8); box(b,x,y,z,1.8,1.8,1.1,col);
-  const [tx,ty]=P(x+.9,y+.9,z+1.1); text(b,tx,ty+4,label,'lbl'); return b;
-}
+function label(ctx,x,y,txt,col,al='center',size=11,alpha=1){if(alpha<=0)return;ctx.globalAlpha=alpha;ctx.font=`700 ${size}px "JetBrains Mono",monospace`;ctx.textAlign=al;ctx.textBaseline='middle';
+ const w=ctx.measureText(txt).width,px=al==='center'?x-w/2:al==='right'?x-w:x;ctx.fillStyle='rgba(10,8,7,.66)';ctx.beginPath();if(ctx.roundRect)ctx.roundRect(px-7,y-10,w+14,20,10);else ctx.rect(px-7,y-10,w+14,20);ctx.fill();
+ ctx.fillStyle=col||'rgba(240,237,232,.9)';ctx.fillText(txt,x,y);ctx.globalAlpha=1}
+
+/* ---------- hero: the thread as a double helix ---------- */
+const HELIX={spin:.32,build:N=>build(N,(i,m)=>{
+  m.s=m.s||new Float32Array(N);m.k=m.k||new Uint8Array(N);m.t=m.t||new Float32Array(N);m.j=m.j||new Float32Array(N*3);
+  const kind=i%5<2?0:i%5<4?1:2;m.k[i]=kind;m.s[i]=Math.random();m.t[i]=Math.random();m.j.set(inBall(.045),i*3);
+  return{p:[0,0,0],c:kind===0?COL.a:kind===1?COL.w:COL.a2,s:kind===2?.7:1.05}}),
+ anim(i,v,c,te,D){const m=D.m,k=m.k[i],s=(m.s[i]+te*.018)%1,L=4.4;let x,y,z;
+  if(k<2){const a=s*TAU*2.4+(k?Math.PI:0);x=Math.cos(a)*.78;z=Math.sin(a)*.78;y=(s-.5)*L}
+  else{const rung=Math.floor(s*30),rs=rung/30,a=rs*TAU*2.4,t=m.t[i],x0=Math.cos(a)*.78,z0=Math.sin(a)*.78;x=x0-2*x0*t;z=z0-2*z0*t;y=(rs-.5)*L;
+   if(rung%4===0){c[0]=COL.g[0];c[1]=COL.g[1];c[2]=COL.g[2]}else{c[0]=150;c[1]=80;c[2]=70}}
+  x+=m.j[i*3];y+=m.j[i*3+1];z+=m.j[i*3+2];
+  const tilt=-.42,ct=Math.cos(tilt),st=Math.sin(tilt);v[0]=x*ct-y*st;v[1]=x*st+y*ct;v[2]=z;
+  if(k<2){const pulse=((s*3-te*.35)%1+1)%1;if(pulse<.06){c[0]=255;c[1]=235;c[2]=225}}}};
+
+/* ---------- the eight story scenes ---------- */
 const SYS=['CTMS','EDC','eTMF','ISF','Safety','IxRS','Email','Excel'];
-const ringPos=(i,n=8,cx=8,cy=8,r=6.3)=>{const a=-Math.PI*0.75+i*2*Math.PI/n;return [cx+r*Math.cos(a)-.9,cy+r*Math.sin(a)-.9]};
-
-/* ---------- tween ---------- */
-let run=0;
-const ease=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
-function tw(dur,fn,delay=0){const id=run;dur=reduce?1:dur;return new Promise(res=>{const st=performance.now()+(reduce?0:delay);(function f(t){if(id!==run)return res();if(t<st){requestAnimationFrame(f);return}const p=Math.min(1,(t-st)/dur);fn(ease(p),p);if(p<1)requestAnimationFrame(f);else res()})(performance.now())})}
-const wait=ms=>tw(ms,()=>{});
-const alive=id=>id===run;
-
-/* ---------- scenes ---------- */
+const RING=SYS.map((_,j)=>{const a=j/8*TAU+.3;return[Math.cos(a)*1.8,Math.sin(j*1.9)*.38,Math.sin(a)*1.8]});
+const PAIRS=(()=>{const out=[];let seed=3;const r=()=>{seed=(seed*16807)%2147483647;return seed/2147483647};
+ for(let n=0;n<26;n++){const a=Math.floor(r()*8);let b=Math.floor(r()*8);if(b===a)b=(a+3)%8;const A=RING[a],B=RING[b],mid=[(A[0]+B[0])/2+(r()*2-1)*1.1,(A[1]+B[1])/2+(r()*2-1)*1.1,(A[2]+B[2])/2+(r()*2-1)*1.1];
+  out.push({a,b,ctl:[2*mid[0]-(A[0]+B[0])/2,2*mid[1]-(A[1]+B[1])/2,2*mid[2]-(A[2]+B[2])/2],sp:.12+r()*.25,off:r()})}return out})();
+const quad=(A,C,B,u)=>{const w=1-u;return[w*w*A[0]+2*w*u*C[0]+u*u*B[0],w*w*A[1]+2*w*u*C[1]+u*u*B[1],w*w*A[2]+2*w*u*C[2]+u*u*B[2]]};
+function tangle(ctx,P,te,alpha,packets){const pa=[0,0,0,0],pc=[0,0,0,0],pb=[0,0,0,0],pp=[0,0,0,0];
+ PAIRS.forEach((q,n)=>{const A=RING[q.a],B=RING[q.b];P(...A,pa);P(...q.ctl,pc);P(...B,pb);
+  ctx.strokeStyle=`rgba(232,93,74,${alpha*(.6+.4*Math.sin(te*3+n))})`;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(pa[0],pa[1]);ctx.quadraticCurveTo(pc[0],pc[1],pb[0],pb[1]);ctx.stroke();
+  if(packets){P(...quad(A,q.ctl,B,(te*q.sp+q.off)%1),pp);ctx.fillStyle='rgba(255,180,160,.95)';ctx.beginPath();ctx.arc(pp[0],pp[1],2.2,0,TAU);ctx.fill()}})}
+function sysLabels(ctx,P,alpha){const o=[0,0,0,0];RING.forEach((r,j)=>{P(r[0],r[1]+.52,r[2],o);label(ctx,o[0],o[1],SYS[j],null,'center',11,alpha*clamp(.85-o[3]*.2,.35,1))})}
+const fade=(te,d=.6,len=.7)=>clamp((te-d)/len);
+const ERR=['old consent form','unsigned log','expired GCP cert','visit out of window'];
+const CHAIN=['9f2a…41c0','4ac7…e912','b03d…7a55','e81f…0c3b','27c9…d4e8','5b9e…c21f','board pack · signed'];
+const ctr=b=>[(b-3)*.62,Math.sin(b*.9)*.18,-(b-3)*.46];
+const curve=s=>[(s-.5)*4.6,.62*Math.sin(s*TAU*1.5),.62*Math.cos(s*TAU*1.5)-.2];
+const obsPos=(j,te)=>{const a=j/8*TAU+te*.45,t=(j%4)*.38-.55,x=Math.cos(a)*1.7,z0=Math.sin(a)*1.7;return[x,-z0*Math.sin(t),z0*Math.cos(t)]};
+const EDGES=[[[-1,-1,-1],[1,-1,-1]],[[-1,1,-1],[1,1,-1]],[[-1,-1,1],[1,-1,1]],[[-1,1,1],[1,1,1]],[[-1,-1,-1],[-1,1,-1]],[[1,-1,-1],[1,1,-1]],[[-1,-1,1],[-1,1,1]],[[1,-1,1],[1,1,1]],[[-1,-1,-1],[-1,-1,1]],[[1,-1,-1],[1,-1,1]],[[-1,1,-1],[-1,1,1]],[[1,1,-1],[1,1,1]]];
 const SCENES=[
-{ t:'Every trial runs on trust.', q:'Sets the stakes: participants protected, data real.',
-  vo:'Every clinical trial runs on trust. The person who checks it, site by site, is the CRA.',
-  build(g){
-    const r={};
-    floor(g,0,0,16,15);
-    // paths
-    box(g,8.6,9,0,1.4,6,.05,'var(--wall)');
-    // trees
-    [[1.5,1.5],[2.5,11.5],[13.5,2],[14,12]].forEach(([x,y])=>{shadow(g,x,y,.6);const [sx,sy]=P(x,y,0);el('rect',{x:sx-2,y:sy-22,width:4,height:22,style:'fill:var(--wood)'},g);el('circle',{cx:sx,cy:sy-30,r:15,style:'fill:var(--leaf)'},g)});
-    // clinic
-    shadow(g,8,6.5,3.6);
-    box(g,5,3,0,7,6,4.2,'var(--blk)');
-    box(g,4.8,2.8,4.2,7.4,6.4,.45,'var(--blk-2)');
-    faceY(g,8.6,9,0,1.4,2.3,'color-mix(in srgb, var(--human) 55%, var(--blk))');
-    for(let i=0;i<3;i++) faceY(g,5.6+i*(i===2?2.2:1.3)+(i===2?.7:0),9,2.6,.9,1,'color-mix(in srgb, var(--human) 28%, var(--blk))');
-    for(let i=0;i<3;i++) faceX(g,12,3.7+i*1.8,2.6,1,1,'color-mix(in srgb, var(--human) 28%, var(--blk))');
-    // cross sign
-    const [cx,cy]=P(12,6,3.4); el('rect',{x:cx-3,y:cy-9,width:6,height:18,rx:1,style:'fill:var(--accent)'},g); el('rect',{x:cx-9,y:cy-3,width:18,height:6,rx:1,style:'fill:var(--accent)'},g);
-    const [lx,ly]=P(8.5,6,5.2); text(g,lx,ly-10,'Site 012','lbl-s');
-    // sun
-    r.sun=el('circle',{cx:1040,cy:96,r:30,style:'fill:color-mix(in srgb, var(--warn) 55%, var(--stage))'},g);
-    r.pt=person(g,'var(--ok)'); place(r.pt,9.3,13.2);
-    r.cra=person(g,'var(--ink)',{bag:true}); place(r.cra,10.4,14.4);
-    const [ax,ay]=P(10.4,14.4,0); r.lab=text(g,ax+40,ay-20,'CRA','lbl','start');
-    const [bx,by]=P(9.3,13.2,0); r.lab2=text(g,bx-34,by-40,'participant','lbl-s','end');
-    return r;
-  },
-  async play(r,id){
-    tw(3000,t=>r.sun.setAttribute('cy',150-54*t));
-    tw(4200,t=>{place(r.pt,lerp(14.5,9.3,t),lerp(13.6,10.6,t));place(r.cra,lerp(16,10.4,t),lerp(15.2,11.6,t))},300);
-    r.lab.style.opacity=0;r.lab2.style.opacity=0;
-    await wait(4400); if(!alive(id))return; r.lab.style.opacity=1;r.lab2.style.opacity=1;
-    const [ax,ay]=P(10.4,11.6,0); r.lab.setAttribute('x',ax+18);r.lab.setAttribute('y',ay-20);
-    const [bx,by]=P(9.3,10.6,0); r.lab2.setAttribute('x',bx-16);r.lab2.setAttribute('y',by-40);
-  }
-},
-{ t:'Eight systems. One person. Every week.', q:'Is this real? Yes, and it is structural.',
-  vo:'The same facts are copied between eight systems, spreadsheets and email. Each copy is a chance for an error.',
-  build(g){
-    const r={blocks:[]};
-    floor(g,1,1,14,14);
-    const order=SYS.map((s,i)=>({s,i,p:ringPos(i)})).sort((a,b)=>(a.p[0]+a.p[1])-(b.p[0]+b.p[1]));
-    r.lines=el('g',{},g);
-    order.filter(o=>o.p[0]+o.p[1]<14).forEach(o=>{r.blocks[o.i]=sysBlock(g,o.p[0],o.p[1],1.6,o.s)});
-    // desk + cra
-    shadow(g,8,8,1.6); box(g,6.8,7.2,0,2.6,1.6,1.3,'var(--wood)');
-    box(g,7.4,7.4,1.3,1.4,.25,1,'var(--ink)',{k1:90,k2:80});
-    r.cra=person(g,'var(--ink)'); place(r.cra,8.6,9.6);
-    order.filter(o=>o.p[0]+o.p[1]>=14).forEach(o=>{r.blocks[o.i]=sysBlock(g,o.p[0],o.p[1],1.6,o.s)});
-    // tangled lines (screen space between block tops)
-    r.centers=SYS.map((s,i)=>{const p=ringPos(i);return P(p[0]+.9,p[1]+.9,2.7)});
-    const pairs=[[0,3],[3,1],[1,6],[6,7],[7,2],[2,5],[5,0],[4,6],[7,1],[3,5],[4,2],[0,7]];
-    pairs.forEach(([a,b],k)=>{const A=r.centers[a],B=r.centers[b];const mx=(A[0]+B[0])/2+((k*53)%120-60),my=(A[1]+B[1])/2+((k*37)%90-45);
-      el('path',{d:`M${A[0]},${A[1]} Q${mx},${my} ${B[0]},${B[1]}`,style:'fill:none;stroke:color-mix(in srgb, var(--ink) 28%, transparent);stroke-width:1.4;stroke-dasharray:4 4'},r.lines)});
-    r.doc=doc(g); r.doc.setAttribute('transform',`translate(${r.centers[0][0]},${r.centers[0][1]-16})`);
-    const pill=el('g',{transform:'translate(600,48)'},g);
-    el('rect',{x:-82,y:-18,width:164,height:36,rx:18,style:'fill:var(--surface);stroke:var(--line)'},pill);
-    r.count=text(pill,0,6,'re-keyed ×5','lbl mono');
-    return r;
-  },
-  async play(r,id){
-    const route=[0,1,7,6,2,3]; let n=0; r.count.textContent='re-keyed ×0';
-    for(let k=0;k<route.length-1&&alive(id);k++){
-      const A=r.centers[route[k]],B=r.centers[route[k+1]];const dur=900-k*110;
-      await tw(dur,t=>{const x=lerp(A[0],B[0],t),y=lerp(A[1],B[1],t)-16-Math.sin(t*Math.PI)*60;r.doc.setAttribute('transform',`translate(${x},${y})`)});
-      if(!alive(id))return; n++; r.count.textContent='re-keyed ×'+n;
-      const bl=r.blocks[route[k+1]]; bl.style.transition='transform .2s'; bl.style.transform='translateY(-6px)'; setTimeout(()=>bl.style.transform='',200);
-    }
-  }
-},
-{ t:'Errors hide in the gaps.', q:'Why hasn\'t it been fixed? The risk sits between systems.',
-  vo:'Checks are sampled, so a consent on an old form is found weeks later, at the next visit.',
-  build(g){
-    const r={};
-    floor(g,1,2,14,12);
-    // gap: dark slot in floor
-    box(g,7.6,4,-.36,.8,8,.02,'color-mix(in srgb, var(--ink) 55%, var(--stage))');
-    sysBlock(g,4.2,6.2,1.4,'EDC'); sysBlock(g,9.8,6.2,1.4,'ISF');
-    // calendar
-    const cal=el('g',{},g); shadow(cal,13.2,3.6,.9); box(cal,12.4,2.8,0,1.6,1.6,2.4,'var(--blk)');
-    const [cx,cy]=P(13.2,4.4,1.3); r.calT=text(g,cx,cy-24,'Week 7','lbl mono'); text(g,cx,cy-8,'next visit','lbl-s');
-    // red doc (rest: found, below gap)
-    const [gx,gy]=P(8,8,0);
-    r.doc=doc(g,'var(--bad-soft)',{lines:'var(--bad)'}); r.doc.setAttribute('transform',`translate(${gx},${gy+20})`);
-    r.mag=el('g',{transform:`translate(${gx+26},${gy+6})`},g);
-    el('circle',{cx:0,cy:0,r:24,style:'fill:color-mix(in srgb, var(--human) 14%, transparent);stroke:var(--ink);stroke-width:4'},r.mag);
-    el('line',{x1:17,y1:17,x2:36,y2:36,style:'stroke:var(--ink);stroke-width:6;stroke-linecap:round'},r.mag);
-    r.found=text(g,gx+70,gy+58,'found at the next visit','lbl','start'); r.found.style.fill='var(--bad)';
-    r.gx=gx;r.gy=gy; return r;
-  },
-  async play(r,id){
-    const [ax,ay]=P(5.1,7.1,2.7); r.mag.style.opacity=0; r.found.style.opacity=0; r.calT.textContent='Week 1';
-    await tw(1400,t=>{const x=lerp(ax,r.gx,t),y=lerp(ay-14,r.gy-6,t)-Math.sin(t*Math.PI)*50;r.doc.setAttribute('transform',`translate(${x},${y}) rotate(${t*25})`)});
-    if(!alive(id))return;
-    await tw(600,t=>{r.doc.setAttribute('transform',`translate(${r.gx},${r.gy-6+t*26}) rotate(25)`);r.doc.style.opacity=1-t*.75});
-    for(let w=2;w<=7&&alive(id);w++){await wait(260);r.calT.textContent='Week '+w}
-    if(!alive(id))return;
-    r.mag.style.opacity=1; r.doc.style.opacity=1;
-    await tw(900,t=>r.mag.setAttribute('transform',`translate(${r.gx+120-94*t},${r.gy+6-40*(1-t)})`));
-    if(alive(id)) r.found.style.opacity=1;
-  }
-},
-{ t:'And the risk lands on your desk.', q:'What does it cost? Findings, delay, credibility.',
-  vo:'When it surfaces, it surfaces here: an inspection finding, a delayed submission, a question you must answer.',
-  build(g){ const r=boardroom(g,'cool'); r.tokens=[];
-    ['inspection finding','delay','reputation'].forEach((s,i)=>{const t=el('g',{},g);const [x,y]=P(6+i*2.3,6.5,1.25);
-      el('ellipse',{cx:0,cy:8,rx:20,ry:9,style:`fill:${shade('var(--bad)',70)}`},t);el('rect',{x:-20,y:0,width:40,height:8,style:`fill:${shade('var(--bad)',70)}`},t);el('ellipse',{cx:0,cy:0,rx:20,ry:9,style:'fill:var(--bad)'},t);
-      text(t,0,-18,s,'lbl'); t.dataset.x=x;t.dataset.y=y; t.setAttribute('transform',`translate(${x},${y})`); r.tokens.push(t)});
-    return r },
-  async play(r,id){
-    r.tint.style.opacity=0; r.tokens.forEach(t=>t.style.opacity=0);
-    tw(2400,t=>r.tint.style.opacity=.16*t);
-    for(const [i,t] of r.tokens.entries()){ if(!alive(id))return; t.style.opacity=1;
-      await tw(650,p=>t.setAttribute('transform',`translate(${t.dataset.x},${+t.dataset.y-160*(1-p)})`),i?150:400) }
-  }
-},
-{ t:'TrialThread: capture once. Check on arrival.', q:'Do I replace my systems? No. They stay where they are.',
-  vo:'Each record is captured once, checked against protocol and regulation as it arrives, and fed to the systems you already run.',
-  build(g){
-    const r={};
-    floor(g,0,1,16,14);
-    r.src=el('g',{},g); shadow(r.src,2.6,8.6,1); box(r.src,1.6,7.6,0,2,2,1.6,'var(--accent)'); const [sx,sy]=P(2.6,8.6,1.6); text(g,sx,sy-18,'Source, captured once','lbl');
-    r.pos=SYS.map((s,i)=>[12.2,0.9+i*1.75]);
-    r.ends=r.pos.map(p=>P(p[0]+.2,p[1]+.8,1.9));
-    r.S=P(3.6,8.6,1.2); r.H=P(7.5,8,1.2);
-    r.paths=r.ends.map((E,i)=>el('path',{d:'',style:'fill:none;stroke:var(--accent);stroke-width:2.4;stroke-linecap:round'},g));
-    r.pos.forEach((p,i)=>sysBlock(g,p[0],p[1],0.8,SYS[i]));
-    r.chaos=r.ends.map((E,i)=>[[300+((i*173)%600),80+((i*97)%400)],[200+((i*251)%700),120+((i*131)%380)]]);
-    r.clean=r.ends.map(E=>[[r.H[0],r.H[1]],[E[0]-90,E[1]]]);
-    setPaths(r,1); r.pulses=el('g',{},g);
-    const [nx,ny]=P(14.6,15,0); text(g,nx+10,ny-12,'your systems stay where they are','lbl-s','start');
-    return r;
-  },
-  async play(r,id){
-    setPaths(r,0); r.paths.forEach(p=>p.style.stroke='color-mix(in srgb, var(--ink) 35%, transparent)');
-    await wait(700); if(!alive(id))return;
-    await tw(2000,t=>setPaths(r,t)); if(!alive(id))return;
-    r.paths.forEach(p=>p.style.stroke='var(--accent)');
-    for(let k=0;k<3&&alive(id);k++){ r.paths.forEach((p,i)=>{const L=p.getTotalLength();const d=el('circle',{r:5,style:'fill:var(--accent)'},r.pulses);tw(1100,t=>{const q=p.getPointAtLength(L*t);d.setAttribute('cx',q.x);d.setAttribute('cy',q.y)},i*40).then(()=>d.remove())}); await wait(1000) }
-  }
-},
-{ t:'Eight AI observers check 100%. Not a sample.', q:'Can AI be trusted? It checks. It never decides.',
-  vo:'Every consent form and every report statement is checked as it happens. Observers read; they never change anything.',
-  build(g){
-    const r={};
-    floor(g,1,3,14,10);
-    box(g,1.5,7,0,13,2,.6,'var(--blk-2)');
-    r.docs=[]; r.ticks=[];
-    for(let i=0;i<7;i++){const x=2.4+i*1.85; const d=doc(g,i===3?'var(--bad-soft)':'var(--surface)',i===3?{lines:'var(--bad)'}:{}); place(d,x,8,1); r.docs.push(d);
-      const tk=el('g',{},g); const [tx,ty]=P(x,8,1); tk.setAttribute('transform',`translate(${tx+12},${ty-18})`);
-      el('circle',{r:8,style:`fill:${i===3?'var(--bad)':'var(--ok)'}`},tk); el('path',{d:i===3?'M-3,-4 L-3,4 M-3,-4 L4,-2 L-3,1':'M-4,0 L-1,3 L4,-3',style:'fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round'},tk); r.ticks.push(tk)}
-    r.c=P(8,8,4.4); r.orbs=[];
-    for(let i=0;i<8;i++){const o=el('g',{},g); el('circle',{r:13,style:'fill:color-mix(in srgb, var(--accent) 18%, var(--surface));stroke:var(--accent);stroke-width:1.5'},o);
-      const t=el('text',{y:4,'text-anchor':'middle',class:'mono',style:'font-size:10px;fill:var(--accent)'},o); t.textContent='0'+(i+1);
-      const ring=el('circle',{r:13,style:'fill:none;stroke:var(--accent);opacity:0'},o); o.ring=ring; r.orbs.push(o)}
-    setOrbs(r,0); const [lx,ly]=P(8,3,0); text(g,lx,ly-6,'100% of work observed · signed','lbl');
-    return r;
-  },
-  async play(r,id){
-    r.ticks.forEach(t=>t.style.opacity=0); r.docs[3].style.transform='';
-    let a=0; (function spin(){ if(!alive(id))return; a+=reduce?0:.012; setOrbs(r,a); requestAnimationFrame(spin) })();
-    r.orbs.forEach((o,i)=>{ if(reduce)return; const loop=()=>{ if(!alive(id))return; tw(1400,t=>{o.ring.setAttribute('r',13+16*t);o.ring.style.opacity=.6*(1-t)},i*170).then(loop)}; loop() });
-    for(let i=0;i<r.ticks.length&&alive(id);i++){ await wait(420); r.ticks[i].style.opacity=1 }
-    if(!alive(id))return;
-    await tw(900,t=>{r.docs[3].style.transform=`translateY(${-70*t}px)`;r.ticks[3].style.transform=`translateY(${-70*t}px)`});
-  }
-},
-{ t:'Giau observes. Judges. Signs.', q:'Who is accountable? A named person, with a verifiable signature.',
-  vo:'The conductor reviews only what the observers raise. She didn\'t do the work, so she can judge it.',
-  build(g){
-    const r={};
-    floor(g,0,0,9,16,'var(--blk-2)');
-    box(g,1,5,0,7,1.6,.5,'var(--surface-2)');
-    [2,4,6].forEach(x=>{const p=person(g,'var(--muted)');place(p,x+.4,7.6)});
-    const [dx,dy]=P(4.5,1,0); text(g,dx-20,dy+30,'doing the work','lbl-s','end');
-    // gap line
-    const a=P(9.6,1.5,0), b=P(9.6,15,0); el('line',{x1:a[0],y1:a[1],x2:b[0],y2:b[1],style:'stroke:var(--human);stroke-width:2;stroke-dasharray:6 6'},g);
-    const [gx,gy]=P(9.6,14,0); text(g,gx-14,gy+16,'once removed','lbl','end').style.fill='var(--human)';
-    // observer platform
-    floor(g,10.4,5,5.2,7,'var(--human-soft)');
-    shadow(g,12.6,8.2,1.2); box(g,11.6,7.2,0,2.2,1.2,1.2,'var(--blk)');
-    box(g,11.9,7.25,1.2,1.6,.2,.9,'var(--ink)',{k1:92,k2:84});
-    r.giau=person(g,'var(--human)'); place(r.giau,13.2,9.7);
-    const [nx,ny]=P(13.2,9.7,0); text(g,nx+20,ny-26,'Giau · conductor','lbl','start');
-    const fpo=el('g',{},g); const [fx,fy]=P(12.6,7.8,1.25); fpo.setAttribute('transform',`translate(${fx},${fy})`); r.fp=el('g',{},fpo);
-    el('circle',{r:11,style:'fill:var(--human)'},r.fp); el('path',{d:'M-4,3 Q-4,-5 0,-5 Q4,-5 4,3 M-1.5,4 Q-1.5,-2 0,-2 Q1.5,-2 1.5,4',style:'fill:none;stroke:#fff;stroke-width:1.4;stroke-linecap:round'},r.fp);
-    r.ripple=el('circle',{cx:fx,cy:fy,r:11,style:'fill:none;stroke:var(--human);stroke-width:2;opacity:0'},g);
-    r.flag=doc(g,'var(--bad-soft)',{lines:'var(--bad)'}); r.flagEnd=P(12.2,7.6,2.6); r.flagStart=P(4.5,5.8,1.2);
-    r.flag.setAttribute('transform',`translate(${r.flagEnd[0]},${r.flagEnd[1]})`);
-    r.seal=el('g',{transform:`translate(${r.flagEnd[0]+14},${r.flagEnd[1]-12})`},g);
-    el('circle',{r:10,style:'fill:var(--human)'},r.seal); el('path',{d:'M-4,0 L-1,3 L4,-3',style:'fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round'},r.seal);
-    return r;
-  },
-  async play(r,id){
-    r.seal.style.opacity=0;
-    await tw(1600,t=>{const x=lerp(r.flagStart[0],r.flagEnd[0],t),y=lerp(r.flagStart[1],r.flagEnd[1],t)-Math.sin(t*Math.PI)*90;r.flag.setAttribute('transform',`translate(${x},${y})`)},300);
-    if(!alive(id))return; await wait(500);
-    
-    await tw(500,t=>{r.fp.style.transform=`scale(${1+.25*Math.sin(t*Math.PI)})`});
-    if(!alive(id))return; r.seal.style.opacity=1;
-    tw(1200,t=>{r.ripple.setAttribute('r',11+50*t);r.ripple.style.opacity=.8*(1-t)});
-  }
-},
-{ t:'Proof on one page. Start with one study.', q:'What do you need from me? One study, eight weeks.',
-  vo:'Three answers on one page each month, every number linked to a signed record. Prove it on one study in eight weeks.',
-  build(g){ const r=boardroom(g,'warm');
-    r.page=el('g',{},g); const [px,py]=P(8,6.6,1.25); r.px=px;r.py=py; r.page.setAttribute('transform',`translate(${px},${py})`);
-    el('polygon',{points:'-46,0 0,-24 46,0 0,24',style:'fill:var(--surface);stroke:var(--line)'},r.page);
-    r.lights=['var(--ok)','var(--ok)','var(--warn)'].map((c,i)=>el('circle',{cx:-18+i*18,cy:-1+(i-1)*0,r:5.5,style:`fill:${c}`},r.page));
-    el('circle',{cx:26,cy:6,r:7,style:'fill:var(--human)'},r.page);
-    const lab=['participants protected','data trustworthy','on track'];
-    r.labels=lab.map((s,i)=>{const t=text(g,px-130+i*130,py-44,s,'lbl-s');return t});
-    r.badge=el('g',{transform:'translate(600,44)'},g); el('rect',{x:-150,y:-20,width:300,height:40,rx:20,style:'fill:var(--accent)'},r.badge);
-    const bt=text(r.badge,0,6,'Approve an eight-week pilot','lbl'); bt.style.fill='#fff';
-    return r },
-  async play(r,id){
-    r.tint.style.opacity=0; r.lights.forEach(l=>l.style.opacity=0); r.labels.forEach(l=>l.style.opacity=0); r.badge.style.opacity=0;
-    tw(1800,t=>r.tint.style.opacity=.1*t);
-    await tw(1300,t=>r.page.setAttribute('transform',`translate(${r.px-180*(1-t)},${r.py+90*(1-t)})`),200);
-    for(let i=0;i<3&&alive(id);i++){await wait(380);r.lights[i].style.opacity=1;r.labels[i].style.opacity=1}
-    await wait(500); if(alive(id)) r.badge.style.opacity=1;
-  }
-},
+ {tag:'trust',spin:.14,build:N=>build(N,i=>{const n=Math.floor(N*.78);if(i<n){const q=fib(i,n);return{p:[q[0]*1.35,q[1]*1.35,q[2]*1.35],c:hash(i)<.12?COL.a:COL.w,s:.9}}return{p:inBall(.38),c:hash(i)<.5?COL.a:COL.a2,s:1.3}}),
+  anim(i,v,c,te){const b=1+.05*Math.pow(Math.max(0,Math.sin(te*5.2)),12)+.02*Math.sin(te*1.3);v[0]*=b;v[1]*=b;v[2]*=b},
+  over(ctx,P,te){const o=[0,0,0,0];P(0,1.85,0,o);label(ctx,o[0],o[1],'participants protected · data real',null,'center',11,fade(te,.8))}},
+ {tag:'overload',spin:.12,build:N=>build(N,i=>{const R=RING[i%8],q=inBall(.36);return{p:[R[0]+q[0],R[1]+q[1],R[2]+q[2]],c:hash(i)<.15?COL.a:hash(i+1)<.5?COL.w:[170,160,150]}}),
+  anim(i,v,c,te){v[1]+=.03*Math.sin(te*2+i)},
+  over(ctx,P,te){ctx.globalCompositeOperation='lighter';tangle(ctx,P,te,.32*fade(te,.4),true);ctx.globalCompositeOperation='source-over';sysLabels(ctx,P,fade(te,.6));
+   const o=[0,0,0,0];P(0,-1.6,0,o);label(ctx,o[0],o[1],'the same fact, entered 3–5 times','#ff9a88','center',11,fade(te,1.2))}},
+ {tag:'hidden risk',spin:.1,build:N=>build(N,i=>{
+   if(i%11===0){const q=PAIRS[(i/11|0)%PAIRS.length],pt=quad(RING[q.a],q.ctl,RING[q.b],.25+hash(i+2)*.5),n=inBall(.08);return{p:[pt[0]+n[0],pt[1]+n[1],pt[2]+n[2]],c:COL.r,s:1.5}}
+   const R=RING[i%8],q=inBall(.36);return{p:[R[0]+q[0],R[1]+q[1],R[2]+q[2]],c:[150,142,134],s:.9}}),
+  anim(i,v,c,te){if(i%11===0){const b=.5+.5*Math.sin(te*6+i);c[0]=255;c[1]=60+90*b;c[2]=50+60*b}},
+  over(ctx,P,te,D){ctx.globalCompositeOperation='lighter';tangle(ctx,P,te,.12,false);ctx.globalCompositeOperation='source-over';sysLabels(ctx,P,.55);
+   const o=[0,0,0,0];[0,5,11,17].forEach((pi,n)=>{const j=pi*11*3;P(D.p[j],D.p[j+1],D.p[j+2],o);const ph=(te*.9+n*.25)%1,al=fade(te,.8+n*.35);
+    ctx.globalAlpha=al;ctx.strokeStyle=`rgba(255,70,60,${1-ph})`;ctx.lineWidth=2;ctx.beginPath();ctx.arc(o[0],o[1],6+ph*22,0,TAU);ctx.stroke();ctx.globalAlpha=1;
+    label(ctx,o[0]+14,o[1]-18,ERR[n],'#ff8a78','left',11,al)});
+   P(0,-1.65,0,o);label(ctx,o[0],o[1],'sampled: 5 of 38 checked','#e8a33d','center',12,fade(te,2.2))}},
+ {tag:'consequence',spin:.08,build:N=>build(N,i=>{const k=i%3;let u=rnd(),w=rnd();if(hash(i+3)<.3){if(hash(i+5)<.5)u=u<0?-1:1;else w=w<0?-1:1}
+   const x=u*1.25,z=w*.8,ta=-.25+k*.12,y2=-z*Math.sin(ta),z2=z*Math.cos(ta),tb=k*.32-.3,cb=Math.cos(tb),sb=Math.sin(tb);
+   return{p:[x*cb-z2*sb+(k-1)*.45,y2+.95-k*.95,x*sb+z2*cb],c:k===0?COL.r:k===1?COL.y:COL.a,s:.9}}),
+  anim(i,v,c,te){v[1]+=.06*Math.sin(te*1.3+(i%3)*2)},
+  over(ctx,P,te){const o=[0,0,0,0];['inspection finding','delayed submission','a question you must answer'].forEach((t,k)=>{P(1.6+(k-1)*.45,.95-k*.95,0,o);label(ctx,o[0]+8,o[1],t,['#ff6a5a','#e8a33d','#ff8a78'][k],'left',12,fade(te,.7+k*.35))})}},
+ {tag:'the turn',face:-.18,sway:.22,build:N=>build(N,(i,m)=>{m.s=m.s||new Float32Array(N);m.j=m.j||new Float32Array(N*3);m.s[i]=i/N;m.j.set(inBall(.06),i*3);const q=curve(i/N);return{p:q,c:COL.a}}),
+  anim(i,v,c,te,D){const m=D.m,s=(m.s[i]+te*.03)%1,q=curve(s);v[0]=q[0]+m.j[i*3];v[1]=q[1]+m.j[i*3+1];v[2]=q[2]+m.j[i*3+2];
+   const b=((s*4-te*.6)%1+1)%1<.07?1:0;c[0]=Math.min(255,232+23*s*.6+b*20);c[1]=Math.min(255,93+127*s*.7+b*120);c[2]=Math.min(255,74+136*s*.7+b*120)},
+  over(ctx,P,te){const o=[0,0,0,0];SYS.forEach((n,j)=>{const q=curve((j+.5)/8);P(...q,o);const al=fade(te,.9+j*.12);
+   ctx.globalAlpha=al;ctx.strokeStyle='rgba(255,255,255,.75)';ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(o[0],o[1],8,0,TAU);ctx.stroke();ctx.globalAlpha=1;
+   label(ctx,o[0],o[1]-(j%2?-1:1)*24,n,null,'center',11,al);
+   if(te>1.8+j*.28){ctx.fillStyle='#3fb97a';ctx.font='700 13px "JetBrains Mono",monospace';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText('✓',o[0],o[1]+1)}});
+   P(0,-1.3,0,o);label(ctx,o[0],o[1],'captured once · checked on arrival · systems stay put','#ff9a88','center',11,fade(te,2.6))}},
+ {tag:'coverage',spin:.16,build:N=>build(N,(i,m)=>{m.R=Math.floor(N*.84);if(i<m.R)return{p:inBall(1),c:COL.d,s:.85};return{p:inBall(.09),c:COL.a2,s:1.3}}),
+  anim(i,v,c,te,D){const m=D.m;if(i<m.R){const f=clamp((te-.7)/4);if(hash(i)<f){if(i===7){c[0]=255;c[1]=50;c[2]=40}else{c[0]=COL.g[0];c[1]=COL.g[1];c[2]=COL.g[2]}}}
+   else{const q=obsPos((i-m.R)%8,te);v[0]+=q[0];v[1]+=q[1];v[2]+=q[2]}},
+  over(ctx,P,te,D){const o=[0,0,0,0],z=[0,0,0,0];P(0,0,0,z);ctx.globalCompositeOperation='lighter';
+   for(let j=0;j<8;j++){P(...obsPos(j,te),o);const g=ctx.createLinearGradient(o[0],o[1],z[0],z[1]);g.addColorStop(0,'rgba(255,150,130,.5)');g.addColorStop(1,'rgba(255,150,130,0)');ctx.strokeStyle=g;ctx.lineWidth=1.2;ctx.beginPath();ctx.moveTo(o[0],o[1]);ctx.lineTo(z[0],z[1]);ctx.stroke()}
+   ctx.globalCompositeOperation='source-over';
+   const f=clamp((te-.7)/4);P(0,1.5,0,o);label(ctx,o[0],o[1],`observed ${Math.round(f*100)}% · not a sample`,f>=1?'#3fb97a':null,'center',12,1);
+   if(f>=hash(7)){P(D.p[21],D.p[22],D.p[23],o);const ph=(te*1.1)%1;ctx.strokeStyle=`rgba(255,60,50,${1-ph})`;ctx.lineWidth=2;ctx.beginPath();ctx.arc(o[0],o[1],6+ph*18,0,TAU);ctx.stroke();
+    label(ctx,o[0]+16,o[1]+22,'signal: consent on ICF v2.1 after v3.0 approved','#ff8a78','left',11,clamp((te-.7-hash(7)*4)/.6))}}},
+ {tag:'judgement',spin:.3,face:true,build:N=>build(N,(i,m)=>{const ring=i%8;m.r=m.r||new Uint8Array(N);m.a=m.a||new Float32Array(N);m.r[i]=ring;m.a[i]=Math.random()*TAU;
+   return{p:[0,0,0],c:ring===0?COL.h:ring===7?COL.a:ring%2?COL.a2:COL.w,s:ring===0?1.4:1}}),
+  anim(i,v,c,te,D){const m=D.m,k=m.r[i];
+   if(k===7&&Math.floor(m.a[i]/TAU*36)%3===0){v[0]=v[1]=v[2]=0;c[0]=c[1]=c[2]=0;return}
+   const R=k===0?Math.sqrt(hash(i))*.28:.22+k*.2,a=m.a[i]+te*.25*(k%2?1:-1)*(1+k*.08),st=1+.35*Math.exp(-te*2.2);
+   v[0]=Math.cos(a)*R*st;v[1]=Math.sin(a)*R*st;v[2]=k===0?(hash(i+9)-.5)*.04:0},
+  over(ctx,P,te){const o=[0,0,0,0];
+   P(0,1.95,0,o);label(ctx,o[0],o[1],'confirmed · graded important',null,'center',12,fade(te,.9));
+   P(0,-1.95,0,o);label(ctx,o[0],o[1],'signed · passkey · name · time · meaning','#9ab8ff','center',12,fade(te,1.5));
+   P(0,0,0,o);label(ctx,o[0],o[1],'Giau','#fff','center',12,fade(te,.5))}},
+ {tag:'proof',face:.5,sway:.25,zoom:.92,build:N=>build(N,i=>{const b=i%7,E=EDGES[(i/7|0)%12],t=Math.random(),h=.27,C=ctr(b);
+   return{p:[0,1,2].map(d=>C[d]+(E[0][d]+(E[1][d]-E[0][d])*t)*h),c:b===6?COL.a:hash(i)<.2?COL.a2:COL.w,s:b===6?1.2:.95}}),
+  anim(i,v,c,te){if(i%7===6){const C=ctr(6),s=1+.12*Math.max(0,Math.sin(te*3));for(let d=0;d<3;d++)v[d]=C[d]+(v[d]-C[d])*s}},
+  over(ctx,P,te){const o=[0,0,0,0],q=[0,0,0,0];
+   ctx.globalCompositeOperation='lighter';for(let b=0;b<6;b++){P(...ctr(b),o);P(...ctr(b+1),q);ctx.strokeStyle=`rgba(232,93,74,${.65*fade(te,.4+b*.15)})`;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(o[0],o[1]);ctx.lineTo(q[0],q[1]);ctx.stroke()}
+   ctx.globalCompositeOperation='source-over';for(let b=0;b<7;b++){const C=ctr(b);P(C[0],C[1]-.5,C[2],o);label(ctx,o[0],o[1]+(b%2?14:0),CHAIN[b],b===6?'#ff8a78':'rgba(240,237,232,.75)','center',10,fade(te,.6+b*.18))}}}
 ];
-function lerp(a,b,t){return a+(b-a)*t}
-function setPaths(r,t){ r.paths.forEach((p,i)=>{const E=r.ends[i],c=r.chaos[i],k=r.clean[i];
-  const c1=[lerp(c[0][0],k[0][0],t),lerp(c[0][1],k[0][1],t)], c2=[lerp(c[1][0],k[1][0],t),lerp(c[1][1],k[1][1],t)];
-  p.setAttribute('d',`M${r.S[0]},${r.S[1]} C${c1[0]},${c1[1]} ${c2[0]},${c2[1]} ${E[0]},${E[1]}`)}) }
-function setOrbs(r,a){ r.orbs.forEach((o,i)=>{const t=a+i*Math.PI/4;o.setAttribute('transform',`translate(${r.c[0]+Math.cos(t)*250},${r.c[1]+Math.sin(t)*62})`)}) }
-function boardroom(g,mood){
-  const r={};
-  floor(g,0,0,16,14,mood==='cool'?'color-mix(in srgb, var(--cool) 22%, var(--blk-2))':'var(--blk-2)');
-  // back walls
-  box(g,0,0,0,16,.3,5,'var(--wall)'); box(g,0,0,0,.3,14,5,'var(--wall)');
-  faceY(g,3,.3,1.6,4,2.2,mood==='cool'?'color-mix(in srgb, var(--cool) 40%, var(--wall))':'color-mix(in srgb, var(--warn) 25%, var(--wall))');
-  faceY(g,9,.3,1.6,4,2.2,mood==='cool'?'color-mix(in srgb, var(--cool) 40%, var(--wall))':'color-mix(in srgb, var(--warn) 25%, var(--wall))');
-  [5,7.3,9.6].forEach(x=>{box(g,x,3.6,0,1.2,1.1,1.6,'var(--blk-2)',{k1:82,k2:70})});
-  shadow(g,8.5,6.5,3.6); box(g,4,5,0,9,3,1.2,'var(--wood)');
-  [5,7.3,9.6].forEach(x=>{box(g,x,8.6,0,1.2,1.1,1.6,'var(--blk-2)',{k1:82,k2:70})});
-  box(g,13.6,5.8,0,1.5,1.5,2.6,'var(--ink)',{k1:88,k2:76});
-  const [cx,cy]=P(14.3,6.5,2.6); text(g,cx+10,cy-18,'President','lbl-s','start');
-  r.tint=el('rect',{x:0,y:0,width:1200,height:620,style:`fill:${mood==='cool'?'var(--cool)':'var(--accent)'};opacity:${mood==='cool'?.16:.1};pointer-events:none`},g);
-  return r;
-}
 
-/* ---------- player ---------- */
-const stage=$('#stage'); let cur=0, paused=false, timer=null; const DUR=6800;
-const chips=$('#chips');
-SCENES.forEach((s,i)=>{const b=document.createElement('button');b.innerHTML=`<i><b></b></i>${i+1} · ${['Trust','Overload','Hidden risk','Consequence','The turn','Coverage','Judgement','Proof'][i]}`;b.setAttribute('aria-label',`Frame ${i+1}: ${s.t}`);b.onclick=()=>show(i);chips.appendChild(b)});
-function show(i){
-  run++; const id=run; cur=(i+SCENES.length)%SCENES.length; const S=SCENES[cur];
-  stage.innerHTML=''; const g=el('g',{style:'opacity:0;transition:opacity .45s ease'},stage);
-  const refs=S.build(g); requestAnimationFrame(()=>g.style.opacity=1);
-  $('#capN').textContent=`FRAME ${cur+1} / ${SCENES.length}`; $('#capT').textContent=S.t; $('#capQ').textContent=S.q;
-  $$('#chips button').forEach((b,j)=>{b.classList.toggle('done',j<cur);b.classList.toggle('cur',j===cur);const bar=b.querySelector('b');bar.style.transition='none';bar.style.transform=j<cur?'scaleX(1)':'scaleX(0)';
-    if(j===cur&&!paused){requestAnimationFrame(()=>{bar.style.transition=`transform ${DUR}ms linear`;bar.style.transform='scaleX(1)'})}});
-  S.play(refs,id);
-  clearTimeout(timer); if(!paused) timer=setTimeout(()=>show(cur+1),DUR);
-}
-$('#bPlay').onclick=()=>{paused=!paused;$('#bPlay').textContent=paused?'▶':'❚❚';$('#bPlay').setAttribute('aria-label',paused?'Play':'Pause');if(paused){clearTimeout(timer);const b=$('#chips .cur b');if(b){const m=getComputedStyle(b).transform;b.style.transition='none';b.style.transform=m}}else show(cur)};
-$('#bPrev').onclick=()=>show(cur-1); $('#bNext').onclick=()=>show(cur+1);
-if(reduce){paused=true;$('#bPlay').textContent='▶'}
-show(0);
+/* hero field */
+const helix=Field($('#helix'),{N:1600,ox:.75,oy:.5,oyS:.36,zoom:1.7,dist:5,pitch:-.12,pt:.9,host:$('.hero')});
+helix.set(HELIX);
 
-/* ---------- storyboard sheet ---------- */
-const sheet=$('#sheet');
-SCENES.forEach((s,i)=>{
-  const f=document.createElement('article'); f.className='frame';
-  f.innerHTML=`<svg class="thumb" viewBox="0 0 1200 620" role="img" aria-label="Frame ${i+1}: ${esc(s.t)}" tabindex="0"></svg><div class="fb"><div class="fno">FRAME ${i+1} · ${((i)*6).toString().padStart(2,'0')}–${((i+1)*6).toString().padStart(2,'0')} s</div><h3>${esc(s.t)}</h3><p class="vo">${esc(s.vo)}</p><div class="q"><b>Buyer asks:</b> ${esc(s.q)}</div></div>`;
-  sheet.appendChild(f);
-  const svg=f.querySelector('svg'); s.build(el('g',{},svg));
-  const go=()=>{show(i);document.querySelector('.stagebox').scrollIntoView({behavior:reduce?'auto':'smooth',block:'center'})};
-  svg.addEventListener('click',go); svg.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go()}});
-});
+/* story field, driven by the steps */
+const story=$('#story'),field=Field($('#field'),{N:1900,ox:.5,oy:.5,oyS:.36,zoom:1.75,pt:.85,host:story});
+const hud=$('#hud');hud.innerHTML=SCENES.map((s,i)=>`<div class="seg${i===4?' turn':''}"><i></i></div>`).join('');
+let curStep=-1;
+function goStep(i){if(i===curStep)return;curStep=i;field.set(SCENES[i]);$$('.step').forEach((s,j)=>s.classList.toggle('on',j===i));
+ [...hud.children].forEach((s,j)=>{s.classList.toggle('on',j===i);s.classList.toggle('done',j<i)});$('#stageTag').textContent=String(i+1).padStart(2,'0')+' · '+SCENES[i].tag}
+const so=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)goStep(+e.target.dataset.s)}),{rootMargin:'-45% 0px -45% 0px'});
+$$('.step').forEach(s=>so.observe(s));goStep(0);
 
-/* ---------- prompts ---------- */
-const PROMPTS=['A small modern clinic building on a floating isometric tile, a patient walking toward the entrance, a clinical research associate with a laptop bag arriving, morning light',
- 'A person at a desk surrounded by eight floating blocks like servers and folders, tangled cables between them, a single paper document hopping between blocks, a feeling of overload',
- 'A red paper document slipping through a gap between two floating blocks, a wall calendar flipping forward, a magnifying glass finding the document weeks later',
- 'An empty executive boardroom table with one large chair, three red tokens on the table, cool blue-grey light, sense of consequence',
- 'Tangled cables between eight floating blocks straightening into one glowing orange thread, a document entering at one end and branching to every block, sense of relief',
- 'Eight small glowing orbs orbiting a conveyor of documents, each document getting a green tick, one document with a red flag lifting away',
- 'A calm person at a minimal console one step back from a busy workflow lane, pressing a fingerprint key, a blue seal appearing on a document',
- 'The same boardroom now warm and bright, a single page on the table with three soft lights (two green, one amber), a confident and simple mood'];
-const style=$('#styleLine').textContent.trim();
-$('#prompts').innerHTML=PROMPTS.map((p,i)=>`<div class="prompt"><span class="n">F${i+1}</span><p id="pr${i}">${esc(p)}</p><button class="btn" data-i="${i}">Copy</button></div>`).join('');
-$$('#prompts .btn').forEach(b=>b.onclick=async()=>{const txt=PROMPTS[+b.dataset.i]+', '+style;
-  try{await navigator.clipboard.writeText(txt);b.textContent='Copied'}catch(e){const r=document.createRange();r.selectNodeContents($('#pr'+b.dataset.i));const s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent='Selected'}
-  setTimeout(()=>b.textContent='Copy',1600)});
+/* ---------- pipeline: one record goes through ---------- */
+(function(){const gates=$$('#pipe .gate'),fill=$('#pipeFill'),log=$('#pipeLog');let started=false;
+ const LINES=[
+  '<span class="p">intake</span>site-012/scan_0419.pdf received · sha256 <span class="h">5b9e…c21f</span>',
+  '<span class="p">classify</span>essential document → <b>informed consent form</b> · subject 012-019 · conf 0.97',
+  '<span class="p">extract</span>ICF version v2.1 · signed 14 Oct 2026 · coordinator confirms 2 low-confidence fields <span class="g">✓</span>',
+  '<span class="p">check</span>rule: ICF v3.0 approved 2 Oct 2026 → <span class="y">✗ superseded version</span> · finding raised',
+  '<span class="p">route</span>CRA and PI notified · deviation proposed: important · re-consent due in 7 days',
+  '<span class="p">prove</span>finding signed by the CRA (ACDC) · anchored to the ledger · filed to ISF and eTMF <span class="g">✓</span>'];
+ const MAP=[0,1,1,2,3,4];
+ function run(){log.innerHTML='';gates.forEach(g=>g.classList.remove('on','done'));fill.style.width='0';let i=0;
+  (function next(){if(i>=LINES.length){setTimeout(run,5000);return}const gi=MAP[i];gates.forEach((g,j)=>{g.classList.toggle('on',j===gi);g.classList.toggle('done',j<gi)});fill.style.width=(gi/4*100)+'%';
+   const d=document.createElement('div');d.innerHTML=LINES[i];d.style.opacity=0;d.style.transition='opacity .4s';log.appendChild(d);requestAnimationFrame(()=>requestAnimationFrame(()=>d.style.opacity=1));i++;setTimeout(next,reduce?0:1500)})()}
+ new IntersectionObserver(es=>{if(es[0].isIntersecting&&!started){started=true;run()}}).observe($('#pipe'))})();
+
+/* ---------- rules: a record checked against all three tiers ---------- */
+(function(){const lis=$$('#rulesBox li');let done=false;
+ new IntersectionObserver(es=>{if(!es[0].isIntersecting||done)return;done=true;lis.forEach((li,i)=>setTimeout(()=>{const bad=i===2;li.classList.add(bad?'bad':'ok');li.querySelector('i').textContent=bad?'!':'✓';if(i===lis.length-1)$('#rulesNote').classList.add('in')},reduce?0:500+i*380))},{threshold:.4}).observe($('#rulesBox'))})();
+
+/* ---------- architecture stack ---------- */
+const LAYERS=[
+ ['1','Trust','KERI identifiers for every person, site and AI agent; ACDC credentials for GCP, licence and delegation; a hash ledger (the Nexus). The ledger proves content hasn\'t changed and never holds the content itself.'],
+ ['2','Ingest','One intake for every record: capture, classify, extract, human confirm, hash. Deterministic where possible, AI where needed, always with a confidence score.'],
+ ['3','Records','A canonical model: study, protocol, site, person, delegation, training, document, visit, data point, query, deviation, signature. Versioned, nothing deleted, ALCOA++.'],
+ ['4','Rules','The Rule → Standard → Policy engine. Rules are authored as data, versioned, and each is linked to the clause it implements.'],
+ ['5','Context','The verified context graph: rules ↔ records ↔ why. Every decision is linked to its justification and every edge is checkable.'],
+ ['6','Workflow','Queries, deviations, actions, visits, approvals and payment events, raised against the record and routed by role, with due dates from Policy.'],
+ ['7','Experience','The CRA cockpit, a site portal, tablet visit mode that works offline, and a time-boxed, read-only inspector view.']];
+(function(){const st=$('#stack'),ls=$('#layers'),sw=$('#stackWrap');
+ st.innerHTML=LAYERS.map((l,i)=>`<div class="plate" style="--i:${i}" data-i="${i}"><span><b>${l[0]}</b>${l[1].toUpperCase()}</span></div>`).join('');
+ ls.innerHTML=LAYERS.slice().reverse().map(l=>`<div class="layer" data-i="${+l[0]-1}" tabindex="0" role="button"><span class="ln">L${l[0]}</span><div><b>${l[1]}</b><p>${l[2]}</p></div></div>`).join('');
+ let auto=true,ai=0,t=0;
+ function act(i){$$('.plate').forEach(p=>p.classList.toggle('on',+p.dataset.i===i));$$('.layer').forEach(p=>p.classList.toggle('on',+p.dataset.i===i))}
+ const pick=i=>{auto=false;clearInterval(t);act(i)};
+ $$('.plate,.layer').forEach(p=>{p.addEventListener('click',()=>pick(+p.dataset.i));p.addEventListener('mouseenter',e=>{if(matchMedia('(hover:hover)').matches)pick(+p.dataset.i)});p.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();pick(+p.dataset.i)}})});
+ new IntersectionObserver(es=>{if(es[0].isIntersecting&&auto&&!t){act(0);if(!reduce)t=setInterval(()=>{if(!auto)return;ai=(ai+1)%7;act(ai)},2400)}}).observe(sw);
+ if(!reduce)sw.addEventListener('pointermove',e=>{if(e.pointerType!=='mouse')return;const r=sw.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;st.style.transform=`rotateX(${58-y*14}deg) rotateZ(${-40+x*18}deg)`});
+ sw.addEventListener('pointerleave',()=>st.style.transform='')})();
+
+/* ---------- why? decision trace ---------- */
+(function(){const body=$('#traceBody');const T=[
+ '<span class="d">DECISION</span>  Minor deviation · Site 012 · Subject 012-007 · Visit 4',
+ '  ├─ <span class="r">justified-by</span> → <span class="d">FINDING</span>  Visit 4 on Day 33; window Day 25–31 → out by 2 days',
+ '  │      ├─ <span class="r">breaches</span> → PROTOCOL v4.0 §6.3  "Visit 4 Day 28 ± 3"',
+ '  │      └─ <span class="r">derived-from</span> → DATA POINT visit date ← source worksheet p.2 <span class="m">(hash 4ac…)</span>',
+ '  ├─ <span class="r">justified-by</span> → SOP DEV-002 §4  "out-of-window, no safety impact = minor"',
+ '  │      └─ <span class="r">implements</span> → ICH E6(R3) Annex 1, non-compliance',
+ '  ├─ <span class="r">proposed-by</span> → AI agent deviation-classifier v0.3 <span class="m">(confidence 0.91)</span>',
+ '  └─ <span class="r">signed-by</span> → <span class="h">CRA</span> (ACDC "reviewed &amp; classified") · <span class="h">PM</span> (ACDC "acknowledged") <span class="g">✓</span>'];
+ let tm=[];function play(){tm.forEach(clearTimeout);tm=[];body.innerHTML=T.map(l=>`<div class="ln">${l}</div>`).join('');[...body.children].forEach((d,i)=>tm.push(setTimeout(()=>d.classList.add('in'),reduce?0:300+i*420)))}
+ $('#whyBtn').onclick=play;let seen=false;new IntersectionObserver(es=>{if(es[0].isIntersecting&&!seen){seen=true;play()}},{threshold:.3}).observe($('#trace'))})();
+
+/* ---------- observers orbit ---------- */
+const OBS=[
+ ['01','Direction','study risk','key risk indicators per site vs thresholds; quality tolerance limits.','Site deviation rate ≤ 1.5× the study mean','ICH E6(R3) risk-based quality management; E8(R1) critical-to-quality factors'],
+ ['02','Enablement','competence','GCP currency, protocol training, delegation × training.','No delegated task without current training','E6(R3) qualified staff; 21 CFR 312.53'],
+ ['03','Protocols','consent & protocol','every ICF version vs its approval date; eligibility; visit windows; prohibited medications.','Consent signed on the version approved on that date','NHMRC National Statement; 21 CFR 50; the protocol'],
+ ['04','Sustainability','IP & money','IP accountability, temperature excursions, site payments vs verified visits.','Dispensed − returned = IxRS balance','E6(R3) investigational product; CTRA'],
+ ['05','Processes','monitoring conduct','visit cadence vs the monitoring plan; report and letter timeliness; action closure; source review coverage.','Report final ≤ 10 working days after the visit','Monitoring plan; sponsor SOP'],
+ ['06','Accountability','records & trail','ISF/eTMF completeness; audit-trail integrity; signature manifestation; report statements vs the record.','Every "no issues" statement is consistent with the record','21 CFR 11; E6(R3) Appendix C'],
+ ['07','Engagement','communication','query response times; open actions; escalations; decisions living only in email.','Queries answered ≤ 5 working days','Sponsor SOP'],
+ ['08','Organisational','roles & segregation','author ≠ approver; blinded/unblinded separation; access for joiners and leavers.','No one approves their own report','E6(R3) roles; 21 CFR 11.10(d)']];
+(function(){const sats=$('#sats'),det=$('#obsDetail');
+ sats.innerHTML=OBS.map((o,i)=>{const a=i/8*TAU-Math.PI/2,x=50+Math.cos(a)*47,y=50+Math.sin(a)*47;return`<div class="sat" style="left:${x.toFixed(2)}%;top:${y.toFixed(2)}%"><div class="upright"><button data-i="${i}" aria-label="Observer ${o[0]}: ${o[2]}"><small>${o[0]}</small>${o[1]}</button></div></div>`}).join('');
+ function show(i){const o=OBS[i];$$('#sats button').forEach(b=>b.classList.toggle('on',+b.dataset.i===i));
+  det.innerHTML=`<span class="k">Observer ${o[0]} · ${o[1]}</span><h4>${o[2][0].toUpperCase()+o[2].slice(1)}</h4><p style="color:var(--muted);font-size:15px">Observes 100% of the population: ${o[3]}</p><div class="crit"><span>Example criterion</span>${o[4]}</div><div class="crit" style="border-left-color:var(--human)"><span>Grounding</span>${o[5]}</div><div class="chips"><span class="chip">read-only</span><span class="chip hu">identifier delegated from the conductor</span><span class="chip ok">every observation signed</span></div>`}
+ let auto=true,ai=2,t=0;show(2);
+ $$('#sats button').forEach(b=>b.onclick=()=>{auto=false;clearInterval(t);show(+b.dataset.i)});
+ new IntersectionObserver(es=>{if(es[0].isIntersecting&&auto&&!t&&!reduce)t=setInterval(()=>{if(!auto)return;ai=(ai+1)%8;show(ai)},3200)}).observe($('#orbit'))})();
+
+/* roadmap fill */
+new IntersectionObserver((es,o)=>{if(es[0].isIntersecting){$('#roadEl').classList.add('in');o.disconnect()}},{threshold:.3}).observe($('#roadEl'));
 })();
 </script>
 </body>
