@@ -46,12 +46,6 @@ p{margin:0}
 .mono{font-family:var(--f-mono)}
 .icon{width:1em;height:1em;flex:none}
 
-/* ---------- custom cursor (desktop only, added by script) ---------- */
-.cursor-dot,.cursor-ring{display:none}
-.cur body,.cur a,.cur button,.cur label{cursor:none}
-.cur .cursor-dot{display:block;position:fixed;top:0;left:0;width:8px;height:8px;border-radius:50%;background:var(--constructive);pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:background .2s}
-.cur .cursor-ring{display:block;position:fixed;top:0;left:0;width:34px;height:34px;border-radius:50%;border:1.5px solid rgba(240,238,255,.3);pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .2s,height .2s,border-color .2s}
-
 /* ---------- nav ---------- */
 .nav{position:fixed;top:0;left:0;right:0;z-index:50;padding-top:env(safe-area-inset-top,0px);background:var(--navbg);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid var(--border)}
 .nav-in{display:flex;align-items:center;gap:16px;height:64px}
@@ -368,7 +362,6 @@ p{margin:0}
 </style>
 </head>
 <body id="top">
-<div class="cursor-dot" id="cdot"></div><div class="cursor-ring" id="cring"></div>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
   <symbol id="ic-telescope" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="17" cy="13" r="3"/><path d="M3 7l5.5 2.5"/><path d="M3 7l2-4 14.5 6.5-2 4"/><path d="M8.5 9.5L6 20h5l1.5-4"/><path d="M17 16v4"/></symbol>
   <symbol id="ic-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></symbol>
@@ -697,20 +690,7 @@ p{margin:0}
 
 <script>
 (function(){
-  // Custom cursor: desktop pointers only, so touch and keyboard users keep the native one.
-  var fine = window.matchMedia && matchMedia('(hover:hover) and (pointer:fine)').matches;
   var calm = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (fine) {
-    document.documentElement.classList.add('cur');
-    var dot = document.getElementById('cdot'), ring = document.getElementById('cring');
-    var rx = 0, ry = 0, dx = 0, dy = 0;
-    document.addEventListener('mousemove', function(e){ dx = e.clientX; dy = e.clientY; dot.style.left = dx + 'px'; dot.style.top = dy + 'px'; });
-    (function loop(){ rx += (dx - rx) * .18; ry += (dy - ry) * .18; ring.style.left = rx + 'px'; ring.style.top = ry + 'px'; requestAnimationFrame(loop); })();
-    document.querySelectorAll('a,button,.task').forEach(function(el){
-      el.addEventListener('mouseenter', function(){ ring.style.width = '52px'; ring.style.height = '52px'; ring.style.borderColor = 'rgba(0,229,160,.6)'; });
-      el.addEventListener('mouseleave', function(){ ring.style.width = '34px'; ring.style.height = '34px'; ring.style.borderColor = 'rgba(240,238,255,.3)'; });
-    });
-  }
   // Scroll reveal: anything already on screen stays put; only blocks below the fold animate in.
   if (!calm && 'IntersectionObserver' in window) {
     var vh = window.innerHeight || 800;

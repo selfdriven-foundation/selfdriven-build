@@ -29,8 +29,7 @@ permalink: /cyberdeck-pocket-build-guide
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.65;overflow-x:hidden;cursor:none;-webkit-font-smoothing:antialiased}
-a{cursor:none}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased}
 h1,h2,h3,h4{font-family:'Bricolage Grotesque',sans-serif;line-height:1.05}
 .mono{font-family:'JetBrains Mono',monospace}
 
@@ -42,9 +41,6 @@ h1,h2,h3,h4{font-family:'Bricolage Grotesque',sans-serif;line-height:1.05}
 .gb4{width:340px;height:340px;background:var(--chill);bottom:-80px;right:16%;animation:gb 17s ease-in-out infinite 8s}
 @keyframes gb{0%,100%{transform:translate(0,0) scale(1)}40%{transform:translate(34px,-26px) scale(1.08)}70%{transform:translate(-22px,30px) scale(.93)}}
 
-.cursor-dot{position:fixed;top:0;left:0;width:8px;height:8px;border-radius:50%;background:var(--chill-bright);pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .12s ease,background .2s}
-.cursor-ring{position:fixed;top:0;left:0;width:34px;height:34px;border-radius:50%;border:1.5px solid rgba(240,238,255,.3);pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .2s,height .2s,border-color .2s}
-@media (hover:none){body{cursor:auto}a{cursor:auto}.cursor-dot,.cursor-ring{display:none}}
 
 nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:16px 0;transition:background .3s,border-color .3s,padding .3s;border-bottom:1px solid transparent}
 nav.scrolled{background:rgba(9,9,15,.72);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid var(--border);padding:11px 0}
@@ -258,8 +254,6 @@ footer{border-top:1px solid var(--border);padding:48px 0 60px;position:relative;
   <div class="gblob gb1"></div><div class="gblob gb2"></div><div class="gblob gb3"></div><div class="gblob gb4"></div>
 </div>
 
-<div class="cursor-dot" id="cdot"></div>
-<div class="cursor-ring" id="cring"></div>
 
 <nav id="nav">
   <div class="nav-inner">
@@ -579,17 +573,6 @@ const nav=document.getElementById('nav');
 addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>30));
 const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('vis');io.unobserve(x.target);}}),{threshold:.14});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
-(function(){
-  var dot=document.getElementById('cdot'),ring=document.getElementById('cring');
-  var rx=0,ry=0,dx=0,dy=0;
-  document.addEventListener('mousemove',function(e){dx=e.clientX;dy=e.clientY;dot.style.left=dx+'px';dot.style.top=dy+'px';});
-  function loop(){rx+=(dx-rx)*.18;ry+=(dy-ry)*.18;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop);}
-  loop();
-  document.querySelectorAll('a,.phase,.arch,.why-card').forEach(function(el){
-    el.addEventListener('mouseenter',function(){ring.style.width='52px';ring.style.height='52px';ring.style.borderColor='rgba(155,143,255,.6)';});
-    el.addEventListener('mouseleave',function(){ring.style.width='34px';ring.style.height='34px';ring.style.borderColor='rgba(240,238,255,.3)';});
-  });
-})();
 </script>
 </body>
 </html>
